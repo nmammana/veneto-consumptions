@@ -1,0 +1,18 @@
+.MuiList-root {
+  .MuiIconButton-label {
+    .MuiSvgIcon-root {
+      color: #008dc8;
+    }
+  }
+}
+.MuiTableCell-root.MuiTableCell-footer {
+  border-bottom: none;
+}
+/* .tableContainer {
+  position: relative;
+} */
+.createStayButton {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+}

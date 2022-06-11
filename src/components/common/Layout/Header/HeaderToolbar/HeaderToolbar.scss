@@ -1,0 +1,12 @@
+@import "../../../../../styles/Global.scss";
+
+.headerToolbar {
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+}
+.itemText {
+  font: $button;
+  color: $white;
+  cursor: pointer;
+}

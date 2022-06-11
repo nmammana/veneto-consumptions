@@ -1,0 +1,14 @@
+.formWrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 60px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+.submitButton {
+  max-width: 150px;
+}
