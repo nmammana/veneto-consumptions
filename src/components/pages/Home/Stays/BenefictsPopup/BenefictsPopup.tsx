@@ -48,15 +48,80 @@ export const BenefictsPopup = () => {
             borderRadius: "8px",
             background: "#fff",
             width: "35%",
-            height: "70%",
+            height: "700px",
             padding: "36px",
             overflow: "hidden"
           }
         }}
       >
-        <div className="popupContent">
+        <div className="benefictsPopupContent">
           <div className="popupHeader">
-            <p className="benefictsPopupTitle">Beneficios de huéspedes</p>
+            <p className="popupTitle">Beneficios de huéspedes</p>
+          </div>
+          <div className="guestCard">
+            <div className="nameContainer">
+              <p className="title">Nombre y apellido</p>
+              <p className="content">Federico Gonzalez</p>
+            </div>
+            <div className="benefictsContainer">
+              <p className="title">Beneficio</p>
+              <div className="benefictsList">
+                <p className="content">Almuerzo vegetariano x 2</p>
+                <p className="content">Desayuno completo x 3</p>
+              </div>
+            </div>
+          </div>
+          <div className="guestCard">
+            <div className="nameContainer">
+              <p className="title">Nombre y apellido</p>
+              <p className="content">Federico Gonzalez</p>
+            </div>
+            <div className="benefictsContainer">
+              <p className="title">Beneficio</p>
+              <div className="benefictsList">
+                <p className="content">Almuerzo vegetariano x 2</p>
+                <p className="content">Desayuno completo x 3</p>
+              </div>
+            </div>
+          </div>
+          <div className="guestCard">
+            <div className="nameContainer">
+              <p className="title">Nombre y apellido</p>
+              <p className="content">Federico Gonzalez</p>
+            </div>
+            <div className="benefictsContainer">
+              <p className="title">Beneficio</p>
+              <div className="benefictsList">
+                <p className="content">Almuerzo vegetariano x 2</p>
+                <p className="content">Desayuno completo x 3</p>
+              </div>
+            </div>
+          </div>
+          <div className="guestCard">
+            <div className="nameContainer">
+              <p className="title">Nombre y apellido</p>
+              <p className="content">Federico Gonzalez</p>
+            </div>
+            <div className="benefictsContainer">
+              <p className="title">Beneficio</p>
+              <div className="benefictsList">
+                <p className="content">Almuerzo vegetariano x 2</p>
+                <p className="content">Desayuno completo x 3</p>
+              </div>
+            </div>
+          </div>
+          <div className="guestCard">
+            <div className="nameContainer">
+              <p className="title">Nombre y apellido</p>
+              <p className="content">Federico Gonzalez</p>
+            </div>
+            <div className="benefictsContainer">
+              <p className="title">Beneficio</p>
+              <div className="benefictsList">
+                <p className="content">Almuerzo vegetariano x 2</p>
+                <p className="content">Desayuno completo x 3</p>
+              </div>
+            </div>
           </div>
           <div className="guestCard">
             <div className="nameContainer">

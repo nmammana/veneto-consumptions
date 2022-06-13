@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { TableType } from "../../../../../types/types";
 import { AdminPageContext } from "../../../../context/AdminPageContext";
 import "./HeaderToolbar.scss";
@@ -10,6 +11,7 @@ interface HeaderItem {
 
 export const HeaderToolbar = () => {
   const adminPageContext = useContext(AdminPageContext);
+  const navigate = useNavigate();
   const items: HeaderItem[] = [
     { title: "Estadías", type: TableType.Stays },
     { title: "Productos", type: TableType.Products },
@@ -23,6 +25,7 @@ export const HeaderToolbar = () => {
     event.stopPropagation();
     if (type) {
       adminPageContext?.setTableType(type);
+      navigate("/home");
     }
   };
 

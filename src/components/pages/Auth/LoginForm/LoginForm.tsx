@@ -57,7 +57,12 @@ export const LoginForm = () => {
       >
         <Form className="form">
           <Field id="email" name="email" placeholder="Email" />
-          <Field id="password" name="password" placeholder="Password" />
+          <Field
+            id="password"
+            type="password"
+            name="password"
+            placeholder="Password"
+          />
           <button className="submitButton" type="submit">
             Submit
           </button>
