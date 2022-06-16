@@ -8,8 +8,8 @@ import "./StaysForm.scss";
 
 export interface StayProps {
   apartment: string;
-  startDate: DateTime;
-  endDate: DateTime;
+  startDate?: DateTime;
+  endDate?: DateTime;
 }
 
 export const StaysForm = () => {
