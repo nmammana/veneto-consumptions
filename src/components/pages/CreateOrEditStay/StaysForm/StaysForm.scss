@@ -2,19 +2,9 @@
 
 .stayFormContainer {
   max-width: 350px;
-  .stayFormTitle {
-    font: $subtitle2;
-    color: $blue;
-    padding-bottom: 2em;
-  }
   .stayForm {
     display: flex;
     flex-direction: column;
     gap: 3.5em;
-    .dateFields {
-      display: flex;
-      flex-direction: row;
-      gap: 1em;
-    }
   }
 }

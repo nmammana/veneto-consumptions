@@ -11,6 +11,7 @@ import { AuthContextProvider } from "./components/context/AuthContext";
 import { AxiosContextProvider } from "./components/context/AxiosContext";
 import { PublicRoute } from "./components/routes/PublicRoute";
 import { AdminPageContextProvider } from "./components/context/AdminPageContext";
+import { PrivateRoute } from "./components/routes/PrivateRoute";
 
 export const App = () => {
   return (
@@ -33,8 +34,22 @@ export const App = () => {
                   />
                   {/* **** Private Routes **** */}
                   {/* TODO: Change /home route to private when auth is done */}
-                  <Route path="/home" element={<Home />} />
-                  <Route path="/edit" element={<CreateOrEditStay />} />
+                  <Route
+                    path="/home"
+                    element={
+                      <PrivateRoute>
+                        <Home />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/edit"
+                    element={
+                      <PrivateRoute>
+                        <CreateOrEditStay />
+                      </PrivateRoute>
+                    }
+                  />
                 </Routes>
               </Suspense>
             </BrowserRouter>

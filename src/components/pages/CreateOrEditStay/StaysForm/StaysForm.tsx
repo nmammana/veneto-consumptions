@@ -1,10 +1,11 @@
 import React from "react";
 import { Form, Formik } from "formik";
 import { DateTime } from "luxon";
-import { ApartmentsField } from "./ApartmentField/ApartmentsField";
-import { StartDateField } from "./StartDateField/StartDateField";
-import { EndDateField } from "./EndDateField/EndDateField";
 import "./StaysForm.scss";
+import { ButtonMiddle } from "../../../common/buttons/ButtonMiddle/ButtonMiddle";
+import { ButtonTypes } from "../../../../types/types";
+import { StayFields } from "./StayFields/StayFields";
+import { GuestFields } from "./GuestFields/GuestFields";
 
 export interface StayProps {
   apartment: string;
@@ -20,7 +21,6 @@ export const StaysForm = () => {
   };
   return (
     <div className="stayFormContainer">
-      <p className="stayFormTitle">Cargar/editar estadía</p>
       <Formik
         initialValues={initialValues}
         onSubmit={(values, actions) => {
@@ -29,14 +29,17 @@ export const StaysForm = () => {
         }}
       >
         <Form className="stayForm">
-          <ApartmentsField />
-          <div className="dateFields">
-            <StartDateField />
-            <EndDateField />
+          <StayFields />
+          <GuestFields />
+          <div>
+            <p>Resumen</p>
           </div>
-          <button className="submitButton" type="submit">
-            Crear
-          </button>
+
+          <ButtonMiddle
+            text="Cargar estadía"
+            className="submitButton"
+            type={ButtonTypes.Submit}
+          />
         </Form>
       </Formik>
     </div>

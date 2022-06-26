@@ -1,71 +1,94 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Formik, Form, Field } from "formik";
 /* import { useNavigate } from "react-router-dom"; */
 import "./LoginForm.scss";
 import axios from "axios";
-/* import { AuthContext } from "../../../context/AuthContext"; */
+import { AuthContext } from "../../../context/AuthContext";
+import { AuthInput } from "./AuthInput/AuthInput";
+import { SubmitButton } from "./SubmitButton/SubmitButton";
 
 interface AuthFormProps {
   email: string;
   password: string;
 }
 
+const authenticateUser = async (values: AuthFormProps) => {
+  const authResponse = await axios.post(
+    "https://consumos-veneto-village-dev.herokuapp.com/api/auth/login",
+    {
+      email: values.email,
+      password: values.password
+    }
+  );
+  if (!authResponse.data) {
+    /* localStorage.setItem("user", JSON.stringify(authResponse.data)); */
+    return null;
+  }
+  return authResponse;
+};
+
 export const LoginForm = () => {
   const initialValues: AuthFormProps = { email: "", password: "" };
-  /*  const navigate = useNavigate();
-  const authContext = useContext(AuthContext); */
+  /*  const navigate = useNavigate(); */
+  const authContext = useContext(AuthContext);
 
-  const login = async (/* values: AuthFormProps */) => {
+  const login = async (values: AuthFormProps) => {
     try {
-      const res = await axios.post(
-        "https://consumos-veneto-village-dev.herokuapp.com/api/auth/login",
-        {
-          email: "paulo@londra.com",
-          password: "Password0"
-        }
-      );
-      const data = { res };
-      console.log(data);
-      /* if (data.res) {
+      const authResponse = await authenticateUser(values);
+      /* const data = { res }; */
+      if (authResponse?.data) {
+        await localStorage.setItem(
+          "token",
+          JSON.stringify({
+            access: authResponse.data.access,
+            refresh: authResponse.data.refresh
+          })
+        );
         authContext?.setAuthState({
-          access: 
-          pin: data.pin,
-          tower: data.tower,
-          floor: data.floor,
-          apartment: data.apartment,
-          wing: data.wing,
-          userId: data._id,
-          name: data.name,
-          identityNumber: data.identityNumber
+          access: authResponse.data.access,
+          refresh: authResponse.data.refresh
         });
-        setReservation({ ...reservation, user: data._id });
-        navigate("/home");
-      } */
-    } catch (e) {
-      console.error("Ocurrio un ERROR: ", e);
+        /* navigate("/home"); */
+      }
+    } catch (error) {
+      console.error("Auth error: ", error);
     }
   };
 
   return (
     <div className="formWrapper">
+      <div className="formTitlesContainer">
+        <p className="formTitle">Bienvenido</p>
+        <p className="formSubtitle">Ingresá tus datos para comenzar</p>
+      </div>
+
       <Formik
         initialValues={initialValues}
         onSubmit={(values, actions) => {
-          login();
+          login(values);
           actions.setSubmitting(false);
         }}
       >
         <Form className="form">
-          <Field id="email" name="email" placeholder="Email" />
+          <Field
+            id="email"
+            name="email"
+            placeholder="Email"
+            component={AuthInput}
+          />
           <Field
             id="password"
             type="password"
             name="password"
             placeholder="Password"
+            component={AuthInput}
           />
-          <button className="submitButton" type="submit">
-            Submit
-          </button>
+          <Field
+            id="submit"
+            type="submit"
+            name="submit"
+            component={SubmitButton}
+          />
         </Form>
       </Formik>
     </div>

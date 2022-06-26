@@ -64,6 +64,17 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({
     }),
     [authState, getAccess, logout]
   );
+  /* // TODO: Chequear si es valido hacer esto o si es una negrada
+  useEffect(() => {
+    const localStorageToken = JSON.parse(localStorage.getItem("token") || "{}");
+    if (localStorageToken?.access) {
+      setAuthState({
+        access: localStorageToken.access,
+        refresh: localStorageToken.refresh,
+        authenticated: true
+      });
+    }
+  }, []); */
 
   return (
     <AuthContext.Provider value={authContextValues}>

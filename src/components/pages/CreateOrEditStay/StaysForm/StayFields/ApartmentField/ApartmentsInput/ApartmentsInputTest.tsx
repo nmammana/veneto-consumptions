@@ -1,7 +1,7 @@
 import React from "react";
 import Select, { ActionMeta } from "react-select";
 import { FieldProps } from "formik";
-import { apartments } from "../../../apartments";
+import { apartments } from "../../../../apartments";
 
 interface Option {
   value: string;

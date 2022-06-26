@@ -1,3 +1,5 @@
+@import "../../../../styles/Global.scss";
+
 .formWrapper {
   max-width: 600px;
   margin: 0 auto;
@@ -9,6 +11,20 @@
   gap: 16px;
   align-items: center;
 }
-.submitButton {
-  max-width: 150px;
+
+.formTitlesContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  padding-bottom: 32px;
+  .formTitle {
+    font: $heading1;
+    color: $blue;
+  }
+  .formSubtitle {
+    font: $subtitle3;
+    color: $blue;
+  }
 }

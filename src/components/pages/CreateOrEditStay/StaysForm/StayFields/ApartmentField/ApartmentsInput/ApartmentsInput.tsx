@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Autocomplete } from "@mui/material";
 import { TextField, TextFieldProps } from "@material-ui/core";
 import { FieldProps } from "formik";
-import { apartments } from "../../../apartments";
+import { apartments } from "../../../../apartments";
 
 export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
   const {

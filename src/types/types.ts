@@ -19,3 +19,9 @@ export enum TableType {
   Stays = "Stays",
   Products = "Products"
 }
+
+export enum ButtonTypes {
+  Button = "button",
+  Submit = "submit",
+  Reset = "reset"
+}

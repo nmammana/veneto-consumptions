@@ -1,0 +1,13 @@
+@import "../../../../../styles/Global.scss";
+
+.stayFormTitle {
+  font: $subtitle2;
+  color: $blue;
+  padding-bottom: 2em;
+}
+
+.dateFields {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
