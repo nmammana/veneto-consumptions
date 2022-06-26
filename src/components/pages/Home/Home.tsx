@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { AddButton } from "../../common/buttons/AddButton/AddButton";
 import { Layout } from "../../common/Layout/Layout";
 import { StaysTable } from "./Stays/StaysTable/StaysTable";
@@ -9,6 +10,7 @@ import { ProductsTable } from "./Products/ProductsTable/ProductsTable";
 
 export const Home = () => {
   const adminPageContext = useContext(AdminPageContext);
+  const navigate = useNavigate();
 
   switch (adminPageContext?.tableType) {
     case TableType.Stays:
@@ -18,7 +20,7 @@ export const Home = () => {
             <StaysTable />
           </Layout>
           <AddButton
-            onClick={() => console.log("add button clicked")}
+            onClick={() => navigate("/editStay")}
             className="floatingButton"
           />
         </div>
@@ -30,7 +32,7 @@ export const Home = () => {
             <ProductsTable />
           </Layout>
           <AddButton
-            onClick={() => console.log("add button clicked")}
+            onClick={() => navigate("/editProduct")}
             className="floatingButton"
           />
         </div>

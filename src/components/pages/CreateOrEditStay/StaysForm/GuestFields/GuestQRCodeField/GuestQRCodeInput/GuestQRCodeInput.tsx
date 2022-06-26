@@ -2,7 +2,7 @@ import { TextField } from "@material-ui/core";
 import { FieldProps } from "formik";
 import React, { FC } from "react";
 
-export const GuestNameInput: FC<FieldProps> = ({ field, form }) => {
+export const GuestQRCodeInput: FC<FieldProps> = ({ field, form }) => {
   return (
     <TextField
       value={field.value}

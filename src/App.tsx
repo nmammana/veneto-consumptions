@@ -12,6 +12,7 @@ import { AxiosContextProvider } from "./components/context/AxiosContext";
 import { PublicRoute } from "./components/routes/PublicRoute";
 import { AdminPageContextProvider } from "./components/context/AdminPageContext";
 import { PrivateRoute } from "./components/routes/PrivateRoute";
+import { CreateOrEditProduct } from "./components/pages/CreateOrEditProduct/CreateOrEditProduct";
 
 export const App = () => {
   return (
@@ -43,10 +44,18 @@ export const App = () => {
                     }
                   />
                   <Route
-                    path="/edit"
+                    path="/editStay"
                     element={
                       <PrivateRoute>
                         <CreateOrEditStay />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/editProduct"
+                    element={
+                      <PrivateRoute>
+                        <CreateOrEditProduct />
                       </PrivateRoute>
                     }
                   />
