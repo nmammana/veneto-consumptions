@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Formik, Form, Field } from "formik";
-/* import { useNavigate } from "react-router-dom"; */
+import { useNavigate } from "react-router-dom";
 import "./LoginForm.scss";
 import axios from "axios";
 import { AuthContext } from "../../../context/AuthContext";
@@ -21,7 +21,6 @@ const authenticateUser = async (values: AuthFormProps) => {
     }
   );
   if (!authResponse.data) {
-    /* localStorage.setItem("user", JSON.stringify(authResponse.data)); */
     return null;
   }
   return authResponse;
@@ -29,7 +28,7 @@ const authenticateUser = async (values: AuthFormProps) => {
 
 export const LoginForm = () => {
   const initialValues: AuthFormProps = { email: "", password: "" };
-  /*  const navigate = useNavigate(); */
+  const navigate = useNavigate();
   const authContext = useContext(AuthContext);
 
   const login = async (values: AuthFormProps) => {
@@ -48,7 +47,7 @@ export const LoginForm = () => {
           access: authResponse.data.access,
           refresh: authResponse.data.refresh
         });
-        /* navigate("/home"); */
+        navigate("/home");
       }
     } catch (error) {
       console.error("Auth error: ", error);
@@ -74,6 +73,7 @@ export const LoginForm = () => {
             id="email"
             name="email"
             placeholder="Email"
+            className="authInputField"
             component={AuthInput}
           />
           <Field
@@ -81,6 +81,7 @@ export const LoginForm = () => {
             type="password"
             name="password"
             placeholder="Password"
+            className="authInputField"
             component={AuthInput}
           />
           <Field

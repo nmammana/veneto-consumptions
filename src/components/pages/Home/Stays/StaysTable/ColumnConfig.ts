@@ -10,7 +10,7 @@ export const columns: Column<Stay>[] = [
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
-      borderBottom: "none"
+      border: "none"
     }
   },
   {
@@ -18,8 +18,8 @@ export const columns: Column<Stay>[] = [
     field: "appartment",
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
-      color: "#817185",
-      borderBottom: "none"
+      color: "#2d0836",
+      border: "none"
     }
   },
   {
@@ -28,7 +28,7 @@ export const columns: Column<Stay>[] = [
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
-      borderBottom: "none"
+      border: "none"
     }
   },
   {
@@ -37,7 +37,7 @@ export const columns: Column<Stay>[] = [
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
-      borderBottom: "none"
+      border: "none"
     }
   },
   {
@@ -47,7 +47,7 @@ export const columns: Column<Stay>[] = [
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
-      borderBottom: "none"
+      border: "none"
     }
   },
   {
@@ -57,7 +57,7 @@ export const columns: Column<Stay>[] = [
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
-      borderBottom: "none"
+      border: "none"
     }
   },
   {
@@ -67,7 +67,7 @@ export const columns: Column<Stay>[] = [
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
-      borderBottom: "none"
+      border: "none"
     }
   }
 ];

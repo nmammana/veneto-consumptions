@@ -30,6 +30,14 @@ export const HeaderToolbar = () => {
     }
   };
 
+  const onLogoutClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent
+  ) => {
+    event.stopPropagation();
+    authContext?.logout();
+    navigate("/");
+  };
+
   return (
     <div className="headerToolbar">
       {items.map((item, index) => (
@@ -47,7 +55,7 @@ export const HeaderToolbar = () => {
       ))}
       <div
         className="item"
-        onClick={() => authContext?.logout()}
+        onClick={onLogoutClick}
         onKeyDown={onItemClick}
         // eslint-disable-next-line react/no-array-index-key
         role="button"

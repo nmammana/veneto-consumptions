@@ -27,15 +27,12 @@ export const StaysTable = () => {
       return { backgroundColor: "#FFFFFF" };
     },
     cellStyle: {
-      borderBottom: "none"
+      border: "none"
     },
     headerStyle: {
-      borderBottom: "none",
+      border: "none",
       font: "normal normal 400 20px/27px Poppins",
       color: "#008dc8"
-    },
-    style: {
-      background: "red"
     },
     filtering: true
     /* headerStyle: {
@@ -89,7 +86,8 @@ export const StaysTable = () => {
         }
       ]} */
       style={{
-        boxShadow: "none"
+        boxShadow: "none",
+        border: "none"
       }}
     />
   );

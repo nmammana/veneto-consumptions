@@ -1,9 +1,9 @@
 import React from "react";
 import { BiEditAlt } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import "./EditStayButton.scss";
+import "./EditProductButton.scss";
 
-export const EditStayButton = () => {
+export const EditProductButton = () => {
   return (
     <Link to="/editStay" className="editStayButton">
       <BiEditAlt />

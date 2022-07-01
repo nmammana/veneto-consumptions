@@ -3,6 +3,7 @@ import React, {
   FC,
   ReactNode,
   useCallback,
+  useEffect,
   useMemo,
   useState
 } from "react";
@@ -64,7 +65,7 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({
     }),
     [authState, getAccess, logout]
   );
-  /* // TODO: Chequear si es valido hacer esto o si es una negrada
+
   useEffect(() => {
     const localStorageToken = JSON.parse(localStorage.getItem("token") || "{}");
     if (localStorageToken?.access) {
@@ -74,7 +75,7 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({
         authenticated: true
       });
     }
-  }, []); */
+  }, [authState.authenticated]);
 
   return (
     <AuthContext.Provider value={authContextValues}>

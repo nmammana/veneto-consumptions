@@ -1,10 +1,10 @@
 @import "../../../../styles/Global.scss";
 
 .stayFormContainer {
-  max-width: 350px;
+  width: 100%;
   .stayForm {
-    display: flex;
-    flex-direction: column;
-    gap: 3.5em;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 3.5em;
   }
 }

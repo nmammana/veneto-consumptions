@@ -2,10 +2,9 @@ import React from "react";
 import { Form, Formik } from "formik";
 import { DateTime } from "luxon";
 import "./StaysForm.scss";
-import { ButtonTypes } from "../../../../types/types";
 import { StayFields } from "./StayFields/StayFields";
 import { GuestFields } from "./GuestFields/GuestFields";
-import { ButtonLarge } from "../../../common/buttons/ButtonLarge/ButtonLarge";
+import { StaySummary } from "./StaySummary/StaySummary";
 
 export interface StayProps {
   apartment: string;
@@ -31,15 +30,7 @@ export const StaysForm = () => {
         <Form className="stayForm">
           <StayFields />
           <GuestFields />
-          <div>
-            <p>Resumen</p>
-          </div>
-
-          <ButtonLarge
-            text="Cargar estadía"
-            className="submitButton"
-            type={ButtonTypes.Submit}
-          />
+          <StaySummary />
         </Form>
       </Formik>
     </div>

@@ -6,13 +6,13 @@ import "./StayFields.scss";
 
 export const StayFields = () => {
   return (
-    <>
+    <div className="stayFields">
       <p className="stayFormTitle">Cargar/editar estadía</p>
       <ApartmentsField />
       <div className="dateFields">
         <StartDateField />
         <EndDateField />
       </div>
-    </>
+    </div>
   );
 };

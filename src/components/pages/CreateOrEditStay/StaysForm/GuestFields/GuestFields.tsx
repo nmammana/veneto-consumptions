@@ -9,13 +9,15 @@ import { GuestQRCodeField } from "./GuestQRCodeField/GuestQRCodeField";
 
 export const GuestFields = () => {
   return (
-    <div>
+    <div className="guestFields">
       <p className="guestFormTitle">Huésped y beneficios</p>
       <GuestNameField />
       <GuestEmailField />
       <GuestQRCodeField />
       <GuestBenefictsField />
-      <Field id="submit" name="submit" component={AddGuestButtonInput} />
+      <div className="addGuestButtonContainer">
+        <Field id="submit" name="submit" component={AddGuestButtonInput} />
+      </div>
     </div>
   );
 };
