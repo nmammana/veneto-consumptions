@@ -7,5 +7,5 @@ interface PublicRouteProps {
 
 export const PublicRoute: FC<PublicRouteProps> = ({ children }) => {
   const localStorageToken = JSON.parse(localStorage.getItem("token") || "{}");
-  return !localStorageToken.access ? children : <Navigate to="/home" />;
+  return !localStorageToken.access ? children : <Navigate to="/stays" />;
 };

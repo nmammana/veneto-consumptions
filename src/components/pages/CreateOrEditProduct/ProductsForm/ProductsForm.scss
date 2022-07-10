@@ -1,0 +1,22 @@
+@import "../../../../styles/Global.scss";
+
+.productFormContainer {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  .productForm {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5em;
+    .productsFormTitle {
+      font: $subtitle2;
+      color: $blue;
+      padding-top: 2em;
+    }
+    .productFields {
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+    }
+  }
+}

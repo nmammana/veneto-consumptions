@@ -10,7 +10,7 @@ export type FCC<P = unknown> = FC<PropsWithChildren<P>>;
 
 export type Optional<T> = T | undefined;
 
-export interface User {
+export interface UserAuth {
   email: string;
   password: string;
 }
@@ -24,4 +24,79 @@ export enum ButtonTypes {
   Button = "button",
   Submit = "submit",
   Reset = "reset"
+}
+
+export interface Apartment {
+  id: number;
+  tower: number;
+  wing: number;
+  floor: number;
+  letter: string;
+  name: string;
+}
+
+export enum TypeOfBenefict {
+  Breakfast = 1, // 'Desayuno'
+  Lunch = 2, // 'Almuerzo'
+  Snack = 3, // 'Merienda'
+  Dinner = 4, // 'Cena'
+  Spa = 5, // 'Spa'
+  Store = 6 // 'Kiosko'
+}
+
+export interface BenefictName {
+  name: string;
+  typeOfBenefict: TypeOfBenefict;
+}
+
+export interface Item {
+  id?: number;
+  type_of_benefit?: number;
+  name: string;
+  price: number;
+}
+export interface ProductTableItem {
+  id?: number;
+  typeOfBenefict?: string;
+  name: string;
+  price: number;
+  actionItems?: ReactElement;
+}
+
+export interface Person {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  identityNumber: string;
+  role: number;
+}
+
+export interface Benefict {
+  typeOfBenefict: TypeOfBenefict;
+  quantity: number;
+  quantityAvailable: number;
+}
+
+export interface User {
+  id: number;
+  user: Person;
+  qrCode: string;
+  beneficts: Benefict[];
+}
+
+export interface Stay {
+  id: number;
+  startDate: string;
+  endDate: string;
+  apartment: number;
+  users: User[];
+}
+
+export interface StayTableItem {
+  id: number;
+  apartmentName: string;
+  startDate: string;
+  endDate: string;
+  guestsNumber: number;
 }

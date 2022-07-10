@@ -3,7 +3,6 @@ import React, {
   FC,
   ReactNode,
   useCallback,
-  useEffect,
   useMemo,
   useState
 } from "react";
@@ -66,16 +65,16 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({
     [authState, getAccess, logout]
   );
 
-  useEffect(() => {
+  /* useEffect(() => {
     const localStorageToken = JSON.parse(localStorage.getItem("token") || "{}");
-    if (localStorageToken?.access) {
+    if (localStorageToken?.refresh) {
       setAuthState({
         access: localStorageToken.access,
         refresh: localStorageToken.refresh,
         authenticated: true
       });
     }
-  }, [authState.authenticated]);
+  }, []); */
 
   return (
     <AuthContext.Provider value={authContextValues}>

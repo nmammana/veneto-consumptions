@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { TableType } from "../../../../../types/types";
-import { AdminPageContext } from "../../../../context/AdminPageContext";
 import { AuthContext } from "../../../../context/AuthContext";
 import "./HeaderToolbar.scss";
 
@@ -11,7 +10,6 @@ interface HeaderItem {
 }
 
 export const HeaderToolbar = () => {
-  const adminPageContext = useContext(AdminPageContext);
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
   const items: HeaderItem[] = [
@@ -24,9 +22,10 @@ export const HeaderToolbar = () => {
     type?: TableType
   ) => {
     event.stopPropagation();
-    if (type) {
-      adminPageContext?.setTableType(type);
-      navigate("/home");
+    if (type === TableType.Stays) {
+      navigate("/stays");
+    } else if (type === TableType.Products) {
+      navigate("/products");
     }
   };
 
@@ -56,7 +55,7 @@ export const HeaderToolbar = () => {
       <div
         className="item"
         onClick={onLogoutClick}
-        onKeyDown={onItemClick}
+        onKeyDown={onLogoutClick}
         // eslint-disable-next-line react/no-array-index-key
         role="button"
         tabIndex={0}
