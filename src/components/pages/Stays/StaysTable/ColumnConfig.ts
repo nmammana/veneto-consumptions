@@ -39,7 +39,7 @@ export const columns: Column<StayTableItem>[] = [
       color: "#817185",
       border: "none"
     }
-  },
+  }
   /* TODO: Preguntar si esto se va a usar
    {
     title: "Huespedes",
@@ -51,7 +51,7 @@ export const columns: Column<StayTableItem>[] = [
       border: "none"
     }
   }, */
-  {
+  /* {
     title: "Beneficios",
     field: "beneficts",
     filtering: false,
@@ -60,7 +60,8 @@ export const columns: Column<StayTableItem>[] = [
       color: "#817185",
       border: "none"
     }
-  } /* ,
+  }  */
+  /* ,
   {
     title: "",
     field: "actionItems",

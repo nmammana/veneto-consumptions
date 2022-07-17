@@ -1,8 +1,11 @@
-@import "../../../../styles/Global.scss";
+@import "../../../../../styles/Global.scss";
 
 .viewBenefictsButton {
   color: #817185;
   cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 120px;
 }
 
 .benefictsPopupContent {

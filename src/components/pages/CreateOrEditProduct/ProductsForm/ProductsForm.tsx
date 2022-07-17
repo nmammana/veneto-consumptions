@@ -8,9 +8,11 @@ import { ProductPriceField } from "./ProductPriceField/ProductPriceField";
 import { ProductTypeField } from "./ProductTypeField/ProductTypeField";
 import { ProductSubmitField } from "./ProductSubmitField/ProductSubmitField";
 import { AxiosContext } from "../../../context/AxiosContext";
+import { ProductsContext } from "../../../context/ProductsContext";
 
 export const ProductsForm = () => {
   const { authAxios } = useContext(AxiosContext);
+  const productsContext = useContext(ProductsContext);
   const params = useParams();
   const navigate = useNavigate();
   const itemId = Number(params.itemId);
@@ -28,6 +30,10 @@ export const ProductsForm = () => {
   const createProduct = async (product: Item) => {
     try {
       await authAxios.post("/items/", product);
+      productsContext?.setProductList([
+        ...productsContext.productList,
+        product
+      ]);
     } catch (e) {
       console.error("ERROR: ", e);
     }
@@ -36,6 +42,12 @@ export const ProductsForm = () => {
   const editProduct = async (product: Item) => {
     try {
       await authAxios.put(`/items/${itemId}/`, product);
+      productsContext?.setProductList(
+        productsContext.productList.map(productItem => {
+          if (productItem.id === product.id) return product;
+          return productItem;
+        })
+      );
     } catch (e) {
       console.error("ERROR: ", e);
     }

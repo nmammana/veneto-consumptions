@@ -6,35 +6,34 @@ import "./StaysTable.scss";
 import { columns } from "./ColumnConfig";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { Apartment, Stay, StayTableItem } from "../../../../types/types";
+import { StaysContext } from "../../../context/StaysContext";
+import { StaysTableRowActionButtons } from "../TableRowActionButtons/StaysTableRowActionButtons";
 
 export const StaysTable = () => {
   /* const [areFiltersActive, setAreFiltersActive] = useState(false); */
 
   const { authAxios } = useContext(AxiosContext);
-  const [stayList, setStayList] = useState<StayTableItem[]>([]);
-  const [isLoadingStayItem, setIsLoadingStayItem] = useState<boolean>(false);
-
-  const getStayList = async (): Promise<Stay[]> => {
-    const stayListResponse = await authAxios.get("/stay");
-    return stayListResponse.data.results;
-  };
+  const staysContext = useContext(StaysContext);
+  const [stayTableList, setStayTableList] = useState<StayTableItem[]>([]);
+  /* const [isLoadingStayItem, setIsLoadingStayItem] = useState<boolean>(false); */
 
   const getApartmentById = async (apartmentId: number): Promise<Apartment> => {
     const apartmentResponse = await authAxios.get(
       `/apartments/${apartmentId}/`
     );
-    return apartmentResponse;
+    return apartmentResponse.data;
   };
 
-  const formatStayList = async (stays: Stay[]): Promise<StayTableItem[]> => {
+  const formatStayList = async (stays?: Stay[]): Promise<StayTableItem[]> => {
+    if (!stays) return [];
     const tableStayList: StayTableItem[] = await Promise.all(
       stays.map(async stay => {
         const apartment = await getApartmentById(stay.id);
         return {
           id: stay.id,
+          startDate: stay.start_date,
+          endDate: stay.end_date,
           apartmentName: apartment.name,
-          startDate: stay.startDate,
-          endDate: stay.endDate,
           guestsNumber: stay.users.length
         };
       })
@@ -43,19 +42,12 @@ export const StaysTable = () => {
   };
 
   useEffect(() => {
-    const fetchStayList = async () => {
-      setIsLoadingStayItem(true);
-      const stays = await getStayList();
-      const formattedStayList = await formatStayList(stays);
-      setStayList(formattedStayList);
-      setIsLoadingStayItem(false);
+    const createStayTableList = async () => {
+      const formattedStayList = await formatStayList(staysContext?.stayList);
+      setStayTableList(formattedStayList);
     };
-    fetchStayList();
-  }, []);
-
-  useEffect(() => {
-    console.log("stayList", stayList);
-  }, [stayList]);
+    createStayTableList();
+  }, [staysContext]);
 
   const options = {
     paging: true,
@@ -76,12 +68,16 @@ export const StaysTable = () => {
     cellStyle: {
       border: "none"
     },
+    actionsCellStyle: {
+      border: "none"
+    },
     headerStyle: {
       border: "none",
       font: "normal normal 400 20px/27px Poppins",
       color: "#008dc8"
     },
-    filtering: true
+    filtering: true,
+    actionsColumnIndex: -1
     /* headerStyle: {
       position: "sticky",
       top: "0",
@@ -94,10 +90,10 @@ export const StaysTable = () => {
     <MaterialTable
       columns={columns}
       icons={tableIcons}
-      data={stayList}
+      data={stayTableList}
       title=""
       options={options}
-      isLoading={isLoadingStayItem}
+      isLoading={staysContext?.isLoadingStayList}
       localization={{
         toolbar: {
           searchPlaceholder: "Buscar por nombre o DNI...",
@@ -115,24 +111,32 @@ export const StaysTable = () => {
           filterRow: {
             filterTooltip: "Filtrar"
           }
+        },
+        header: {
+          actions: ""
         }
       }}
-      /* style={{
-        borderRadius: "10px",
-        display: "grid",
-        height: "100vh",
-        gridTemplateRows: "auto 54px"
-      }} */
-      /* actions={[
+      actions={[
         {
-          icon: FilterList,
-          tooltip: "Filtros de búsqueda",
-          isFreeAction: true,
-          onClick: () => {
-            setAreFiltersActive(!areFiltersActive);
-          }
+          icon: "",
+          tooltip: "",
+          onClick: () => {}
         }
-      ]} */
+      ]}
+      components={{
+        // eslint-disable-next-line react/no-unstable-nested-components
+        Action: (props: any) => {
+          const { data } = props;
+          return (
+            <StaysTableRowActionButtons
+              itemId={data.id}
+              deleteItem={() => {
+                /* deleteItem(data.id) */
+              }}
+            />
+          );
+        }
+      }}
       style={{
         boxShadow: "none",
         border: "none"

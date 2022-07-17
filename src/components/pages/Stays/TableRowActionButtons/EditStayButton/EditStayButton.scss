@@ -2,6 +2,12 @@
 
 .editStayButton {
   color: $blue;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .icon {
+    font-size: 1.2rem;
+  }
 }
 .editStayButton:visited {
   color: $blue;

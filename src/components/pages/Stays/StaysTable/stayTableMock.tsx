@@ -3,8 +3,8 @@ import { Stay } from "../../../../types/types";
 export const staysTable: Stay[] = [
   {
     id: 1,
-    startDate: "27/04/2022",
-    endDate: "30/05/2022",
+    start_date: "27/04/2022",
+    end_date: "30/05/2022",
     users: [
       {
         id: 1,

@@ -42,7 +42,8 @@ export const LoginForm = () => {
         );
         authContext?.setAuthState({
           access: authResponse.data.access,
-          refresh: authResponse.data.refresh
+          refresh: authResponse.data.refresh,
+          authenticated: true
         });
         navigate("/Stays");
       }

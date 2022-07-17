@@ -4,7 +4,6 @@ import React, {
   FC,
   ReactNode,
   useContext,
-  useEffect,
   useMemo
 } from "react";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
@@ -20,28 +19,6 @@ export const AxiosContextProvider: FC<AxiosContextProviderProps> = ({
   children
 }) => {
   const authContext = useContext(AuthContext);
-
-  useEffect(() => {
-    const localStorageToken = JSON.parse(localStorage.getItem("token") || "{}");
-    if (localStorageToken?.access && localStorageToken?.refresh) {
-      authContext?.setAuthState({
-        access: localStorageToken.access,
-        refresh: localStorageToken.refresh,
-        authenticated: true
-      });
-    } else {
-      authContext?.setAuthState({
-        access: null!,
-        refresh: null!,
-        authenticated: false,
-        user: null!
-      });
-    }
-  }, [
-    authContext?.authState.authenticated,
-    authContext?.authState.access,
-    authContext?.authState.refresh
-  ]);
 
   const authAxios = axios.create({
     baseURL: "https://consumos-veneto-village-dev.herokuapp.com/api"
@@ -70,9 +47,10 @@ export const AxiosContextProvider: FC<AxiosContextProviderProps> = ({
 
   const refreshAuthLogic = (failedRequest: any) => {
     const data = {
-      refresh: JSON.parse(localStorage.getItem("token") || "{}").refresh
-      // refresh: authContext?.authState.refresh
+      // refresh: JSON.parse(localStorage.getItem("token") || "{}").refresh
+      refresh: authContext?.authState.refresh
     };
+    if (!data.refresh) return Promise.resolve();
     const options = {
       method: "POST",
       data,
@@ -109,7 +87,8 @@ export const AxiosContextProvider: FC<AxiosContextProviderProps> = ({
       });
   };
 
-  createAuthRefreshInterceptor(authAxios, refreshAuthLogic, {});
+  if (authContext?.authState.authenticated)
+    createAuthRefreshInterceptor(authAxios, refreshAuthLogic, {});
 
   const axiosContextValues = useMemo(
     () => ({

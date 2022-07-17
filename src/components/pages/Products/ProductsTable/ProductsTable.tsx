@@ -12,19 +12,16 @@ import {
   TypeOfBenefict
 } from "../../../../types/types";
 import { AxiosContext } from "../../../context/AxiosContext";
-import { TableRowActionButtons } from "../TableRowActionButtons/TableRowActionButtons";
+import { ProductsContext } from "../../../context/ProductsContext";
+import { ProductsTableRowActionButtons } from "../TableRowActionButtons/ProductsTableRowActionButtons";
 
 export const ProductsTable = () => {
   /* const [areFiltersActive, setAreFiltersActive] = useState(false); */
   const { authAxios } = useContext(AxiosContext);
-  const [itemList, setItemList] = useState<ProductTableItem[]>([]);
+  const productsContext = useContext(ProductsContext);
+  const [itemTableList, setItemTableList] = useState<ProductTableItem[]>([]);
 
-  const [isLoadingItems, setIsLoadingItems] = useState<boolean>(false);
-
-  const getItemsList = async (): Promise<Item[]> => {
-    const itemsListResponse = await authAxios.get("/items");
-    return itemsListResponse.data.results;
-  };
+  /* const [isLoadingItems, setIsLoadingItems] = useState<boolean>(false); */
 
   const beneficts: BenefictName[] = [
     { name: "Desayuno", typeOfBenefict: TypeOfBenefict.Breakfast },
@@ -38,15 +35,18 @@ export const ProductsTable = () => {
   const deleteItem = async (itemId: number) => {
     try {
       await authAxios.delete(`/items/${itemId}/`);
-      const updatedItems = itemList.filter(item => item.id !== itemId);
-      setItemList(updatedItems);
+      const updatedItems = productsContext?.productList.filter(
+        item => item.id !== itemId
+      );
+      if (updatedItems) productsContext?.setProductList(updatedItems);
     } catch (error) {
       console.error("ERROR: ", error);
     }
   };
 
-  const formatItemList = (items: Item[]): ProductTableItem[] => {
-    const tableItemsList = items.map(item => ({
+  const formatItemList = (items?: Item[]): ProductTableItem[] => {
+    if (!items) return [];
+    const tableItemsList: ProductTableItem[] = items.map(item => ({
       ...item,
       type_of_benefit:
         beneficts.find(
@@ -57,14 +57,14 @@ export const ProductsTable = () => {
   };
 
   useEffect(() => {
-    const fetchItemsList = async () => {
-      setIsLoadingItems(true);
-      const items = await getItemsList();
-      setItemList(formatItemList(items));
-      setIsLoadingItems(false);
+    const createItemTableList = async () => {
+      const formattedItemList = await formatItemList(
+        productsContext?.productList
+      );
+      setItemTableList(formattedItemList);
     };
-    fetchItemsList();
-  }, [itemList.length]);
+    createItemTableList();
+  }, [productsContext]);
 
   const options = {
     paging: true,
@@ -108,10 +108,10 @@ export const ProductsTable = () => {
       <MaterialTable
         columns={columns}
         icons={tableIcons}
-        data={itemList}
+        data={itemTableList}
         title=""
         options={options}
-        isLoading={isLoadingItems}
+        isLoading={productsContext?.isLoadingProductList}
         localization={{
           toolbar: {
             searchPlaceholder: "Buscar por nombre o DNI...",
@@ -135,40 +135,19 @@ export const ProductsTable = () => {
             actions: ""
           }
         }}
-        /* style={{
-        borderRadius: "10px",
-        display: "grid",
-        height: "100vh",
-        gridTemplateRows: "auto 54px"
-      }} */
-        /* actions={[
-        {
-          icon: FilterList,
-          tooltip: "Filtros de búsqueda",
-          isFreeAction: true,
-          onClick: () => {
-            setAreFiltersActive(!areFiltersActive);
-          }
-        }
-      ]} */
         actions={[
           {
-            icon: "delete",
-            tooltip: "delete",
+            icon: "",
+            tooltip: "",
             onClick: () => {}
-          } /* ,
-          {
-            icon: "edit",
-            tooltip: "edit",
-            onClick: () => {}
-          } */
+          }
         ]}
         components={{
           // eslint-disable-next-line react/no-unstable-nested-components
           Action: (props: any) => {
             const { data } = props;
             return (
-              <TableRowActionButtons
+              <ProductsTableRowActionButtons
                 itemId={data.id}
                 deleteItem={() => deleteItem(data.id)}
               />

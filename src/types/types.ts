@@ -87,15 +87,15 @@ export interface User {
 
 export interface Stay {
   id: number;
-  startDate: string;
-  endDate: string;
+  start_date: string;
+  end_date: string;
   apartment: number;
   users: User[];
 }
 
 export interface StayTableItem {
   id: number;
-  apartmentName: string;
+  apartmentName?: string;
   startDate: string;
   endDate: string;
   guestsNumber: number;

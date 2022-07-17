@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import "./BenefictsPopup.scss";
 import { IoMdClose } from "react-icons/io";
+import { Tooltip } from "@material-ui/core";
 
 Modal.setAppElement("#root");
 
@@ -9,9 +10,7 @@ export const BenefictsPopup = () => {
   const [isBenefictsPopupOpen, setIsBenefictsPopupOpen] =
     useState<boolean>(false);
 
-  const onViewBenefictsClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent
-  ) => {
+  const onViewBenefictsClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     setIsBenefictsPopupOpen(true);
   };
@@ -24,15 +23,15 @@ export const BenefictsPopup = () => {
   };
   return (
     <>
-      <div
-        className="viewBenefictsButton"
-        onClick={e => onViewBenefictsClick(e)}
-        onKeyDown={onViewBenefictsClick}
-        role="button"
-        tabIndex={0}
-      >
-        <p>Ver beneficios</p>
-      </div>
+      <Tooltip title="Ver beneficios">
+        <button
+          className="viewBenefictsButton"
+          onClick={e => onViewBenefictsClick(e)}
+        >
+          <p>Ver beneficios</p>
+        </button>
+      </Tooltip>
+
       <Modal
         isOpen={isBenefictsPopupOpen}
         onRequestClose={() => setIsBenefictsPopupOpen(false)}

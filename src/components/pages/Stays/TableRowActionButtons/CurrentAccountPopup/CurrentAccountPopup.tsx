@@ -1,3 +1,4 @@
+import { Tooltip } from "@material-ui/core";
 import React, { useState } from "react";
 import { FiEye } from "react-icons/fi";
 import { IoMdClose } from "react-icons/io";
@@ -12,9 +13,7 @@ export const CurrentAccountPopup = () => {
   const [iscurrentAccountPopupOpen, setIsCurrentAcccountPopupOpen] =
     useState<boolean>(false);
 
-  const onViewCurrentAccountClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent
-  ) => {
+  const onViewCurrentAccountClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     setIsCurrentAcccountPopupOpen(true);
   };
@@ -32,15 +31,15 @@ export const CurrentAccountPopup = () => {
 
   return (
     <>
-      <div
-        className="currentAccountButton"
-        onClick={e => onViewCurrentAccountClick(e)}
-        onKeyDown={onViewCurrentAccountClick}
-        role="button"
-        tabIndex={0}
-      >
-        <FiEye />
-      </div>
+      <Tooltip title="Cuenta corriente">
+        <button
+          className="currentAccountButton"
+          onClick={e => onViewCurrentAccountClick(e)}
+        >
+          <FiEye className="icon" />
+        </button>
+      </Tooltip>
+
       <Modal
         isOpen={iscurrentAccountPopupOpen}
         onRequestClose={() => setIsCurrentAcccountPopupOpen(false)}
