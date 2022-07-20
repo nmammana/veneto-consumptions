@@ -9,6 +9,7 @@ export type FC<P = unknown> = (props: P) => ReactElement | null;
 export type FCC<P = unknown> = FC<PropsWithChildren<P>>;
 
 export type Optional<T> = T | undefined;
+export const notUndefined = <T>(x: Optional<T>): x is T => x !== undefined;
 
 export interface UserAuth {
   email: string;
@@ -68,8 +69,8 @@ export interface Person {
   firstName: string;
   lastName: string;
   email: string;
-  identityNumber: string;
-  role: number;
+  identityNumber?: string;
+  role?: number;
 }
 
 export interface Benefict {
@@ -86,17 +87,17 @@ export interface User {
 }
 
 export interface Stay {
-  id: number;
-  start_date: string;
-  end_date: string;
-  apartment: number;
-  users: User[];
+  id?: number;
+  start_date?: string;
+  end_date?: string;
+  apartment?: number;
+  users?: User[];
 }
 
 export interface StayTableItem {
   id: number;
   apartmentName?: string;
-  startDate: string;
-  endDate: string;
-  guestsNumber: number;
+  startDate?: string;
+  endDate?: string;
+  guestsNumber?: number;
 }

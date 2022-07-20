@@ -1,0 +1,12 @@
+@import "../../../../../../styles/Global.scss";
+
+.guestBenefictList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  max-width: 400px;
+  .guestBenefictListTitle {
+    font: $subtitle4;
+    color: $blue;
+  }
+}

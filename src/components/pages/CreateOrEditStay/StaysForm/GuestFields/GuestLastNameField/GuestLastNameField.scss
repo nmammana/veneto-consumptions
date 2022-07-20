@@ -1,6 +1,6 @@
 @import "../../../../../../styles/Global.scss";
 
-.guestBenefictsField {
+.guestLastNameField {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
@@ -9,11 +9,4 @@
 .guestFormLabel {
   font: $subtitle4;
   color: $blue;
-}
-.benefictFieldContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1em;
 }

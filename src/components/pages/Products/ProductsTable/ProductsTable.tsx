@@ -57,10 +57,8 @@ export const ProductsTable = () => {
   };
 
   useEffect(() => {
-    const createItemTableList = async () => {
-      const formattedItemList = await formatItemList(
-        productsContext?.productList
-      );
+    const createItemTableList = () => {
+      const formattedItemList = formatItemList(productsContext?.productList);
       setItemTableList(formattedItemList);
     };
     createItemTableList();

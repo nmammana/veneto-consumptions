@@ -5,7 +5,12 @@ import { tableIcons } from "../../../../assets/icons/material-icons/MaterialIcon
 import "./StaysTable.scss";
 import { columns } from "./ColumnConfig";
 import { AxiosContext } from "../../../context/AxiosContext";
-import { Apartment, Stay, StayTableItem } from "../../../../types/types";
+import {
+  Apartment,
+  notUndefined,
+  Stay,
+  StayTableItem
+} from "../../../../types/types";
 import { StaysContext } from "../../../context/StaysContext";
 import { StaysTableRowActionButtons } from "../TableRowActionButtons/StaysTableRowActionButtons";
 
@@ -26,19 +31,20 @@ export const StaysTable = () => {
 
   const formatStayList = async (stays?: Stay[]): Promise<StayTableItem[]> => {
     if (!stays) return [];
-    const tableStayList: StayTableItem[] = await Promise.all(
+    const tableStayList = await Promise.all(
       stays.map(async stay => {
+        if (!stay.id) return undefined;
         const apartment = await getApartmentById(stay.id);
         return {
           id: stay.id,
           startDate: stay.start_date,
           endDate: stay.end_date,
           apartmentName: apartment.name,
-          guestsNumber: stay.users.length
+          guestsNumber: stay.users?.length
         };
       })
     );
-    return tableStayList;
+    return tableStayList.filter(notUndefined);
   };
 
   useEffect(() => {

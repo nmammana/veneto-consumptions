@@ -1,22 +1,33 @@
-import { Field } from "formik";
-import React from "react";
-import { AddGuestButtonInput } from "./AddGuestButtonInput/AddGuestButtonInput";
-import { GuestBenefictsField } from "./GuestBenefictsField/GuestBenefictsField";
+import React, { FC } from "react";
+import { ButtonTypes } from "../../../../../types/types";
+import { ButtonMiddle } from "../../../../common/buttons/ButtonMiddle/ButtonMiddle";
+import { GuestBenefictsFieldList } from "./GuestBenefictsFieldList/GuestBenefictsFieldList";
 import { GuestEmailField } from "./GuestEmailField/GuestEmailField";
 import "./GuestFields.scss";
-import { GuestNameField } from "./GuestNameField/GuestNameField";
+import { GuestFirstNameField } from "./GuestFirstNameField/GuestFirstNameField";
+import { GuestLastNameField } from "./GuestLastNameField/GuestLastNameField";
 import { GuestQRCodeField } from "./GuestQRCodeField/GuestQRCodeField";
 
-export const GuestFields = () => {
+interface GuestFieldsProps {
+  onAddGuestClick: () => void;
+}
+
+export const GuestFields: FC<GuestFieldsProps> = ({ onAddGuestClick }) => {
   return (
     <div className="guestFields">
       <p className="guestFormTitle">Huésped y beneficios</p>
-      <GuestNameField />
+      <GuestFirstNameField />
+      <GuestLastNameField />
       <GuestEmailField />
       <GuestQRCodeField />
-      <GuestBenefictsField />
+      <GuestBenefictsFieldList />
       <div className="addGuestButtonContainer">
-        <Field id="submit" name="submit" component={AddGuestButtonInput} />
+        {/* <Field id="submit" name="submit" component={AddGuestButtonInput} /> */}
+        <ButtonMiddle
+          type={ButtonTypes.Button}
+          text="Agregar"
+          onClick={onAddGuestClick}
+        />
       </div>
     </div>
   );
