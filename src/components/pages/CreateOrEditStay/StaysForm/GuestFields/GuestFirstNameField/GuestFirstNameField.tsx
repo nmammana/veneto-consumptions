@@ -11,7 +11,7 @@ export const GuestFirstNameField = () => {
       </label>
       <Field
         id="guestFirstName"
-        name="guestFirstName"
+        name="firstName"
         component={GuestFirstNameInput}
       />
     </div>

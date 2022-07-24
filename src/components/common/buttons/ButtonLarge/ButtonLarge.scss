@@ -12,3 +12,10 @@
     color: $white;
   }
 }
+.disabled {
+  background-color: $grayLightest;
+  cursor: auto;
+  p {
+    color: $grayLight;
+  }
+}

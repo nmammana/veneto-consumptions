@@ -5,6 +5,7 @@ import { GuestBenefictsFieldList } from "./GuestBenefictsFieldList/GuestBenefict
 import { GuestEmailField } from "./GuestEmailField/GuestEmailField";
 import "./GuestFields.scss";
 import { GuestFirstNameField } from "./GuestFirstNameField/GuestFirstNameField";
+import { GuestIdentityNumberField } from "./GuestIdentityNumberField/GuestIdentityNumberField";
 import { GuestLastNameField } from "./GuestLastNameField/GuestLastNameField";
 import { GuestQRCodeField } from "./GuestQRCodeField/GuestQRCodeField";
 
@@ -19,6 +20,7 @@ export const GuestFields: FC<GuestFieldsProps> = ({ onAddGuestClick }) => {
       <GuestFirstNameField />
       <GuestLastNameField />
       <GuestEmailField />
+      <GuestIdentityNumberField />
       <GuestQRCodeField />
       <GuestBenefictsFieldList />
       <div className="addGuestButtonContainer">

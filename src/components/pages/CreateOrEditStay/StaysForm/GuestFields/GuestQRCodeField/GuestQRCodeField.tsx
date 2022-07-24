@@ -7,10 +7,10 @@ import { GuestQRCodeInput } from "./GuestQRCodeInput/GuestQRCodeInput";
 export const GuestQRCodeField = () => {
   return (
     <div className="guestQRCodeField">
-      <label className="guestFormLabel" htmlFor="guestQRCode">
+      <label className="guestFormLabel" htmlFor="qrCode">
         Código QR
       </label>
-      <Field id="guestQRCode" name="guestQRCode" component={GuestQRCodeInput} />
+      <Field id="qrCode" name="qrCode" component={GuestQRCodeInput} />
     </div>
   );
 };

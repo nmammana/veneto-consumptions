@@ -65,10 +65,10 @@ export interface ProductTableItem {
 }
 
 export interface Person {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
+  id?: number;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
   identityNumber?: string;
   role?: number;
 }
@@ -76,14 +76,14 @@ export interface Person {
 export interface Benefict {
   typeOfBenefict: TypeOfBenefict;
   quantity: number;
-  quantityAvailable: number;
+  quantityAvailable?: number;
 }
 
 export interface User {
-  id: number;
+  id?: number;
   user: Person;
-  qrCode: string;
-  beneficts: Benefict[];
+  qrCode?: string;
+  beneficts?: Benefict[];
 }
 
 export interface Stay {
@@ -91,7 +91,22 @@ export interface Stay {
   start_date?: string;
   end_date?: string;
   apartment?: number;
-  users?: User[];
+  users: User[];
+}
+
+export interface PlainBenefict {
+  [key: string]: number;
+}
+export interface StayInputs {
+  startDate?: string;
+  endDate?: string;
+  apartment?: number;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  identityNumber?: string;
+  qrCode?: string;
+  beneficts?: PlainBenefict[];
 }
 
 export interface StayTableItem {

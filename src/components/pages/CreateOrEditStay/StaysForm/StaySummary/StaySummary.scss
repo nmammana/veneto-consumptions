@@ -4,11 +4,23 @@
   grid-column: 9/13;
   display: flex;
   flex-direction: column;
-  gap: 2em;
+  gap: 1em;
   max-width: 450px;
   .summaryTitle {
     font: $subtitle2;
     color: $blue;
-    padding-top: 2em;
+    padding: 2em 0.5em 0;
+  }
+  .summaryContainer {
+    .guestSummaryTitle {
+      font: $subtitle4;
+      color: $blue;
+      padding: 1em 1em 0;
+    }
+    background-color: rgba($grayLightest, 0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
   }
 }

@@ -9,7 +9,7 @@ export const GuestEmailField = () => {
       <label className="guestFormLabel" htmlFor="guestEmail">
         Email
       </label>
-      <Field id="guestEmail" name="guestEmail" component={GuestEmailInput} />
+      <Field id="guestEmail" name="email" component={GuestEmailInput} />
     </div>
   );
 };

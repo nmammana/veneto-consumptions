@@ -9,6 +9,7 @@ import { ProductTypeField } from "./ProductTypeField/ProductTypeField";
 import { ProductSubmitField } from "./ProductSubmitField/ProductSubmitField";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { ProductsContext } from "../../../context/ProductsContext";
+import { Spinner } from "../../../common/Spinner/Spinner";
 
 export const ProductsForm = () => {
   const { authAxios } = useContext(AxiosContext);
@@ -64,7 +65,7 @@ export const ProductsForm = () => {
     }
   }, [itemId]);
 
-  if (isLoadingItem) return <div>Cargando</div>;
+  if (isLoadingItem) return <Spinner />;
   return (
     <div className="productFormContainer">
       <Formik
