@@ -1,0 +1,19 @@
+@import "../../../../../styles/Global.scss";
+
+.guestFields {
+  grid-column: 5/9;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  max-width: 450px;
+  .guestFormTitle {
+    font: $subtitle2;
+    color: $blue;
+    padding-top: 2em;
+  }
+  .addGuestButtonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,19 @@
+@import "../../../../../styles/Global.scss";
+
+.stayFields {
+  grid-column: 1/5;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  max-width: 450px;
+  .stayFormTitle {
+    font: $subtitle2;
+    color: $blue;
+    padding-top: 2em;
+  }
+  .dateFields {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+  }
+}

@@ -1,0 +1,21 @@
+@import "../../../../styles/Global.scss";
+
+.buttonLarge {
+  background-color: $blue;
+  width: 260px;
+  height: 56px;
+  border-style: none;
+  border-radius: 27px;
+  cursor: pointer;
+  p {
+    font: $button2;
+    color: $white;
+  }
+}
+.disabled {
+  background-color: $grayLightest;
+  cursor: auto;
+  p {
+    color: $grayLight;
+  }
+}

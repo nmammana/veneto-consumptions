@@ -1,0 +1,20 @@
+@import "../../../../../../../styles/Global.scss";
+
+.benefictFieldContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  .guestBenefictFieldLabel {
+    grid-column: 1/4;
+    font: $caption;
+    color: $blue;
+    width: 80%;
+  }
+  .guestBenefictField {
+    grid-column: 4/5;
+    width: 20%;
+  }
+}

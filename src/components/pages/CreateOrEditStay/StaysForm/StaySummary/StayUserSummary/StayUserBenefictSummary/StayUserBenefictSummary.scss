@@ -1,0 +1,16 @@
+@import "../../../../../../../styles/Global.scss";
+
+.benefictContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  .benefictName {
+    font: $caption;
+    color: $gray;
+  }
+  .benefictQuantity {
+    font: $caption;
+    color: $gray;
+  }
+}

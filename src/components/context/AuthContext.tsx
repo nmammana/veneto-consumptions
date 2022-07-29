@@ -3,6 +3,7 @@ import React, {
   FC,
   ReactNode,
   useCallback,
+  useEffect,
   useMemo,
   useState
 } from "react";
@@ -20,16 +21,14 @@ interface AuthContextProviderProps {
 }
 
 // TODO: Check typing issue when create context (type any???)
-interface AuthContextProps {
+/* interface AuthContextProps {
   authState: AuthState;
   setAuthState: React.Dispatch<React.SetStateAction<AuthState>>;
   logout: () => void;
   getAccess: () => string;
-}
+} */
 
-export const AuthContext = createContext<AuthContextProps | undefined>(
-  undefined
-);
+export const AuthContext = createContext<any>(undefined);
 
 export const AuthContextProvider: FC<AuthContextProviderProps> = ({
   children
@@ -65,6 +64,17 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({
     [authState, getAccess, logout]
   );
 
+  useEffect(() => {
+    const localStorageToken = JSON.parse(localStorage.getItem("token") || "{}");
+    if (localStorageToken?.access && localStorageToken?.refresh)
+      setAuthState({
+        access: localStorageToken.access,
+        refresh: localStorageToken.refresh,
+        authenticated: true
+      });
+  }, []);
+
+  console.log(authState);
   return (
     <AuthContext.Provider value={authContextValues}>
       {children}

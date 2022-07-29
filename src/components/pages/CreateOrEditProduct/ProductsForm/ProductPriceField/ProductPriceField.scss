@@ -1,0 +1,12 @@
+@import "../../../../../styles/Global.scss";
+
+.productPriceField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 400px;
+}
+.productFormLabel {
+  font: $subtitle4;
+  color: $blue;
+}

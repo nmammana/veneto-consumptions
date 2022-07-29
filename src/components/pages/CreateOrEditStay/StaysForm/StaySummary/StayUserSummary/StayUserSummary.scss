@@ -1,0 +1,26 @@
+@import "../../../../../../styles/Global.scss";
+
+.stayUserSummaryContainer {
+  border-radius: 8px;
+  background-color: rgba($grayLightest, 0.1);
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  .nameAndActions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .actionButtons {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1em;
+    }
+    .fullName {
+      font: $body2;
+      color: $gray;
+    }
+  }
+}

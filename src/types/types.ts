@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { ReactElement as _ReactElement, ReactNode } from "react";
 
 // TODO: Ver si se puede hacer funcionar este tipado
@@ -9,8 +10,12 @@ export type FC<P = unknown> = (props: P) => ReactElement | null;
 export type FCC<P = unknown> = FC<PropsWithChildren<P>>;
 
 export type Optional<T> = T | undefined;
+export const notUndefined = <T>(x: Optional<T>): x is T => x !== undefined;
 
-export interface User {
+export type ApiDate = string;
+export type DateInput = DateTime | ApiDate;
+
+export interface UserAuth {
   email: string;
   password: string;
 }
@@ -18,4 +23,101 @@ export interface User {
 export enum TableType {
   Stays = "Stays",
   Products = "Products"
+}
+
+export enum ButtonTypes {
+  Button = "button",
+  Submit = "submit",
+  Reset = "reset"
+}
+
+export interface Apartment {
+  id: number;
+  tower: number;
+  wing: number;
+  floor: number;
+  letter: string;
+  name: string;
+}
+
+export enum TypeOfBenefict {
+  Breakfast = 1, // 'Desayuno'
+  Lunch = 2, // 'Almuerzo'
+  Snack = 3, // 'Merienda'
+  Dinner = 4, // 'Cena'
+  Spa = 5, // 'Spa'
+  Store = 6 // 'Kiosko'
+}
+
+export interface BenefictName {
+  name: string;
+  typeOfBenefict: TypeOfBenefict;
+}
+
+export interface Item {
+  id?: number;
+  type_of_benefit?: number;
+  name: string;
+  price: number;
+}
+export interface ProductTableItem {
+  id?: number;
+  typeOfBenefict?: string;
+  name: string;
+  price: number;
+  actionItems?: ReactElement;
+}
+
+export interface Person {
+  id?: number;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  document?: string;
+  role?: number;
+}
+
+export interface Benefict {
+  type_of_benefit: TypeOfBenefict;
+  quantity: number;
+  quantity_available?: number;
+}
+
+export interface User {
+  id?: number;
+  user: Person;
+  qr_code?: string;
+  benefits?: Benefict[];
+}
+
+export interface Stay {
+  id?: number;
+  start_date?: string;
+  end_date?: string;
+  apartment?: number;
+  users: User[];
+}
+
+export interface PlainBenefict {
+  [key: string]: number;
+}
+export interface StayInputs {
+  id?: number;
+  startDate?: string;
+  endDate?: string;
+  apartment?: number;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  identityNumber?: string;
+  qrCode?: string;
+  beneficts?: PlainBenefict[];
+}
+
+export interface StayTableItem {
+  id: number;
+  apartmentName?: string;
+  startDate?: string;
+  endDate?: string;
+  guestsNumber?: number;
 }

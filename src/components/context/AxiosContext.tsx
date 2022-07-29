@@ -21,19 +21,21 @@ export const AxiosContextProvider: FC<AxiosContextProviderProps> = ({
   const authContext = useContext(AuthContext);
 
   const authAxios = axios.create({
-    baseURL: "https://8ba3-200-122-127-21.sa.ngrok.io/api"
+    baseURL: "https://consumos-veneto-village-dev.herokuapp.com/api"
   });
 
   const publicAxios = axios.create({
-    baseURL: "https://8ba3-200-122-127-21.sa.ngrok.io/api"
+    baseURL: "https://consumos-veneto-village-dev.herokuapp.com/api"
   });
 
   // TODO: Check the eslint rule of no-param-reassign
   authAxios.interceptors.request.use(
     (config: any) => {
       if (!config.headers.Authorization) {
+        const accessToken = JSON.parse(localStorage.getItem("token") || "{}");
         // eslint-disable-next-line no-param-reassign
-        config.headers.Authorization = `Bearer ${authContext?.getAccess()}`;
+        config.headers.Authorization = `Bearer ${accessToken.access}`;
+        /* config.headers.Authorization = `Bearer ${authContext?.getAccess()}`; */
       }
 
       return config;
@@ -45,13 +47,14 @@ export const AxiosContextProvider: FC<AxiosContextProviderProps> = ({
 
   const refreshAuthLogic = (failedRequest: any) => {
     const data = {
+      // refresh: JSON.parse(localStorage.getItem("token") || "{}").refresh
       refresh: authContext?.authState.refresh
     };
-
+    if (!data.refresh) return Promise.resolve();
     const options = {
       method: "POST",
       data,
-      url: "https://8ba3-200-122-127-21.sa.ngrok.io/api/auth/token/refresh"
+      url: "https://consumos-veneto-village-dev.herokuapp.com/api/auth/token/refresh"
     };
 
     // TODO: Check the eslint rule of no-param-reassign
@@ -75,7 +78,9 @@ export const AxiosContextProvider: FC<AxiosContextProviderProps> = ({
 
         return Promise.resolve();
       })
-      .catch(() => {
+      .catch(error => {
+        console.log("error en axios context", error);
+        localStorage.removeItem("token");
         authContext?.setAuthState({
           access: "",
           refresh: ""
@@ -83,7 +88,8 @@ export const AxiosContextProvider: FC<AxiosContextProviderProps> = ({
       });
   };
 
-  createAuthRefreshInterceptor(authAxios, refreshAuthLogic, {});
+  if (authContext?.authState.authenticated)
+    createAuthRefreshInterceptor(authAxios, refreshAuthLogic, {});
 
   const axiosContextValues = useMemo(
     () => ({

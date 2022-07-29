@@ -1,0 +1,11 @@
+@import "../../../../styles/Global.scss";
+
+.stayFormContainer {
+  width: 100%;
+  padding-bottom: 3em;
+  .stayForm {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 3.5em;
+  }
+}

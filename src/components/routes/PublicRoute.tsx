@@ -1,13 +1,12 @@
-import React, { FC, ReactElement, useContext } from "react";
+import React, { FC, ReactElement } from "react";
 import { Navigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
 
 interface PublicRouteProps {
   children: ReactElement;
 }
 
 export const PublicRoute: FC<PublicRouteProps> = ({ children }) => {
-  const authContext = useContext(AuthContext);
-
-  return !authContext?.getAccess() ? children : <Navigate to="/home" />;
+  // const authContext = useContext(AuthContext);
+  const localStorageToken = JSON.parse(localStorage.getItem("token") || "{}");
+  return !localStorageToken.access ? children : <Navigate to="/stays" />;
 };
