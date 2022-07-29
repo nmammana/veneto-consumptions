@@ -17,8 +17,9 @@ export const StayUserSummary: FC<StayUserSummaryProps> = ({
   deleteUser,
   editUser
 }) => {
-  const { user, beneficts } = guest;
-  const { firstName, lastName } = user;
+  const { user, benefits } = guest;
+  const firstName = user.first_name;
+  const lastName = user.last_name;
   const userFullName = getFullNameFromPerson(firstName, lastName);
   return (
     <div className="stayUserSummaryContainer">
@@ -29,7 +30,7 @@ export const StayUserSummary: FC<StayUserSummaryProps> = ({
           <DeleteUserButton user={guest} deleteUser={deleteUser} />
         </div>
       </div>
-      {beneficts
+      {benefits
         ?.filter(benefict => benefict.quantity > 0)
         .map((benefict, index) => (
           // eslint-disable-next-line react/no-array-index-key

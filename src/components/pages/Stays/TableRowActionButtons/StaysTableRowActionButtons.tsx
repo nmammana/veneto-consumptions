@@ -6,19 +6,19 @@ import { EditStayButton } from "./EditStayButton/EditStayButton";
 import "./StaysTableRowActionButtons.scss";
 
 export interface StaysTableRowActionButtonsProps {
-  itemId: number;
-  deleteItem: (itemId: number) => void;
+  stayId: number;
+  deleteStay: (stayId: number) => void;
 }
 
 export const StaysTableRowActionButtons: FC<
   StaysTableRowActionButtonsProps
-> = ({ itemId, deleteItem }) => {
+> = ({ stayId, deleteStay }) => {
   return (
     <div className="actionItems">
       <BenefictsPopup />
       <CurrentAccountPopup />
-      <EditStayButton itemId={itemId} />
-      <DeleteStayButton deleteItem={() => deleteItem(itemId)} itemId={itemId} />
+      <EditStayButton stayId={stayId} />
+      <DeleteStayButton deleteStay={() => deleteStay(stayId)} stayId={stayId} />
     </div>
   );
 };

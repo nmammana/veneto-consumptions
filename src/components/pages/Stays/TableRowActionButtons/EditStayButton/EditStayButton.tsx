@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import "./EditStayButton.scss";
 
 interface EditStayButtonProps {
-  itemId: number;
+  stayId: number;
 }
 
-export const EditStayButton: FC<EditStayButtonProps> = () => {
+export const EditStayButton: FC<EditStayButtonProps> = ({ stayId }) => {
   return (
     <Tooltip title="Editar estadía">
-      <Link to="/editStay" className="editStayButton">
+      <Link to={`/editStay/${stayId}`} className="editStayButton">
         <BiEditAlt className="icon" />
       </Link>
     </Tooltip>

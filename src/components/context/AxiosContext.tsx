@@ -80,6 +80,7 @@ export const AxiosContextProvider: FC<AxiosContextProviderProps> = ({
       })
       .catch(error => {
         console.log("error en axios context", error);
+        localStorage.removeItem("token");
         authContext?.setAuthState({
           access: "",
           refresh: ""

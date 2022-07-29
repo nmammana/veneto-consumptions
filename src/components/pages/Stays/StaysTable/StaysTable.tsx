@@ -22,6 +22,18 @@ export const StaysTable = () => {
   const [stayTableList, setStayTableList] = useState<StayTableItem[]>([]);
   /* const [isLoadingStayItem, setIsLoadingStayItem] = useState<boolean>(false); */
 
+  const deleteStay = async (stayId: number) => {
+    try {
+      await authAxios.delete(`/stay/${stayId}/`);
+      const updatedStays = staysContext?.stayList.filter(
+        stay => stay.id !== stayId
+      );
+      if (updatedStays) staysContext?.setStayList(updatedStays);
+    } catch (error) {
+      console.error("ERROR: ", error);
+    }
+  };
+
   const getApartmentById = async (apartmentId: number): Promise<Apartment> => {
     const apartmentResponse = await authAxios.get(
       `/apartments/${apartmentId}/`
@@ -33,8 +45,8 @@ export const StaysTable = () => {
     if (!stays) return [];
     const tableStayList = await Promise.all(
       stays.map(async stay => {
-        if (!stay.id) return undefined;
-        const apartment = await getApartmentById(stay.id);
+        if (!stay.apartment || !stay.id) return undefined;
+        const apartment = await getApartmentById(stay.apartment);
         return {
           id: stay.id,
           startDate: stay.start_date,
@@ -135,9 +147,9 @@ export const StaysTable = () => {
           const { data } = props;
           return (
             <StaysTableRowActionButtons
-              itemId={data.id}
-              deleteItem={() => {
-                /* deleteItem(data.id) */
+              stayId={data.id}
+              deleteStay={() => {
+                deleteStay(data.id);
               }}
             />
           );

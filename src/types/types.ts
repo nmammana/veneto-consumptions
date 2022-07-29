@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { ReactElement as _ReactElement, ReactNode } from "react";
 
 // TODO: Ver si se puede hacer funcionar este tipado
@@ -10,6 +11,9 @@ export type FCC<P = unknown> = FC<PropsWithChildren<P>>;
 
 export type Optional<T> = T | undefined;
 export const notUndefined = <T>(x: Optional<T>): x is T => x !== undefined;
+
+export type ApiDate = string;
+export type DateInput = DateTime | ApiDate;
 
 export interface UserAuth {
   email: string;
@@ -66,24 +70,24 @@ export interface ProductTableItem {
 
 export interface Person {
   id?: number;
-  firstName?: string;
-  lastName?: string;
+  first_name?: string;
+  last_name?: string;
   email?: string;
-  identityNumber?: string;
+  document?: string;
   role?: number;
 }
 
 export interface Benefict {
-  typeOfBenefict: TypeOfBenefict;
+  type_of_benefit: TypeOfBenefict;
   quantity: number;
-  quantityAvailable?: number;
+  quantity_available?: number;
 }
 
 export interface User {
   id?: number;
   user: Person;
-  qrCode?: string;
-  beneficts?: Benefict[];
+  qr_code?: string;
+  benefits?: Benefict[];
 }
 
 export interface Stay {
@@ -98,6 +102,7 @@ export interface PlainBenefict {
   [key: string]: number;
 }
 export interface StayInputs {
+  id?: number;
   startDate?: string;
   endDate?: string;
   apartment?: number;

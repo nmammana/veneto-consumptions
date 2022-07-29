@@ -10,7 +10,8 @@ interface StayUserBenefictSummaryProps {
 export const StayUserBenefictSummary: FC<StayUserBenefictSummaryProps> = ({
   benefict
 }) => {
-  const { typeOfBenefict, quantity } = benefict;
+  const typeOfBenefict = benefict.type_of_benefit;
+  const { quantity } = benefict;
   const benefictName = getBenefictNameFromType(typeOfBenefict);
   return (
     <div className="benefictContainer">

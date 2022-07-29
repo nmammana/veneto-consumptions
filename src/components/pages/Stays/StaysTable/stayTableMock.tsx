@@ -10,23 +10,23 @@ export const staysTable: Stay[] = [
         id: 1,
         user: {
           id: 1,
-          firstName: "Andres",
-          lastName: "Gallardo",
+          first_name: "Andres",
+          last_name: "Gallardo",
           email: "gallardoandres18@gmail.com",
-          identityNumber: "38500821",
+          document: "38500821",
           role: 5
         },
-        qrCode: "123456",
-        beneficts: [
+        qr_code: "123456",
+        benefits: [
           {
-            typeOfBenefict: 1,
+            type_of_benefit: 1,
             quantity: 3,
-            quantityAvailable: 3
+            quantity_available: 3
           },
           {
-            typeOfBenefict: 2,
+            type_of_benefit: 2,
             quantity: 6,
-            quantityAvailable: 6
+            quantity_available: 6
           }
         ]
       }

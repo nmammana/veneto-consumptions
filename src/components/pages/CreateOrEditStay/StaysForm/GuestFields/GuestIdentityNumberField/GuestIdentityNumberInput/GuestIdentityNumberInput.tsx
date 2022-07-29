@@ -9,7 +9,6 @@ export const GuestIdentityNumberInput: FC<FieldProps> = ({ field, form }) => {
       onChange={event => {
         form.setFieldValue(field.name, event.target.value);
       }}
-      required
     />
   );
 };

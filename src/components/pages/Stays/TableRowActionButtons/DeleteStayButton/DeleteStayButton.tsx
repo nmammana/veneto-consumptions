@@ -4,17 +4,17 @@ import { AiOutlineDelete } from "react-icons/ai";
 import "./DeleteStayButton.scss";
 
 interface DeleteStayButtonProps {
-  itemId: number;
-  deleteItem: (itemId: number) => void;
+  stayId: number;
+  deleteStay: (stayId: number) => void;
 }
 
 export const DeleteStayButton: FC<DeleteStayButtonProps> = ({
-  itemId,
-  deleteItem
+  stayId,
+  deleteStay
 }) => {
   return (
     <Tooltip title="Eliminar estadía">
-      <button className="deleteStayButton" onClick={() => deleteItem(itemId)}>
+      <button className="deleteStayButton" onClick={() => deleteStay(stayId)}>
         <AiOutlineDelete className="icon" />
       </button>
     </Tooltip>

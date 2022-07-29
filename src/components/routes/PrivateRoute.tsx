@@ -6,6 +6,7 @@ interface PrivateRouteProps {
 }
 
 export const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
+  // const authContext = useContext(AuthContext);
   const localStorageToken = JSON.parse(localStorage.getItem("token") || "{}");
   return localStorageToken.access ? children : <Navigate to="/" />;
 };

@@ -72,6 +72,14 @@ export const App = () => {
                         }
                       />
                       <Route
+                        path="/editStay/:stayId"
+                        element={
+                          <PrivateRoute>
+                            <CreateOrEditStay />
+                          </PrivateRoute>
+                        }
+                      />
+                      <Route
                         path="/editProduct"
                         element={
                           <PrivateRoute>

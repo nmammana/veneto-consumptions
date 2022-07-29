@@ -1,7 +1,9 @@
 import {
   createContext,
+  Dispatch,
   FC,
   ReactNode,
+  SetStateAction,
   useContext,
   useEffect,
   useMemo,
@@ -13,6 +15,7 @@ import { AxiosContext } from "./AxiosContext";
 
 interface StaysContextProps {
   stayList: Stay[];
+  setStayList: Dispatch<SetStateAction<Stay[]>>;
   isLoadingStayList: boolean;
 }
 

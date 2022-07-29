@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Form, Formik, FormikProps } from "formik";
+import { useNavigate, useParams } from "react-router-dom";
 import { head } from "lodash";
 import "./StaysForm.scss";
 import { DateTime } from "luxon";
@@ -17,6 +18,9 @@ import {
   User
 } from "../../../../types/types";
 import { benefictList } from "../../../../models/beneficts";
+import { AxiosContext } from "../../../context/AxiosContext";
+import { StaysContext } from "../../../context/StaysContext";
+import { Spinner } from "../../../common/Spinner/Spinner";
 
 const formatBeneficts = (beneficts?: PlainBenefict[]): Optional<Benefict[]> => {
   if (!beneficts) return [];
@@ -31,7 +35,7 @@ const formatBeneficts = (beneficts?: PlainBenefict[]): Optional<Benefict[]> => {
         : 0;
       if (quantity === undefined) return undefined;
       return {
-        typeOfBenefict: type,
+        type_of_benefit: type,
         quantity
       };
     })
@@ -40,14 +44,28 @@ const formatBeneficts = (beneficts?: PlainBenefict[]): Optional<Benefict[]> => {
 };
 
 export const StaysForm = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { authAxios } = useContext(AxiosContext);
+  const staysContext = useContext(StaysContext);
+  const params = useParams();
+  const stayId = Number(params.stayId);
+  const [isLoadingStay, setIsLoadingStay] = useState<boolean>(false);
+  const navigate = useNavigate();
   const [stay, setStay] = useState<Stay>({
     users: []
   });
 
+  /*  const date = DateTime.fromFormat("23/05/2022", "dd/MM/yyyy", {
+    zone: "UTC"
+  }).toISO(); */
+  /* console.log("fecha", date); */
+  const getStayById = async (): Promise<Stay> => {
+    const stayResponse = await authAxios.get(`/stay/${stayId}/`);
+    return stayResponse.data;
+  };
+
   const stayDefaultValues: StayInputs = {
-    startDate: DateTime.local().toFormat("dd/LLL/yyyy"),
-    endDate: DateTime.local().toFormat("dd/LLL/yyyy"),
+    startDate: DateTime.local().toISO(),
+    endDate: DateTime.local().toISO(),
     firstName: "",
     lastName: "",
     email: "",
@@ -57,7 +75,6 @@ export const StaysForm = () => {
       [`${benefict.typeOfBenefict}`]: 0
     }))
   };
-
   const [stayFormValues, setStayFormValues] =
     useState<StayInputs>(stayDefaultValues);
 
@@ -79,26 +96,45 @@ export const StaysForm = () => {
       en la estadía. Despues de eso habria que cambiar el tipado para que los 
       campos obligatorios dejen de ser opcionales */
       const formattedBeneficts = formatBeneficts(beneficts);
+      const formattedStartDate = DateTime.fromISO(startDate ?? "").toFormat(
+        "dd/MM/yyyy"
+      );
+      const formattedEndDate = DateTime.fromISO(endDate ?? "").toFormat(
+        "dd/MM/yyyy"
+      );
       setStay({
-        start_date: startDate,
-        end_date: endDate,
+        start_date: formattedStartDate,
+        end_date: formattedEndDate,
         apartment,
         users: [
           ...stay.users,
           {
             user: {
-              firstName,
-              lastName,
+              first_name: firstName,
+              last_name: lastName,
               email,
-              identityNumber
+              document: identityNumber
             },
-            qrCode,
-            beneficts: formattedBeneficts
+            qr_code: qrCode,
+            benefits: formattedBeneficts
           }
         ]
       });
       setStayFormValues(stayDefaultValues);
-      ref.current.resetForm();
+      ref.current.setFieldValue("startDate", startDate);
+      ref.current.setFieldValue("endDate", endDate);
+      ref.current.setFieldValue("apartment", apartment);
+      ref.current.setFieldValue("firstName", "");
+      ref.current.setFieldValue("lastName", "");
+      ref.current.setFieldValue("email", "");
+      ref.current.setFieldValue("identityNumber", "");
+      ref.current.setFieldValue("qrCode", "");
+      ref.current.setFieldValue(
+        "beneficts",
+        benefictList.map(benefict => ({
+          [`${benefict.typeOfBenefict}`]: 0
+        }))
+      );
     }
   };
 
@@ -114,30 +150,80 @@ export const StaysForm = () => {
       ref.current.setFieldValue("startDate", stay.start_date);
       ref.current.setFieldValue("endDate", stay.end_date);
       ref.current.setFieldValue("apartment", stay.apartment);
-      ref.current.setFieldValue("firstName", userToEdit.user.firstName);
-      ref.current.setFieldValue("lastName", userToEdit.user.lastName);
+      ref.current.setFieldValue("firstName", userToEdit.user.first_name);
+      ref.current.setFieldValue("lastName", userToEdit.user.last_name);
       ref.current.setFieldValue("email", userToEdit.user.email);
-      ref.current.setFieldValue(
-        "identityNumber",
-        userToEdit.user.identityNumber
-      );
-      ref.current.setFieldValue("qrCode", userToEdit.qrCode);
-      userToEdit.beneficts?.forEach((benefict, index) => {
+      ref.current.setFieldValue("identityNumber", userToEdit.user.document);
+      ref.current.setFieldValue("qrCode", userToEdit.qr_code);
+      userToEdit.benefits?.forEach((benefict, index) => {
         ref.current?.setFieldValue(
-          `beneficts[${index}].${benefict.typeOfBenefict}`,
+          `beneficts[${index}].${benefict.type_of_benefit}`,
           benefict.quantity
         );
       });
     }
   };
 
+  const createStay = async (newStay: Stay) => {
+    try {
+      await authAxios.post("/stay/", newStay);
+      staysContext?.setStayList([...staysContext.stayList, newStay]);
+    } catch (e) {
+      console.error("ERROR: ", e);
+    }
+  };
+
+  const editStay = async (stayModified: Stay) => {
+    try {
+      await authAxios.put(`/stays/${stayId}`, stayModified);
+      staysContext?.setStayList(
+        staysContext.stayList.map(existingStay => {
+          if (existingStay.id === stay.id) return stayModified;
+          return existingStay;
+        })
+      );
+    } catch (e) {
+      console.error("ERROR: ", e);
+    }
+  };
+
+  useEffect(() => {
+    if (stayId) {
+      const fetchStayById = async () => {
+        setIsLoadingStay(true);
+        const itemRes = await getStayById();
+        setStay(itemRes);
+        setStayFormValues({
+          ...stayFormValues,
+          apartment: itemRes.apartment,
+          startDate: DateTime.fromFormat(
+            itemRes.start_date ?? "",
+            "dd/MM/yyyy"
+          ).toISO(),
+          endDate: DateTime.fromFormat(
+            itemRes.end_date ?? "",
+            "dd/MM/yyyy"
+          ).toISO()
+        });
+        setIsLoadingStay(false);
+      };
+      fetchStayById();
+    }
+  }, [stayId]);
+
+  if (isLoadingStay) return <Spinner />;
   return (
     <div className="stayFormContainer">
       <Formik
         initialValues={stayFormValues}
         onSubmit={(values, actions) => {
-          console.log(values);
+          if (values.id) {
+            editStay(stay);
+          } else {
+            createStay(stay);
+          }
           actions.setSubmitting(false);
+          navigate("/stays");
         }}
         innerRef={ref}
       >
