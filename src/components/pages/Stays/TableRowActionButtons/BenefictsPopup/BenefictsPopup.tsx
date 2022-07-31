@@ -1,14 +1,26 @@
-import React, { useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 import "./BenefictsPopup.scss";
 import { IoMdClose } from "react-icons/io";
 import { Tooltip } from "@material-ui/core";
+import { isEmpty } from "lodash";
+import { Stay } from "../../../../../types/types";
+import { AxiosContext } from "../../../../context/AxiosContext";
+import { Spinner } from "../../../../common/Spinner/Spinner";
+import { GuestCard } from "./GuestCard/GuestCard";
 
 Modal.setAppElement("#root");
 
-export const BenefictsPopup = () => {
+interface BenefictsPopupProps {
+  stayId: number;
+}
+
+export const BenefictsPopup: FC<BenefictsPopupProps> = ({ stayId }) => {
+  const { authAxios } = useContext(AxiosContext);
   const [isBenefictsPopupOpen, setIsBenefictsPopupOpen] =
     useState<boolean>(false);
+  const [isLoadingStay, setIsLoadingStay] = useState<boolean>(false);
+  const [stay, setStay] = useState<Stay>();
 
   const onViewBenefictsClick = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -21,6 +33,22 @@ export const BenefictsPopup = () => {
     event.stopPropagation();
     setIsBenefictsPopupOpen(false);
   };
+
+  useEffect(() => {
+    if (stayId && isBenefictsPopupOpen) {
+      const getStayById = async (): Promise<Stay> => {
+        const stayResponse = await authAxios.get(`/stay/${stayId}/`);
+        return stayResponse.data;
+      };
+      const fetchStayById = async () => {
+        setIsLoadingStay(true);
+        const stayRes = await getStayById();
+        setStay(stayRes);
+        setIsLoadingStay(false);
+      };
+      fetchStayById();
+    }
+  }, [stayId, authAxios, isBenefictsPopupOpen]);
   return (
     <>
       <Tooltip title="Ver beneficios">
@@ -57,85 +85,14 @@ export const BenefictsPopup = () => {
           <div className="popupHeader">
             <p className="popupTitle">Beneficios de huéspedes</p>
           </div>
-          <div className="guestCard">
-            <div className="nameContainer">
-              <p className="title">Nombre y apellido</p>
-              <p className="content">Federico Gonzalez</p>
-            </div>
-            <div className="benefictsContainer">
-              <p className="title">Beneficio</p>
-              <div className="benefictsList">
-                <p className="content">Almuerzo vegetariano x 2</p>
-                <p className="content">Desayuno completo x 3</p>
-              </div>
-            </div>
-          </div>
-          <div className="guestCard">
-            <div className="nameContainer">
-              <p className="title">Nombre y apellido</p>
-              <p className="content">Federico Gonzalez</p>
-            </div>
-            <div className="benefictsContainer">
-              <p className="title">Beneficio</p>
-              <div className="benefictsList">
-                <p className="content">Almuerzo vegetariano x 2</p>
-                <p className="content">Desayuno completo x 3</p>
-              </div>
-            </div>
-          </div>
-          <div className="guestCard">
-            <div className="nameContainer">
-              <p className="title">Nombre y apellido</p>
-              <p className="content">Federico Gonzalez</p>
-            </div>
-            <div className="benefictsContainer">
-              <p className="title">Beneficio</p>
-              <div className="benefictsList">
-                <p className="content">Almuerzo vegetariano x 2</p>
-                <p className="content">Desayuno completo x 3</p>
-              </div>
-            </div>
-          </div>
-          <div className="guestCard">
-            <div className="nameContainer">
-              <p className="title">Nombre y apellido</p>
-              <p className="content">Federico Gonzalez</p>
-            </div>
-            <div className="benefictsContainer">
-              <p className="title">Beneficio</p>
-              <div className="benefictsList">
-                <p className="content">Almuerzo vegetariano x 2</p>
-                <p className="content">Desayuno completo x 3</p>
-              </div>
-            </div>
-          </div>
-          <div className="guestCard">
-            <div className="nameContainer">
-              <p className="title">Nombre y apellido</p>
-              <p className="content">Federico Gonzalez</p>
-            </div>
-            <div className="benefictsContainer">
-              <p className="title">Beneficio</p>
-              <div className="benefictsList">
-                <p className="content">Almuerzo vegetariano x 2</p>
-                <p className="content">Desayuno completo x 3</p>
-              </div>
-            </div>
-          </div>
-          <div className="guestCard">
-            <div className="nameContainer">
-              <p className="title">Nombre y apellido</p>
-              <p className="content">Federico Gonzalez</p>
-            </div>
-            <div className="benefictsContainer">
-              <p className="title">Beneficio</p>
-              <div className="benefictsList">
-                <p className="content">Almuerzo vegetariano x 2</p>
-                <p className="content">Desayuno completo x 3</p>
-              </div>
-            </div>
-          </div>
-
+          {isLoadingStay || isEmpty(stay?.users) ? (
+            <Spinner />
+          ) : (
+            stay?.users.map((user, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <GuestCard key={index} guest={user} />
+            ))
+          )}
           <div
             className="floatingCloseButton"
             onClick={e => onClosePopup(e)}

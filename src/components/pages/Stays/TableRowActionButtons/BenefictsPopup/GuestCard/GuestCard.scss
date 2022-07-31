@@ -1,0 +1,28 @@
+@import "../../../../../../styles/Global.scss";
+
+.guestCard {
+  background-color: rgba($color: $grayLightest, $alpha: 0.1);
+  border-radius: 8px;
+  padding: 2em 2.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  .title {
+    font: $subtitle4;
+    color: $blue;
+  }
+  .guestName {
+    font: $body2;
+    color: $gray;
+  }
+  .nameContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+  .benefictsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+}

@@ -1,11 +1,9 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useContext } from "react";
 import { Autocomplete } from "@mui/material";
 import { TextField, TextFieldProps } from "@material-ui/core";
 import { FieldProps } from "formik";
 /* import axios from "axios"; */
-import { Apartment } from "../../../../../../../types/types";
-import { AxiosContext } from "../../../../../../context/AxiosContext";
-import { AuthContext } from "../../../../../../context/AuthContext";
+import { ApartmentsContext } from "../../../../../../context/ApartmentsContext";
 
 export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
   const {
@@ -15,38 +13,15 @@ export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
   const {
     field: { name }
   } = props;
-
-  const { authAxios } = useContext(AxiosContext);
-  const { authState } = useContext(AuthContext);
-  const { authenticated } = authState;
-
-  const [apartments, setApartments] = useState<Apartment[]>([]);
-  const [isLoadingApartments, setIsLoadingApartments] =
-    useState<boolean>(false);
-
-  useEffect(() => {
-    if (authenticated) {
-      const getApartmentList = async (): Promise<Apartment[]> => {
-        const apartmentListResponse = await authAxios.get("/apartments/");
-        return apartmentListResponse.data.results;
-      };
-      const fetchApartments = async () => {
-        setIsLoadingApartments(true);
-        const apartmentsList = await getApartmentList();
-        setApartments(apartmentsList);
-        setIsLoadingApartments(false);
-      };
-      fetchApartments();
-    }
-  }, [authAxios, authenticated]);
+  const apartmentsContext = useContext(ApartmentsContext);
 
   return (
     <Autocomplete
       onChange={(_, value) => {
         setFieldValue(name, value?.id);
       }}
-      loading={isLoadingApartments}
-      options={apartments}
+      loading={apartmentsContext?.isLoadingApartmentList}
+      options={apartmentsContext?.apartmentList ?? []}
       /* inputValue={
         apartments.find(apartment => apartment.name === name)?.name ?? ""
       } */

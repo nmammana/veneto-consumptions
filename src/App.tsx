@@ -18,6 +18,7 @@ import { Stays } from "./components/pages/Stays/Stays";
 import { NotFound } from "./components/pages/NotFound/NotFound";
 import { PublicRoute } from "./components/routes/PublicRoute";
 import { ProductsContextProvider } from "./components/context/ProductsContext";
+import { ApartmentsContextProvider } from "./components/context/ApartmentsContext";
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== "undefined") {
@@ -30,77 +31,79 @@ export const App = () => {
       <AuthContextProvider>
         <AxiosContextProvider>
           <AdminPageContextProvider>
-            <StaysContextProvider>
-              <ProductsContextProvider>
-                <BrowserRouter>
-                  <Suspense fallback={<Loading />}>
-                    <Routes>
-                      {/* **** Public Routes **** */}
-                      <Route path="/" element={<Navigate to="/login" />} />
-                      <Route
-                        path="/login"
-                        element={
-                          <PublicRoute>
-                            <Auth />
-                          </PublicRoute>
-                        }
-                      />
-                      {/* **** Private Routes **** */}
-                      {/* TODO: Change /home route to private when auth is done */}
-                      <Route
-                        path="/stays"
-                        element={
-                          <PrivateRoute>
-                            <Stays />
-                          </PrivateRoute>
-                        }
-                      />
-                      <Route
-                        path="/products"
-                        element={
-                          <PrivateRoute>
-                            <Products />
-                          </PrivateRoute>
-                        }
-                      />
-                      <Route
-                        path="/editStay"
-                        element={
-                          <PrivateRoute>
-                            <CreateOrEditStay />
-                          </PrivateRoute>
-                        }
-                      />
-                      <Route
-                        path="/editStay/:stayId"
-                        element={
-                          <PrivateRoute>
-                            <CreateOrEditStay />
-                          </PrivateRoute>
-                        }
-                      />
-                      <Route
-                        path="/editProduct"
-                        element={
-                          <PrivateRoute>
-                            <CreateOrEditProduct />
-                          </PrivateRoute>
-                        }
-                      />
-                      <Route
-                        path="/editProduct/:itemId"
-                        element={
-                          <PrivateRoute>
-                            <CreateOrEditProduct />
-                          </PrivateRoute>
-                        }
-                      />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </Suspense>
-                </BrowserRouter>
-              </ProductsContextProvider>
-            </StaysContextProvider>
+            <ApartmentsContextProvider>
+              <StaysContextProvider>
+                <ProductsContextProvider>
+                  <BrowserRouter>
+                    <Suspense fallback={<Loading />}>
+                      <Routes>
+                        {/* **** Public Routes **** */}
+                        <Route path="/" element={<Navigate to="/login" />} />
+                        <Route
+                          path="/login"
+                          element={
+                            <PublicRoute>
+                              <Auth />
+                            </PublicRoute>
+                          }
+                        />
+                        {/* **** Private Routes **** */}
+                        {/* TODO: Change /home route to private when auth is done */}
+                        <Route
+                          path="/stays"
+                          element={
+                            <PrivateRoute>
+                              <Stays />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route
+                          path="/products"
+                          element={
+                            <PrivateRoute>
+                              <Products />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route
+                          path="/editStay"
+                          element={
+                            <PrivateRoute>
+                              <CreateOrEditStay />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route
+                          path="/editStay/:stayId"
+                          element={
+                            <PrivateRoute>
+                              <CreateOrEditStay />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route
+                          path="/editProduct"
+                          element={
+                            <PrivateRoute>
+                              <CreateOrEditProduct />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route
+                          path="/editProduct/:itemId"
+                          element={
+                            <PrivateRoute>
+                              <CreateOrEditProduct />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </Suspense>
+                  </BrowserRouter>
+                </ProductsContextProvider>
+              </StaysContextProvider>
+            </ApartmentsContextProvider>
           </AdminPageContextProvider>
         </AxiosContextProvider>
       </AuthContextProvider>

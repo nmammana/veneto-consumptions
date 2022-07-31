@@ -5,19 +5,16 @@ import { tableIcons } from "../../../../assets/icons/material-icons/MaterialIcon
 import "./StaysTable.scss";
 import { columns } from "./ColumnConfig";
 import { AxiosContext } from "../../../context/AxiosContext";
-import {
-  Apartment,
-  notUndefined,
-  Stay,
-  StayTableItem
-} from "../../../../types/types";
+import { notUndefined, Stay, StayTableItem } from "../../../../types/types";
 import { StaysContext } from "../../../context/StaysContext";
 import { StaysTableRowActionButtons } from "../TableRowActionButtons/StaysTableRowActionButtons";
+import { ApartmentsContext } from "../../../context/ApartmentsContext";
 
 export const StaysTable = () => {
   /* const [areFiltersActive, setAreFiltersActive] = useState(false); */
 
   const { authAxios } = useContext(AxiosContext);
+  const apartmentsContext = useContext(ApartmentsContext);
   const staysContext = useContext(StaysContext);
   const [stayTableList, setStayTableList] = useState<StayTableItem[]>([]);
   /* const [isLoadingStayItem, setIsLoadingStayItem] = useState<boolean>(false); */
@@ -34,28 +31,29 @@ export const StaysTable = () => {
     }
   };
 
-  const getApartmentById = async (apartmentId: number): Promise<Apartment> => {
+  /* const getApartmentById = async (apartmentId: number): Promise<Apartment> => {
     const apartmentResponse = await authAxios.get(
       `/apartments/${apartmentId}/`
     );
     return apartmentResponse.data;
-  };
+  }; */
 
-  const formatStayList = async (stays?: Stay[]): Promise<StayTableItem[]> => {
+  const formatStayList = (stays?: Stay[]): StayTableItem[] => {
     if (!stays) return [];
-    const tableStayList = await Promise.all(
-      stays.map(async stay => {
-        if (!stay.apartment || !stay.id) return undefined;
-        const apartment = await getApartmentById(stay.apartment);
-        return {
-          id: stay.id,
-          startDate: stay.start_date,
-          endDate: stay.end_date,
-          apartmentName: apartment.name,
-          guestsNumber: stay.users?.length
-        };
-      })
-    );
+    const tableStayList = stays.map(stay => {
+      if (!stay.apartment || !stay.id) return undefined;
+      const apartment = apartmentsContext?.apartmentList.find(
+        apartmentItem => apartmentItem.id === stay.apartment
+      );
+      return {
+        id: stay.id,
+        startDate: stay.start_date,
+        endDate: stay.end_date,
+        apartmentName: apartment?.name,
+        guestsNumber: stay.users?.length
+      };
+    });
+
     return tableStayList.filter(notUndefined);
   };
 

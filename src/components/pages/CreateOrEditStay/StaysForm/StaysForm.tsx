@@ -58,10 +58,6 @@ export const StaysForm = () => {
     zone: "UTC"
   }).toISO(); */
   /* console.log("fecha", date); */
-  const getStayById = async (): Promise<Stay> => {
-    const stayResponse = await authAxios.get(`/stay/${stayId}/`);
-    return stayResponse.data;
-  };
 
   const stayDefaultValues: StayInputs = {
     startDate: DateTime.local().toISO(),
@@ -189,19 +185,23 @@ export const StaysForm = () => {
 
   useEffect(() => {
     if (stayId) {
+      const getStayById = async (): Promise<Stay> => {
+        const stayResponse = await authAxios.get(`/stay/${stayId}/`);
+        return stayResponse.data;
+      };
       const fetchStayById = async () => {
         setIsLoadingStay(true);
-        const itemRes = await getStayById();
-        setStay(itemRes);
+        const stayRes = await getStayById();
+        setStay(stayRes);
         setStayFormValues({
           ...stayFormValues,
-          apartment: itemRes.apartment,
+          apartment: stayRes.apartment,
           startDate: DateTime.fromFormat(
-            itemRes.start_date ?? "",
+            stayRes.start_date ?? "",
             "dd/MM/yyyy"
           ).toISO(),
           endDate: DateTime.fromFormat(
-            itemRes.end_date ?? "",
+            stayRes.end_date ?? "",
             "dd/MM/yyyy"
           ).toISO()
         });
@@ -209,7 +209,7 @@ export const StaysForm = () => {
       };
       fetchStayById();
     }
-  }, [stayId]);
+  }, [stayId, authAxios]);
 
   if (isLoadingStay) return <Spinner />;
   return (
