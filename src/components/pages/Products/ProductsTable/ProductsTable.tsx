@@ -1,36 +1,19 @@
 import MaterialTable from "@material-table/core";
 import React, { useContext, useEffect, useState } from "react";
-/* import { FilterList } from "@material-ui/icons"; */
 import { ToastContainer } from "react-toastify";
 import { tableIcons } from "../../../../assets/icons/material-icons/MaterialIcons";
 import "./ProductsTable.scss";
 import { columns } from "./ColumnConfig";
-import {
-  BenefictName,
-  Item,
-  ProductTableItem,
-  TypeOfBenefict
-} from "../../../../types/types";
+import { Item, ProductTableItem } from "../../../../types/types";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { ProductsContext } from "../../../context/ProductsContext";
 import { ProductsTableRowActionButtons } from "../TableRowActionButtons/ProductsTableRowActionButtons";
+import { benefictList } from "../../../../models/beneficts";
 
 export const ProductsTable = () => {
-  /* const [areFiltersActive, setAreFiltersActive] = useState(false); */
   const { authAxios } = useContext(AxiosContext);
   const productsContext = useContext(ProductsContext);
   const [itemTableList, setItemTableList] = useState<ProductTableItem[]>([]);
-
-  /* const [isLoadingItems, setIsLoadingItems] = useState<boolean>(false); */
-
-  const beneficts: BenefictName[] = [
-    { name: "Desayuno", typeOfBenefict: TypeOfBenefict.Breakfast },
-    { name: "Almuerzo", typeOfBenefict: TypeOfBenefict.Lunch },
-    { name: "Merienda", typeOfBenefict: TypeOfBenefict.Snack },
-    { name: "Cena", typeOfBenefict: TypeOfBenefict.Dinner },
-    { name: "Spa", typeOfBenefict: TypeOfBenefict.Spa },
-    { name: "Kiosco", typeOfBenefict: TypeOfBenefict.Store }
-  ];
 
   const deleteItem = async (itemId: number) => {
     try {
@@ -40,23 +23,22 @@ export const ProductsTable = () => {
       );
       if (updatedItems) productsContext?.setProductList(updatedItems);
     } catch (error) {
-      console.error("ERROR: ", error);
+      /* console.error("ERROR: ", error); */
     }
   };
 
-  const formatItemList = (items?: Item[]): ProductTableItem[] => {
-    if (!items) return [];
-    const tableItemsList: ProductTableItem[] = items.map(item => ({
-      ...item,
-      type_of_benefit:
-        beneficts.find(
-          benefict => benefict.typeOfBenefict === item.type_of_benefit
-        )?.name ?? ""
-    }));
-    return tableItemsList;
-  };
-
   useEffect(() => {
+    const formatItemList = (items?: Item[]): ProductTableItem[] => {
+      if (!items) return [];
+      const tableItemsList: ProductTableItem[] = items.map(item => ({
+        ...item,
+        type_of_benefit:
+          benefictList.find(
+            benefict => benefict.typeOfBenefict === item.type_of_benefit
+          )?.name ?? ""
+      }));
+      return tableItemsList;
+    };
     const createItemTableList = () => {
       const formattedItemList = formatItemList(productsContext?.productList);
       setItemTableList(formattedItemList);
