@@ -11,13 +11,10 @@ import { StaysTableRowActionButtons } from "../TableRowActionButtons/StaysTableR
 import { ApartmentsContext } from "../../../context/ApartmentsContext";
 
 export const StaysTable = () => {
-  /* const [areFiltersActive, setAreFiltersActive] = useState(false); */
-
   const { authAxios } = useContext(AxiosContext);
   const apartmentsContext = useContext(ApartmentsContext);
   const staysContext = useContext(StaysContext);
   const [stayTableList, setStayTableList] = useState<StayTableItem[]>([]);
-  /* const [isLoadingStayItem, setIsLoadingStayItem] = useState<boolean>(false); */
 
   const deleteStay = async (stayId: number) => {
     try {
@@ -27,43 +24,33 @@ export const StaysTable = () => {
       );
       if (updatedStays) staysContext?.setStayList(updatedStays);
     } catch (error) {
-      console.error("ERROR: ", error);
+      /* console.error("ERROR: ", error); */
     }
   };
 
-  /* const getApartmentById = async (apartmentId: number): Promise<Apartment> => {
-    const apartmentResponse = await authAxios.get(
-      `/apartments/${apartmentId}/`
-    );
-    return apartmentResponse.data;
-  }; */
-
-  const formatStayList = (stays?: Stay[]): StayTableItem[] => {
-    if (!stays) return [];
-    const tableStayList = stays.map(stay => {
-      if (!stay.apartment || !stay.id) return undefined;
-      const apartment = apartmentsContext?.apartmentList.find(
-        apartmentItem => apartmentItem.id === stay.apartment
-      );
-      return {
-        id: stay.id,
-        startDate: stay.start_date,
-        endDate: stay.end_date,
-        apartmentName: apartment?.name,
-        guestsNumber: stay.users?.length
-      };
-    });
-
-    return tableStayList.filter(notUndefined);
-  };
-
   useEffect(() => {
-    const createStayTableList = async () => {
-      const formattedStayList = await formatStayList(staysContext?.stayList);
-      setStayTableList(formattedStayList);
+    const formatStayList = (stays?: Stay[]): StayTableItem[] => {
+      if (!stays) return [];
+      const tableStayList = stays.map(stay => {
+        if (!stay.apartment || !stay.id) return undefined;
+        const apartment = apartmentsContext?.apartmentList.find(
+          apartmentItem => apartmentItem.id === stay.apartment
+        );
+        return {
+          id: stay.id,
+          startDate: stay.start_date,
+          endDate: stay.end_date,
+          apartmentName: apartment?.name,
+          guestsNumber: stay.users?.length
+        };
+      });
+
+      return tableStayList.filter(notUndefined);
     };
-    createStayTableList();
-  }, [staysContext]);
+
+    const formattedStayList = formatStayList(staysContext?.stayList);
+    setStayTableList(formattedStayList);
+  }, [staysContext, apartmentsContext?.apartmentList]);
 
   const options = {
     paging: true,
@@ -73,7 +60,6 @@ export const StaysTable = () => {
     search: false,
     showTitle: false,
     toolbar: true,
-    /* sorting: true, */
     sorting: false,
     rowStyle: (data: Stay, index: number) => {
       if (index % 2 === 0) {
@@ -94,12 +80,6 @@ export const StaysTable = () => {
     },
     filtering: true,
     actionsColumnIndex: -1
-    /* headerStyle: {
-      position: "sticky",
-      top: "0",
-      borderRadius: "10px",
-      height: "10px"
-    }, */
   };
 
   return (

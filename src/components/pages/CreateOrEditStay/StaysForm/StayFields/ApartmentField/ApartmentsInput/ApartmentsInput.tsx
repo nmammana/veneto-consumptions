@@ -2,31 +2,28 @@ import React, { FC, useContext } from "react";
 import { Autocomplete } from "@mui/material";
 import { TextField, TextFieldProps } from "@material-ui/core";
 import { FieldProps } from "formik";
-/* import axios from "axios"; */
 import { ApartmentsContext } from "../../../../../../context/ApartmentsContext";
 
 export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
-  const {
-    form: { /* touched, setTouched,  */ setFieldValue }
-  } = props;
+  const { form, field } = props;
   const { error, helperText } = props;
-  const {
-    field: { name }
-  } = props;
   const apartmentsContext = useContext(ApartmentsContext);
 
   return (
     <Autocomplete
       onChange={(_, value) => {
-        setFieldValue(name, value?.id);
+        form.setFieldValue(field.name, value?.id);
       }}
       loading={apartmentsContext?.isLoadingApartmentList}
       options={apartmentsContext?.apartmentList ?? []}
-      /* inputValue={
-        apartments.find(apartment => apartment.name === name)?.name ?? ""
-      } */
-      getOptionLabel={value => value.name}
-      /* onBlur={() => setTouched({ ...touched, [name!]: true })} */
+      value={
+        apartmentsContext?.apartmentList.find(
+          apartment => apartment.id === field.value
+        ) ?? undefined
+      }
+      getOptionLabel={value =>
+        typeof value.name === "undefined" ? "" : value.name
+      }
       renderInput={textFieldProps => (
         <TextField
           {...props}

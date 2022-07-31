@@ -73,8 +73,6 @@ export const AuthContextProvider: FC<AuthContextProviderProps> = ({
         authenticated: true
       });
   }, []);
-
-  console.log(authState);
   return (
     <AuthContext.Provider value={authContextValues}>
       {children}
