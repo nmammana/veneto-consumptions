@@ -41,7 +41,7 @@ export const ApartmentsContextProvider: FC<ApartmentsContextProviderProps> = ({
     if (authenticated) {
       const getApartmentList = async (): Promise<Apartment[]> => {
         const apartmentListResponse = await authAxios.get("/apartments/");
-        return apartmentListResponse.data.results;
+        return apartmentListResponse.data;
       };
       const fetchApartments = async () => {
         setIsLoadingApartmentList(true);
