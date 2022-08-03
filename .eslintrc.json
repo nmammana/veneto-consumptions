@@ -60,6 +60,12 @@
           "some": ["nesting", "id"]
         }
       }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
     ]
   }
 }

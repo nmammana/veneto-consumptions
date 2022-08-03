@@ -46,7 +46,9 @@
   },
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false react-scripts start",
-    "build": "react-scripts build",
+    "startWin": "set \"GENERATE_SOURCEMAP=false\" && react-scripts start",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "buildWin": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint .",
