@@ -89,15 +89,18 @@ export const StaysForm = () => {
       /* TODO: Hay que hacer las validaciones de los campos antes de cargarlos 
       en la estadía. Despues de eso habria que cambiar el tipado para que los 
       campos obligatorios dejen de ser opcionales */
-      const errorMsg = validateUserAddition(ref.current.values);
+      const formattedBeneficts = formatBeneficts(beneficts);
+      const errorMsg = validateUserAddition(
+        ref.current.values,
+        formattedBeneficts
+      );
+      const formattedStartDate = DateTime.fromISO(startDate ?? "").toFormat(
+        "dd/MM/yyyy"
+      );
+      const formattedEndDate = DateTime.fromISO(endDate ?? "").toFormat(
+        "dd/MM/yyyy"
+      );
       if (!errorMsg) {
-        const formattedBeneficts = formatBeneficts(beneficts);
-        const formattedStartDate = DateTime.fromISO(startDate ?? "").toFormat(
-          "dd/MM/yyyy"
-        );
-        const formattedEndDate = DateTime.fromISO(endDate ?? "").toFormat(
-          "dd/MM/yyyy"
-        );
         setStay({
           ...stay,
           start_date: formattedStartDate,
@@ -147,9 +150,9 @@ export const StaysForm = () => {
     if (ref.current) {
       const updatedUserList = stay.users.filter(user => user !== userToEdit);
       setStay({ ...stay, users: updatedUserList });
-      ref.current.setFieldValue("startDate", stay.start_date);
-      ref.current.setFieldValue("endDate", stay.end_date);
-      ref.current.setFieldValue("apartment", stay.apartment);
+      /* ref.current.setFieldValue("startDate", stay.start_date);
+      ref.current.setFieldValue("endDate", stay.end_date); */
+      /* ref.current.setFieldValue("apartment", stay.apartment); */
       ref.current.setFieldValue("firstName", userToEdit.user.first_name);
       ref.current.setFieldValue("lastName", userToEdit.user.last_name);
       ref.current.setFieldValue("email", userToEdit.user.email);
@@ -158,7 +161,7 @@ export const StaysForm = () => {
       userToEdit.benefits?.forEach((benefict, index) => {
         ref.current?.setFieldValue(
           `beneficts[${index}].${benefict.type_of_benefit}`,
-          benefict.quantity_available
+          benefict.quantity
         );
       });
     }

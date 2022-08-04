@@ -18,6 +18,14 @@ export const getBenefictNameFromType = (
   );
 };
 
-export const dateIsAfter = (date: DateTime, comparator: DateTime): boolean => {
-  return date.toMillis() > comparator.toMillis();
+export const convertDateStringToDateTime = (dateStr: string): DateTime => {
+  return DateTime.fromISO(dateStr, { setZone: false });
+};
+
+export const dateIsAfter = (date: DateTime, comparand: DateTime): boolean => {
+  return date.toMillis() > comparand.toMillis();
+};
+
+export const dateIsBefore = (date: DateTime, comparand: DateTime): boolean => {
+  return date.toMillis() < comparand.toMillis();
 };

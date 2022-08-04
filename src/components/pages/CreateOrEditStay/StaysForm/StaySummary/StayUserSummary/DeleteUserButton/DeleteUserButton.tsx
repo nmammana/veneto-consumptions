@@ -13,7 +13,11 @@ export const DeleteUserButton: FC<DeleteUserButtonProps> = ({
   deleteUser
 }) => {
   return (
-    <button className="deleteUserButton" onClick={() => deleteUser(user)}>
+    <button
+      className="deleteUserButton"
+      type="button"
+      onClick={() => deleteUser(user)}
+    >
       <AiOutlineDelete className="icon" />
     </button>
   );

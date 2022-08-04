@@ -10,7 +10,11 @@ interface EditUserButtonProps {
 
 export const EditUserButton: FC<EditUserButtonProps> = ({ user, editUser }) => {
   return (
-    <button className="editUserButton" onClick={() => editUser(user)}>
+    <button
+      className="editUserButton"
+      type="button"
+      onClick={() => editUser(user)}
+    >
       <BiEditAlt className="icon" />
     </button>
   );

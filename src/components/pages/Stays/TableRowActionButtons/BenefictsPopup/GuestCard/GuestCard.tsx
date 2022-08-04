@@ -23,10 +23,7 @@ export const GuestCard: FC<GuestCardProps> = ({ guest }) => {
         <p className="title">Beneficio</p>
         <div className="benefictsList">
           {benefits
-            ?.filter(
-              benefict =>
-                benefict.quantity_available && benefict.quantity_available > 0
-            )
+            ?.filter(benefict => benefict.quantity && benefict.quantity > 0)
             .map((benefict, index) => (
               // eslint-disable-next-line react/no-array-index-key
               <BenefictItem benefict={benefict} key={index} />
