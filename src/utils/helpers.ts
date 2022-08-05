@@ -29,3 +29,9 @@ export const dateIsAfter = (date: DateTime, comparand: DateTime): boolean => {
 export const dateIsBefore = (date: DateTime, comparand: DateTime): boolean => {
   return date.toMillis() < comparand.toMillis();
 };
+
+export const isEmail = (stringToTest: string): boolean => {
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return emailRegex.test(stringToTest);
+};

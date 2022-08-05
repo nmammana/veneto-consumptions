@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash";
 import React, { FC } from "react";
 import { User } from "../../../../../../types/types";
 import { getFullNameFromPerson } from "../../../../../../utils/helpers";
@@ -12,6 +13,9 @@ export const GuestCard: FC<GuestCardProps> = ({ guest }) => {
   const { user, benefits } = guest;
 
   const guestFullName = getFullNameFromPerson(user.first_name, user.last_name);
+  const benefictsWithQuantity =
+    benefits?.filter(benefict => benefict.quantity && benefict.quantity > 0) ??
+    [];
 
   return (
     <div className="guestCard">
@@ -20,14 +24,12 @@ export const GuestCard: FC<GuestCardProps> = ({ guest }) => {
         <p className="guestName">{guestFullName}</p>
       </div>
       <div className="benefictsContainer">
-        <p className="title">Beneficio</p>
+        {!isEmpty(benefictsWithQuantity) && <p className="title">Beneficio</p>}
         <div className="benefictsList">
-          {benefits
-            ?.filter(benefict => benefict.quantity && benefict.quantity > 0)
-            .map((benefict, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <BenefictItem benefict={benefict} key={index} />
-            ))}
+          {benefictsWithQuantity?.map((benefict, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <BenefictItem benefict={benefict} key={index} />
+          ))}
         </div>
       </div>
     </div>

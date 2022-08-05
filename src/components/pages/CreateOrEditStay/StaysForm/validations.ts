@@ -7,7 +7,8 @@ import {
 } from "../../../../types/types";
 import {
   convertDateStringToDateTime,
-  dateIsBefore
+  dateIsBefore,
+  isEmail
 } from "../../../../utils/helpers";
 
 export const validateUserAddition = (
@@ -23,7 +24,7 @@ export const validateUserAddition = (
     return "Error: No hay fecha de finalización de estadía seleccionada.";
   }
   if (!apartment) {
-    return "Error: No hay departamento seleccionado.";
+    return "Error: Elija un departamento.";
   }
   if (!firstName) {
     return "Error: Ingrese el nombre del nuevo huésped.";
@@ -31,11 +32,11 @@ export const validateUserAddition = (
   if (!lastName) {
     return "Error: Ingrese el apellido del nuevo huésped.";
   }
-  if (!email) {
-    return "Error: Ingrese el email del nuevo huésped.";
-  }
   if (!qrCode) {
     return "Error: Ingrese el código QR del nuevo huésped.";
+  }
+  if (qrCode.length !== 6) {
+    return "Error: Escriba un código QR válido.";
   }
   if (
     !dateIsBefore(
@@ -44,6 +45,9 @@ export const validateUserAddition = (
     )
   ) {
     return "Error: La fecha de entrada no puede ser igual o posterior a la de salida ";
+  }
+  if (email && !isEmail(email)) {
+    return "Escriba una direccion válida de correo electrónico";
   }
   const negativeBenefictError = beneficts
     ?.map(benefict => {

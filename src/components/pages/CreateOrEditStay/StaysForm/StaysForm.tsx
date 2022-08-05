@@ -136,7 +136,7 @@ export const StaysForm = () => {
           }))
         );
       } else {
-        toast.error(errorMsg, toastDefaultConfig);
+        toast.warn(errorMsg, toastDefaultConfig);
       }
     }
   };
@@ -175,9 +175,12 @@ export const StaysForm = () => {
           ...staysContext.stayList,
           stayResponse.data
         ]);
+        navigate("/stays");
       }
     } catch (e) {
       toast.error("Ocurrió un error al crear la estadía", toastDefaultConfig);
+      // actions.setSubmitting(false);
+      navigate("/stays");
     }
   };
 
@@ -190,8 +193,11 @@ export const StaysForm = () => {
           return existingStay;
         })
       );
+      navigate("/stays");
     } catch (e) {
       toast.error("Ocurrió un error al editar la estadía", toastDefaultConfig);
+      // actions.setSubmitting(false);
+      navigate("/stays");
     }
   };
 
@@ -235,14 +241,12 @@ export const StaysForm = () => {
     <div className="stayFormContainer">
       <Formik
         initialValues={stayFormValues}
-        onSubmit={(values, actions) => {
+        onSubmit={() => {
           if (stay.id) {
             editStay(stay);
           } else {
             createStay(stay);
           }
-          actions.setSubmitting(false);
-          navigate("/stays");
         }}
         innerRef={ref}
       >
