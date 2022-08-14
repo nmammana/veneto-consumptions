@@ -23,8 +23,8 @@ interface ProductsContextProviderProps {
   children: ReactNode;
 }
 
-export const ProductsContext = createContext<ProductsContextProps | undefined>(
-  undefined
+export const ProductsContext = createContext<ProductsContextProps>(
+  undefined as any
 );
 
 export const ProductsContextProvider: FC<ProductsContextProviderProps> = ({

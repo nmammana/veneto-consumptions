@@ -2,11 +2,9 @@ import React, { FC, useContext } from "react";
 import { Autocomplete } from "@mui/material";
 import { TextField, TextFieldProps } from "@material-ui/core";
 import { FieldProps } from "formik";
-import { ApartmentsContext } from "../../../../../../context/ApartmentsContext";
-import { StaysContext } from "../../../../../../context/StaysContext";
+import { ApartmentsContext } from "../../../../../context/ApartmentsContext";
 
 export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
-  const { setCurrentStay } = useContext(StaysContext);
   const { form, field } = props;
   const { error, helperText } = props;
   const apartmentsContext = useContext(ApartmentsContext);
@@ -15,10 +13,6 @@ export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
     <Autocomplete
       onChange={(_, value) => {
         form.setFieldValue(field.name, value?.id);
-        setCurrentStay(currentStay => ({
-          ...currentStay,
-          apartment: value?.id
-        }));
       }}
       loading={apartmentsContext?.isLoadingApartmentList}
       options={apartmentsContext?.apartmentList ?? []}

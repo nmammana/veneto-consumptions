@@ -59,7 +59,7 @@ export const StaysTable = () => {
     pageSizeOptions: [10, 20, 50],
     search: false,
     showTitle: false,
-    toolbar: true,
+    toolbar: false,
     sorting: false,
     rowStyle: (data: Stay, index: number) => {
       if (index % 2 === 0) {
@@ -78,7 +78,7 @@ export const StaysTable = () => {
       font: "normal normal 400 20px/27px Poppins",
       color: "#008dc8"
     },
-    filtering: true,
+    filtering: false,
     actionsColumnIndex: -1
   };
 
@@ -106,7 +106,9 @@ export const StaysTable = () => {
         body: {
           filterRow: {
             filterTooltip: "Filtrar"
-          }
+          },
+          emptyDataSourceMessage:
+            "No hay estadías para la búsqueda seleccionada"
         },
         header: {
           actions: ""

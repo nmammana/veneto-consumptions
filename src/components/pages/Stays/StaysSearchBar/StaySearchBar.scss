@@ -1,0 +1,20 @@
+.staySearchBar {
+  margin: 2em 0;
+  .staySearchForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    .formFields {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 3em;
+      .apartmentField {
+        width: 280px;
+      }
+    }
+  }
+}

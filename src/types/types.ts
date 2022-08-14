@@ -121,3 +121,9 @@ export interface StayTableItem {
   endDate?: string;
   guestsNumber?: number;
 }
+
+export interface StaySearchParams {
+  apartment?: number;
+  start_date: string;
+  end_date: string;
+}

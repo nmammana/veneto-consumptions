@@ -9,7 +9,7 @@ export const GuestBenefictQuantityInput: FC<FieldProps> = ({ field, form }) => {
       inputProps={{ min: 0, max: 500 }}
       value={field.value}
       onChange={event => {
-        form.setFieldValue(field.name, event.target.value.replace(/^0+/, ""));
+        form.setFieldValue(field.name, event.target.value);
       }}
     />
   );

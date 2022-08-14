@@ -1,0 +1,11 @@
+@import "../../../../../styles/Global.scss";
+
+.apartmentsField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  .staysFormLabel {
+    font: $subtitle4;
+    color: $blue;
+  }
+}
