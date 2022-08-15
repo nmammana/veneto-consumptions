@@ -46,7 +46,7 @@ export const StaysContextProvider: FC<StaysContextProviderProps> = ({
     start_date: DateTime.fromISO(
       DateTime.local().minus({ months: 1 }).toISO()
     ).toFormat("yyyy-MM-dd"),
-    end_date: DateTime.fromISO(DateTime.local().toISO()).toFormat("yyyy-MM-dd")
+    end_date: ""
   });
 
   const getStaysQueryParams = useCallback(() => {

@@ -23,7 +23,10 @@ import { benefictList } from "../../../../models/beneficts";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { StaysContext } from "../../../context/StaysContext";
 import { Spinner } from "../../../common/Spinner/Spinner";
-import { validateUserAddition } from "./validations";
+import {
+  validateStayCreationEdition,
+  validateUserAddition
+} from "./validations";
 import { toastDefaultConfig } from "../../../../utils/toast";
 
 const formatBeneficts = (beneficts?: PlainBenefict[]): Optional<Benefict[]> => {
@@ -90,12 +93,12 @@ export const StaysForm = () => {
         ref.current.values,
         formattedBeneficts
       );
-      const formattedStartDate = DateTime.fromISO(startDate ?? "").toFormat(
-        "dd/MM/yyyy"
-      );
-      const formattedEndDate = DateTime.fromISO(endDate ?? "").toFormat(
-        "dd/MM/yyyy"
-      );
+      const formattedStartDate = startDate
+        ? DateTime.fromISO(startDate).toFormat("dd/MM/yyyy")
+        : "";
+      const formattedEndDate = endDate
+        ? DateTime.fromISO(endDate).toFormat("dd/MM/yyyy")
+        : "";
       if (!errorMsg) {
         setCurrentStay({
           ...currentStay,
@@ -190,8 +193,7 @@ export const StaysForm = () => {
       const error = e as AxiosError;
       if (error.response) {
         const errorData = error.response?.data as any;
-        const errorMsg = errorData.details as string;
-        console.log(errorData.details);
+        const errorMsg = errorData.details;
         toast.error(
           `Ocurrió un error al editar la estadía: ${errorMsg}`,
           toastDefaultConfig
@@ -214,26 +216,23 @@ export const StaysForm = () => {
             "Ocurrió un error al editar la estadía",
             toastDefaultConfig
           );
-          navigate("/stays");
         }
         setCurrentStay(stayRes);
         setStayFormValues(stayValues => ({
           ...stayValues,
           apartment: stayRes.apartment,
-          startDate: DateTime.fromFormat(
-            stayRes.start_date ?? "",
-            "dd/MM/yyyy"
-          ).toISO(),
-          endDate: DateTime.fromFormat(
-            stayRes.end_date ?? "",
-            "dd/MM/yyyy"
-          ).toISO()
+          startDate: stayRes.start_date
+            ? DateTime.fromFormat(stayRes.start_date, "dd/MM/yyyy").toISO()
+            : "",
+          endDate: stayRes.end_date
+            ? DateTime.fromFormat(stayRes.end_date, "dd/MM/yyyy").toISO()
+            : " "
         }));
         setIsLoadingStay(false);
       };
       fetchStayById();
     }
-  }, [stayId, authAxios, navigate]);
+  }, [stayId, authAxios, setCurrentStay]);
 
   if (isLoadingStay) return <Spinner />;
   return (
@@ -241,16 +240,16 @@ export const StaysForm = () => {
       <Formik
         initialValues={stayFormValues}
         onSubmit={() => {
-          /* if (ref.current?.values) {
+          if (ref.current?.values) {
             const { startDate, endDate, apartment } = ref.current.values;
-            const errorMsg = validateStayCreation(ref.current.values);
-            const formattedStartDate = DateTime.fromISO(
-              startDate ?? ""
-            ).toFormat("dd/MM/yyyy");
+            const errorMsg = validateStayCreationEdition(ref.current.values);
+            const formattedStartDate = startDate
+              ? DateTime.fromISO(startDate).toFormat("dd/MM/yyyy")
+              : "";
 
-            const formattedEndDate = DateTime.fromISO(endDate ?? "").toFormat(
-              "dd/MM/yyyy"
-            );
+            const formattedEndDate = endDate
+              ? DateTime.fromISO(endDate).toFormat("dd/MM/yyyy")
+              : "";
             if (!errorMsg) {
               setCurrentStay({
                 ...currentStay,
@@ -261,7 +260,7 @@ export const StaysForm = () => {
             } else {
               toast.warn(errorMsg, toastDefaultConfig);
             }
-          } */
+          }
           if (currentStay.id) {
             editStay(currentStay);
           } else {

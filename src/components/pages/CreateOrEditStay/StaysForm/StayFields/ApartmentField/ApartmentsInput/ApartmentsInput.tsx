@@ -4,12 +4,14 @@ import { TextField, TextFieldProps } from "@material-ui/core";
 import { FieldProps } from "formik";
 import { ApartmentsContext } from "../../../../../../context/ApartmentsContext";
 import { StaysContext } from "../../../../../../context/StaysContext";
+import { useTextFieldInputStyle } from "../../../../../../../styles/muiStyles";
 
 export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
   const { setCurrentStay } = useContext(StaysContext);
   const { form, field } = props;
   const { error, helperText } = props;
   const apartmentsContext = useContext(ApartmentsContext);
+  const classes = useTextFieldInputStyle();
 
   return (
     <Autocomplete
@@ -32,6 +34,7 @@ export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
       }
       renderInput={textFieldProps => (
         <TextField
+          className={classes.textFieldInputStyle}
           {...props}
           {...textFieldProps}
           helperText={helperText}

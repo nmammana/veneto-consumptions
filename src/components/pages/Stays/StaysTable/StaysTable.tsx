@@ -78,6 +78,9 @@ export const StaysTable = () => {
       font: "normal normal 400 20px/27px Poppins",
       color: "#008dc8"
     },
+    filterCellStyle: {
+      border: "none"
+    },
     filtering: false,
     actionsColumnIndex: -1
   };

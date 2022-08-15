@@ -65,6 +65,9 @@ export const ProductsTable = () => {
     cellStyle: {
       border: "none"
     },
+    filterCellStyle: {
+      border: "none"
+    },
     actionsCellStyle: {
       border: "none"
     },
@@ -74,12 +77,6 @@ export const ProductsTable = () => {
       color: "#008dc8"
     },
     filtering: true,
-    /* headerStyle: {
-      position: "sticky",
-      top: "0",
-      borderRadius: "10px",
-      height: "10px"
-    }, */
     actionsColumnIndex: -1
   };
 

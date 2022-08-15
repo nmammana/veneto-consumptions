@@ -81,7 +81,7 @@ export const validateUserAddition = (
   return undefined;
 };
 
-export const validateStayCreation = (
+export const validateStayCreationEdition = (
   formValues: StayInputs
 ): Optional<string> => {
   const { startDate, endDate, apartment } = formValues;
