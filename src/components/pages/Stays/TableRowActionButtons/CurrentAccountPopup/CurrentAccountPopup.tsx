@@ -1,22 +1,34 @@
 import { Tooltip } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { FiEye } from "react-icons/fi";
 import { IoMdClose } from "react-icons/io";
 import Modal from "react-modal";
+import { Consumption } from "../../../../../types/types";
 import { ButtonLarge } from "../../../../common/buttons/ButtonLarge/ButtonLarge";
 import { ButtonMiddle } from "../../../../common/buttons/ButtonMiddle/ButtonMiddle";
+import { Spinner } from "../../../../common/Spinner/Spinner";
+import { AxiosContext } from "../../../../context/AxiosContext";
 import "./CurrentAccountPopup.scss";
 
 Modal.setAppElement("#root");
 
-export const CurrentAccountPopup = () => {
+interface CurrentAccountPopupProps {
+  stayId: number;
+}
+
+export const CurrentAccountPopup: FC<CurrentAccountPopupProps> = ({
+  stayId
+}) => {
+  const { authAxios } = useContext(AxiosContext);
   const [iscurrentAccountPopupOpen, setIsCurrentAcccountPopupOpen] =
     useState<boolean>(false);
-
+  const [isLoadingConsumptions, setIsLoadingConsumptions] =
+    useState<boolean>(false);
   const onViewCurrentAccountClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     setIsCurrentAcccountPopupOpen(true);
   };
+  const [consumption, setConsumption] = useState<Consumption>();
 
   const onClosePopup = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent
@@ -28,6 +40,30 @@ export const CurrentAccountPopup = () => {
   const onPayOffClick = () => {};
 
   const onFullStayPayOffClick = () => {};
+
+  const getConsumptionsByStayId =
+    useCallback(async (): Promise<Consumption> => {
+      const consumptionsResponse = await authAxios.get(
+        `/consumption/${stayId}/`
+      );
+      return consumptionsResponse.data;
+    }, [authAxios, stayId]);
+
+  useEffect(() => {
+    if (stayId && iscurrentAccountPopupOpen) {
+      const fetchStayById = async () => {
+        setIsLoadingConsumptions(true);
+        const consumptionRes = await getConsumptionsByStayId();
+        setConsumption(consumptionRes);
+        setIsLoadingConsumptions(false);
+      };
+      fetchStayById();
+    }
+  }, [getConsumptionsByStayId, iscurrentAccountPopupOpen, stayId]);
+
+  useEffect(() => {
+    console.log("consumption", consumption);
+  }, [consumption]);
 
   return (
     <>
@@ -65,82 +101,88 @@ export const CurrentAccountPopup = () => {
           <div className="popupHeader">
             <p className="popupTitle">Cuenta corriente</p>
           </div>
-          <div className="guestCard">
-            <div className="nameContainer">
-              <p className="title">Nombre y apellido</p>
-              <p className="content">Federico Gonzalez</p>
-            </div>
-            <div className="consumptionsContainer">
-              <p className="title">Consumos</p>
-              <div className="benefictsList">
-                <p className="content">Almuerzo vegetariano x 2 $500</p>
-                <p className="content">Desayuno completo x 3 $350</p>
+          {isLoadingConsumptions ? (
+            <Spinner />
+          ) : (
+            <>
+              <div className="guestCard">
+                <div className="nameContainer">
+                  <p className="title">Nombre y apellido</p>
+                  <p className="content">Federico Gonzalez</p>
+                </div>
+                <div className="consumptionsContainer">
+                  <p className="title">Consumos</p>
+                  <div className="benefictsList">
+                    <p className="content">Almuerzo vegetariano x 2 $500</p>
+                    <p className="content">Desayuno completo x 3 $350</p>
+                  </div>
+                </div>
+                <div className="separator" />
+                <div className="accountSummary">
+                  <div className="totalAmountContainer">
+                    <p className="totalTitle">Total</p>
+                    <p className="totalValue">$2050</p>
+                  </div>
+                  <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
+                </div>
               </div>
-            </div>
-            <div className="separator" />
-            <div className="accountSummary">
-              <div className="totalAmountContainer">
-                <p className="totalTitle">Total</p>
-                <p className="totalValue">$2050</p>
+              <div className="guestCard">
+                <div className="nameContainer">
+                  <p className="title">Nombre y apellido</p>
+                  <p className="content">Federico Gonzalez</p>
+                </div>
+                <div className="consumptionsContainer">
+                  <p className="title">Consumos</p>
+                  <div className="benefictsList">
+                    <p className="content">Almuerzo vegetariano x 2 $500</p>
+                    <p className="content">Desayuno completo x 3 $350</p>
+                  </div>
+                </div>
+                <div className="separator" />
+                <div className="accountSummary">
+                  <div className="totalAmountContainer">
+                    <p className="totalTitle">Total</p>
+                    <p className="totalValue">$2050</p>
+                  </div>
+                  <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
+                </div>
               </div>
-              <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
-            </div>
-          </div>
-          <div className="guestCard">
-            <div className="nameContainer">
-              <p className="title">Nombre y apellido</p>
-              <p className="content">Federico Gonzalez</p>
-            </div>
-            <div className="consumptionsContainer">
-              <p className="title">Consumos</p>
-              <div className="benefictsList">
-                <p className="content">Almuerzo vegetariano x 2 $500</p>
-                <p className="content">Desayuno completo x 3 $350</p>
+              <div className="guestCard">
+                <div className="nameContainer">
+                  <p className="title">Nombre y apellido</p>
+                  <p className="content">Federico Gonzalez</p>
+                </div>
+                <div className="consumptionsContainer">
+                  <p className="title">Consumos</p>
+                  <div className="benefictsList">
+                    <p className="content">Almuerzo vegetariano x 2 $500</p>
+                    <p className="content">Desayuno completo x 3 $350</p>
+                  </div>
+                </div>
+                <div className="separator" />
+                <div className="accountSummary">
+                  <div className="totalAmountContainer">
+                    <p className="totalTitle">Total</p>
+                    <p className="totalValue">$2050</p>
+                  </div>
+                  <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
+                </div>
               </div>
-            </div>
-            <div className="separator" />
-            <div className="accountSummary">
-              <div className="totalAmountContainer">
-                <p className="totalTitle">Total</p>
-                <p className="totalValue">$2050</p>
-              </div>
-              <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
-            </div>
-          </div>
-          <div className="guestCard">
-            <div className="nameContainer">
-              <p className="title">Nombre y apellido</p>
-              <p className="content">Federico Gonzalez</p>
-            </div>
-            <div className="consumptionsContainer">
-              <p className="title">Consumos</p>
-              <div className="benefictsList">
-                <p className="content">Almuerzo vegetariano x 2 $500</p>
-                <p className="content">Desayuno completo x 3 $350</p>
-              </div>
-            </div>
-            <div className="separator" />
-            <div className="accountSummary">
-              <div className="totalAmountContainer">
-                <p className="totalTitle">Total</p>
-                <p className="totalValue">$2050</p>
-              </div>
-              <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
-            </div>
-          </div>
 
-          <div className="stayTotalAmountContainer">
-            <p className="title">Total de consumos</p>
-            <div className="stayAccountSummary">
-              <div className="totalAmountBox">
-                <p className="price">$2700</p>
+              <div className="stayTotalAmountContainer">
+                <p className="title">Total de consumos</p>
+                <div className="stayAccountSummary">
+                  <div className="totalAmountBox">
+                    <p className="price">$2700</p>
+                  </div>
+                  <ButtonLarge
+                    onClick={() => onFullStayPayOffClick()}
+                    text="Saldar estadía"
+                  />
+                </div>
               </div>
-              <ButtonLarge
-                onClick={() => onFullStayPayOffClick()}
-                text="Saldar estadía"
-              />
-            </div>
-          </div>
+            </>
+          )}
 
           <div
             className="floatingCloseButton"

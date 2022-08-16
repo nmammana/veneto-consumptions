@@ -12,7 +12,6 @@ import { AxiosContextProvider } from "./components/context/AxiosContext";
 import { AdminPageContextProvider } from "./components/context/AdminPageContext";
 import { StaysContextProvider } from "./components/context/StaysContext";
 import { PrivateRoute } from "./components/routes/PrivateRoute";
-import { CreateOrEditProduct } from "./components/pages/CreateOrEditProduct/CreateOrEditProduct";
 import { Products } from "./components/pages/Products/Products";
 import { Stays } from "./components/pages/Stays/Stays";
 import { NotFound } from "./components/pages/NotFound/NotFound";
@@ -48,7 +47,6 @@ export const App = () => {
                           }
                         />
                         {/* **** Private Routes **** */}
-                        {/* TODO: Change /home route to private when auth is done */}
                         <Route
                           path="/stays"
                           element={
@@ -78,22 +76,6 @@ export const App = () => {
                           element={
                             <PrivateRoute>
                               <CreateOrEditStay />
-                            </PrivateRoute>
-                          }
-                        />
-                        <Route
-                          path="/editProduct"
-                          element={
-                            <PrivateRoute>
-                              <CreateOrEditProduct />
-                            </PrivateRoute>
-                          }
-                        />
-                        <Route
-                          path="/editProduct/:itemId"
-                          element={
-                            <PrivateRoute>
-                              <CreateOrEditProduct />
                             </PrivateRoute>
                           }
                         />

@@ -16,7 +16,7 @@ export const StaysTableRowActionButtons: FC<
   return (
     <div className="actionItems">
       <BenefictsPopup stayId={stayId} />
-      <CurrentAccountPopup />
+      <CurrentAccountPopup stayId={stayId} />
       <EditStayButton stayId={stayId} />
       <DeleteStayButton deleteStay={() => deleteStay(stayId)} stayId={stayId} />
     </div>

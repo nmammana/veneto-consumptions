@@ -14,6 +14,7 @@ export const notUndefined = <T>(x: Optional<T>): x is T => x !== undefined;
 
 export type ApiDate = string;
 export type DateInput = DateTime | ApiDate;
+export type Url = string;
 
 export interface UserAuth {
   email: string;
@@ -46,7 +47,7 @@ export enum TypeOfBenefict {
   Snack = 3, // 'Merienda'
   Dinner = 4, // 'Cena'
   Spa = 5, // 'Spa'
-  Store = 6 // 'Kiosko'
+  Store = 6 // 'Kiosco'
 }
 
 export interface BenefictName {
@@ -126,4 +127,16 @@ export interface StaySearchParams {
   apartment?: number;
   start_date: string;
   end_date: string;
+}
+
+export interface Consumption {
+  items: Item[];
+  id?: number;
+  extra_price?: number;
+  total?: number;
+  signature?: Url;
+  user_stay: User;
+  stay?: number;
+  payed?: boolean;
+  user_stay_id: number;
 }

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { FC, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import "./ProductsForm.scss";
 import { toast, ToastContainer } from "react-toastify";
@@ -13,17 +13,21 @@ import { ProductsContext } from "../../../context/ProductsContext";
 import { Spinner } from "../../../common/Spinner/Spinner";
 import { toastDefaultConfig } from "../../../../utils/toast";
 
-export const ProductsForm = () => {
+interface ProductsFormProps {
+  itemId?: number;
+}
+
+export const ProductsForm: FC<ProductsFormProps> = ({ itemId }) => {
   const { authAxios } = useContext(AxiosContext);
   const productsContext = useContext(ProductsContext);
-  const params = useParams();
   const navigate = useNavigate();
-  const itemId = Number(params.itemId);
   const [isLoadingItem, setIsLoadingItem] = useState<boolean>(false);
   const [item, setItem] = useState<Item>({
     name: "",
     price: 0
   });
+
+  const title = itemId ? "Editar productos" : "Cargar productos";
 
   const createProduct = async (product: Item) => {
     try {
@@ -87,12 +91,16 @@ export const ProductsForm = () => {
         }}
       >
         <Form className="productForm">
-          <p className="productsFormTitle">Cargar/editar productos</p>
+          <p className="productsFormTitle">{title}</p>
           <div className="productFields">
             <ProductTypeField />
-            <ProductNameField />
-            <ProductPriceField />
-            <ProductSubmitField />
+            <div className="productAndPriceContainer">
+              <ProductNameField />
+              <ProductPriceField />
+            </div>
+            <div className="submitButtonContainer">
+              <ProductSubmitField />
+            </div>
           </div>
         </Form>
       </Formik>
