@@ -8,6 +8,7 @@ import { AuthInput } from "./AuthInput/AuthInput";
 import { SubmitButton } from "./SubmitButton/SubmitButton";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { toastDefaultConfig } from "../../../../utils/toast";
+import { ButtonTypes } from "../../../../types/types";
 
 interface AuthFormProps {
   email: string;
@@ -89,7 +90,7 @@ export const LoginForm = () => {
           />
           <Field
             id="submit"
-            type="submit"
+            type={ButtonTypes.Submit}
             name="submit"
             component={SubmitButton}
           />

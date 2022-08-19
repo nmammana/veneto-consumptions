@@ -10,7 +10,8 @@ export const columns: Column<StayTableItem>[] = [
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
-      border: "none"
+      border: "none",
+      width: "10%"
     }
   },
   {
@@ -19,7 +20,8 @@ export const columns: Column<StayTableItem>[] = [
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#2d0836",
-      border: "none"
+      border: "none",
+      width: "30%"
     }
   },
   {
@@ -28,7 +30,8 @@ export const columns: Column<StayTableItem>[] = [
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
-      border: "none"
+      border: "none",
+      width: "15%"
     }
   },
   {
@@ -37,39 +40,8 @@ export const columns: Column<StayTableItem>[] = [
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
-      border: "none"
+      border: "none",
+      width: "15%"
     }
   }
-  /* TODO: Preguntar si esto se va a usar
-   {
-    title: "Huespedes",
-    field: "guestsNumber",
-    filtering: false,
-    cellStyle: {
-      font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
-      color: "#817185",
-      border: "none"
-    }
-  }, */
-  /* {
-    title: "Beneficios",
-    field: "beneficts",
-    filtering: false,
-    cellStyle: {
-      font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
-      color: "#817185",
-      border: "none"
-    }
-  }  */
-  /* ,
-  {
-    title: "",
-    field: "actionItems",
-    filtering: false,
-    cellStyle: {
-      font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
-      color: "#817185",
-      border: "none"
-    }
-  } */
 ];

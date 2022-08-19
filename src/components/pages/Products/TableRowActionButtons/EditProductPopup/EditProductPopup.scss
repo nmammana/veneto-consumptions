@@ -1,0 +1,14 @@
+@import "../../../../../styles/Global.scss";
+
+.editProductButton {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: $blue;
+  .icon {
+    font-size: 1.2rem;
+  }
+}
+.editProductButton:visited {
+  color: $blue;
+}

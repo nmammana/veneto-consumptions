@@ -1,12 +1,28 @@
 import React, { FC } from "react";
-import { TextField } from "@material-ui/core";
+import { makeStyles, TextField } from "@material-ui/core";
 import { FieldProps } from "formik";
-import "./AuthInput.scss";
 
 interface AuthInputProps {
   placeholder?: string;
   type?: string;
 }
+
+export const useAuthInputStyles = makeStyles(() => ({
+  authInput: {
+    height: "40px",
+    width: "324px",
+    "& .MuiOutlinedInput-root": {
+      "&:hover fieldset": {
+        borderColor: "#817185",
+        borderWidth: "0.5px"
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#008dc8",
+        borderWidth: "2px"
+      }
+    }
+  }
+}));
 
 export const AuthInput: FC<FieldProps & AuthInputProps> = ({
   field,
@@ -14,8 +30,10 @@ export const AuthInput: FC<FieldProps & AuthInputProps> = ({
   placeholder,
   type
 }) => {
+  const classes = useAuthInputStyles();
   return (
     <TextField
+      className={classes.authInput}
       type={type}
       value={field.value}
       onChange={event => {

@@ -19,13 +19,14 @@ export const AxiosContextProvider: FC<AxiosContextProviderProps> = ({
   children
 }) => {
   const authContext = useContext(AuthContext);
+  const { REACT_APP_BASE_URL } = process.env;
 
   const authAxios = axios.create({
-    baseURL: "https://consumos-veneto-village-dev.herokuapp.com/api"
+    baseURL: `${REACT_APP_BASE_URL}`
   });
 
   const publicAxios = axios.create({
-    baseURL: "https://consumos-veneto-village-dev.herokuapp.com/api"
+    baseURL: `${REACT_APP_BASE_URL}`
   });
 
   // TODO: Check the eslint rule of no-param-reassign
@@ -54,7 +55,7 @@ export const AxiosContextProvider: FC<AxiosContextProviderProps> = ({
     const options = {
       method: "POST",
       data,
-      url: "https://consumos-veneto-village-dev.herokuapp.com/api/auth/token/refresh"
+      url: `${REACT_APP_BASE_URL}/auth/token/refresh`
     };
 
     // TODO: Check the eslint rule of no-param-reassign

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import { User } from "../../../../../../../types/types";
+import { ButtonTypes, User } from "../../../../../../../types/types";
 import "./DeleteUserButton.scss";
 
 interface DeleteUserButtonProps {
@@ -13,7 +13,11 @@ export const DeleteUserButton: FC<DeleteUserButtonProps> = ({
   deleteUser
 }) => {
   return (
-    <button className="deleteUserButton" onClick={() => deleteUser(user)}>
+    <button
+      className="deleteUserButton"
+      type={ButtonTypes.Button}
+      onClick={() => deleteUser(user)}
+    >
       <AiOutlineDelete className="icon" />
     </button>
   );

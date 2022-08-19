@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Form, Formik, FormikProps } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
-import { head } from "lodash";
 import "./StaysForm.scss";
+import { head, parseInt } from "lodash";
 import { DateTime } from "luxon";
+import { AxiosError } from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { StayFields } from "./StayFields/StayFields";
 import { GuestFields } from "./GuestFields/GuestFields";
@@ -22,25 +23,34 @@ import { benefictList } from "../../../../models/beneficts";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { StaysContext } from "../../../context/StaysContext";
 import { Spinner } from "../../../common/Spinner/Spinner";
-import { validateUserAddition } from "./validations";
+import {
+  validateStayCreationEdition,
+  validateUserAddition
+} from "./validations";
 import { toastDefaultConfig } from "../../../../utils/toast";
 
 const formatBeneficts = (beneficts?: PlainBenefict[]): Optional<Benefict[]> => {
   if (!beneficts) return [];
-  const formattedBeneficts = Object.values(TypeOfBenefict)
-    .map(type => {
-      if (typeof type === "string") return undefined;
-      const matchedBenefict = beneficts.find(
-        benefict => head(Object.keys(benefict)) === type.toString()
+  const formattedBeneficts = beneficts
+    .map(benefict => {
+      const typeOfBenefict = Object.values(TypeOfBenefict).find(
+        type => head(Object.keys(benefict)) === type.toString()
       );
-      const quantity = matchedBenefict
-        ? (head(Object.values(matchedBenefict)) as number)
-        : 0;
-      if (quantity === undefined) return undefined;
-      return {
-        type_of_benefit: type,
-        quantity
-      };
+      let benefictQuantity = typeOfBenefict
+        ? benefict[typeOfBenefict]
+        : undefined;
+      if (typeof typeOfBenefict === "string") return undefined;
+      /* Por alguna razon en runtime se estan convirtiendo las quantities en string, 
+      a pesar de que vscode las marca como tipo number, y eso hace que se rompa en la 
+      creacion de estadias */
+      if (typeof benefictQuantity === "string")
+        benefictQuantity = parseInt(benefictQuantity);
+      return typeOfBenefict && benefictQuantity
+        ? {
+            type_of_benefit: typeOfBenefict,
+            quantity: benefictQuantity
+          }
+        : undefined;
     })
     .filter(notUndefined);
   return formattedBeneficts;
@@ -48,14 +58,12 @@ const formatBeneficts = (beneficts?: PlainBenefict[]): Optional<Benefict[]> => {
 
 export const StaysForm = () => {
   const { authAxios } = useContext(AxiosContext);
-  const staysContext = useContext(StaysContext);
+  const { currentStay, setCurrentStay, stayList, setStayList } =
+    useContext(StaysContext);
   const params = useParams();
   const stayId = Number(params.stayId);
   const [isLoadingStay, setIsLoadingStay] = useState<boolean>(false);
   const navigate = useNavigate();
-  const [stay, setStay] = useState<Stay>({
-    users: []
-  });
   const stayDefaultValues: StayInputs = {
     startDate: DateTime.local().toISO(),
     endDate: DateTime.local().toISO(),
@@ -86,25 +94,25 @@ export const StaysForm = () => {
         qrCode,
         beneficts
       } = ref.current.values;
-      /* TODO: Hay que hacer las validaciones de los campos antes de cargarlos 
-      en la estadía. Despues de eso habria que cambiar el tipado para que los 
-      campos obligatorios dejen de ser opcionales */
-      const errorMsg = validateUserAddition(ref.current.values);
+      const formattedBeneficts = formatBeneficts(beneficts);
+      const errorMsg = validateUserAddition(
+        ref.current.values,
+        formattedBeneficts
+      );
+      const formattedStartDate = startDate
+        ? DateTime.fromISO(startDate).toFormat("dd/MM/yyyy")
+        : "";
+      const formattedEndDate = endDate
+        ? DateTime.fromISO(endDate).toFormat("dd/MM/yyyy")
+        : "";
       if (!errorMsg) {
-        const formattedBeneficts = formatBeneficts(beneficts);
-        const formattedStartDate = DateTime.fromISO(startDate ?? "").toFormat(
-          "dd/MM/yyyy"
-        );
-        const formattedEndDate = DateTime.fromISO(endDate ?? "").toFormat(
-          "dd/MM/yyyy"
-        );
-        setStay({
-          ...stay,
+        setCurrentStay({
+          ...currentStay,
           start_date: formattedStartDate,
           end_date: formattedEndDate,
           apartment,
           users: [
-            ...stay.users,
+            ...currentStay.users,
             {
               user: {
                 first_name: firstName,
@@ -118,8 +126,8 @@ export const StaysForm = () => {
           ]
         });
         setStayFormValues(stayDefaultValues);
-        ref.current.setFieldValue("startDate", startDate);
-        ref.current.setFieldValue("endDate", endDate);
+        ref.current.setFieldValue("start_date", startDate);
+        ref.current.setFieldValue("end_date", endDate);
         ref.current.setFieldValue("apartment", apartment);
         ref.current.setFieldValue("firstName", "");
         ref.current.setFieldValue("lastName", "");
@@ -133,23 +141,24 @@ export const StaysForm = () => {
           }))
         );
       } else {
-        toast.error(errorMsg, toastDefaultConfig);
+        toast.warn(errorMsg, toastDefaultConfig);
       }
     }
   };
 
   const deleteUser = (deletedUser: User) => {
-    const updatedUserList = stay.users.filter(user => user !== deletedUser);
-    setStay({ ...stay, users: updatedUserList });
+    const updatedUserList = currentStay.users.filter(
+      user => user !== deletedUser
+    );
+    setCurrentStay({ ...currentStay, users: updatedUserList });
   };
 
   const editUser = (userToEdit: User) => {
     if (ref.current) {
-      const updatedUserList = stay.users.filter(user => user !== userToEdit);
-      setStay({ ...stay, users: updatedUserList });
-      ref.current.setFieldValue("startDate", stay.start_date);
-      ref.current.setFieldValue("endDate", stay.end_date);
-      ref.current.setFieldValue("apartment", stay.apartment);
+      const updatedUserList = currentStay.users.filter(
+        user => user !== userToEdit
+      );
+      setCurrentStay({ ...currentStay, users: updatedUserList });
       ref.current.setFieldValue("firstName", userToEdit.user.first_name);
       ref.current.setFieldValue("lastName", userToEdit.user.last_name);
       ref.current.setFieldValue("email", userToEdit.user.email);
@@ -158,7 +167,7 @@ export const StaysForm = () => {
       userToEdit.benefits?.forEach((benefict, index) => {
         ref.current?.setFieldValue(
           `beneficts[${index}].${benefict.type_of_benefit}`,
-          benefict.quantity_available
+          benefict.quantity
         );
       });
     }
@@ -168,10 +177,8 @@ export const StaysForm = () => {
     try {
       const stayResponse = await authAxios.post("/stay/", newStay);
       if (stayResponse.data) {
-        staysContext?.setStayList([
-          ...staysContext.stayList,
-          stayResponse.data
-        ]);
+        setStayList([...stayList, stayResponse.data]);
+        navigate("/stays");
       }
     } catch (e) {
       toast.error("Ocurrió un error al crear la estadía", toastDefaultConfig);
@@ -181,14 +188,23 @@ export const StaysForm = () => {
   const editStay = async (stayModified: Stay) => {
     try {
       await authAxios.put(`/stay/${stayId}/`, stayModified);
-      staysContext?.setStayList(
-        staysContext.stayList.map(existingStay => {
-          if (existingStay.id === stay.id) return stayModified;
+      setStayList(
+        stayList.map(existingStay => {
+          if (existingStay.id === currentStay.id) return stayModified;
           return existingStay;
         })
       );
+      navigate("/stays");
     } catch (e) {
-      toast.error("Ocurrió un error al editar la estadía", toastDefaultConfig);
+      const error = e as AxiosError;
+      if (error.response) {
+        const errorData = error.response?.data as any;
+        const errorMsg = errorData.details;
+        toast.error(
+          `Ocurrió un error al editar la estadía: ${errorMsg}`,
+          toastDefaultConfig
+        );
+      }
     }
   };
 
@@ -206,40 +222,56 @@ export const StaysForm = () => {
             "Ocurrió un error al editar la estadía",
             toastDefaultConfig
           );
-          navigate("/stays");
         }
-        setStay(stayRes);
+        setCurrentStay(stayRes);
         setStayFormValues(stayValues => ({
           ...stayValues,
           apartment: stayRes.apartment,
-          startDate: DateTime.fromFormat(
-            stayRes.start_date ?? "",
-            "dd/MM/yyyy"
-          ).toISO(),
-          endDate: DateTime.fromFormat(
-            stayRes.end_date ?? "",
-            "dd/MM/yyyy"
-          ).toISO()
+          startDate: stayRes.start_date
+            ? DateTime.fromFormat(stayRes.start_date, "dd/MM/yyyy").toISO()
+            : "",
+          endDate: stayRes.end_date
+            ? DateTime.fromFormat(stayRes.end_date, "dd/MM/yyyy").toISO()
+            : " "
         }));
         setIsLoadingStay(false);
       };
       fetchStayById();
     }
-  }, [stayId, authAxios, navigate]);
+  }, [stayId, authAxios, setCurrentStay]);
 
   if (isLoadingStay) return <Spinner />;
   return (
     <div className="stayFormContainer">
       <Formik
         initialValues={stayFormValues}
-        onSubmit={(values, actions) => {
-          if (stay.id) {
-            editStay(stay);
-          } else {
-            createStay(stay);
+        onSubmit={() => {
+          if (ref.current?.values) {
+            const { startDate, endDate, apartment } = ref.current.values;
+            const errorMsg = validateStayCreationEdition(ref.current.values);
+            const formattedStartDate = startDate
+              ? DateTime.fromISO(startDate).toFormat("dd/MM/yyyy")
+              : "";
+
+            const formattedEndDate = endDate
+              ? DateTime.fromISO(endDate).toFormat("dd/MM/yyyy")
+              : "";
+            if (!errorMsg) {
+              setCurrentStay({
+                ...currentStay,
+                start_date: formattedStartDate,
+                end_date: formattedEndDate,
+                apartment
+              });
+            } else {
+              toast.warn(errorMsg, toastDefaultConfig);
+            }
           }
-          actions.setSubmitting(false);
-          navigate("/stays");
+          if (currentStay.id) {
+            editStay(currentStay);
+          } else {
+            createStay(currentStay);
+          }
         }}
         innerRef={ref}
       >
@@ -247,7 +279,7 @@ export const StaysForm = () => {
           <StayFields />
           <GuestFields onAddGuestClick={onAddGuestClick} />
           <StaySummary
-            stay={stay}
+            stay={currentStay}
             deleteUser={deleteUser}
             editUser={editUser}
           />

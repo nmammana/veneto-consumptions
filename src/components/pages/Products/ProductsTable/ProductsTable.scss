@@ -10,9 +10,9 @@
 .MuiTableCell-root.MuiTableCell-footer {
   border-bottom: none;
 }
-/* .tableContainer {
-  position: relative;
-} */
+.MuiOutlinedInput-root {
+  height: 40px;
+}
 .createStayButton {
   position: absolute;
   bottom: 2rem;
@@ -37,4 +37,11 @@
       background-color: $blue;
     }
   }
+}
+.actionButtonsCell.MuiTableCell-root {
+  border: none;
+}
+
+td.css-1ex1afd-MuiTableCell-root {
+  border: none;
 }

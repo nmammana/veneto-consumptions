@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { FC, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import "./ProductsForm.scss";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { Item } from "../../../../types/types";
 import { ProductNameField } from "./ProductNameField/ProductNameField";
 import { ProductPriceField } from "./ProductPriceField/ProductPriceField";
@@ -12,18 +12,23 @@ import { AxiosContext } from "../../../context/AxiosContext";
 import { ProductsContext } from "../../../context/ProductsContext";
 import { Spinner } from "../../../common/Spinner/Spinner";
 import { toastDefaultConfig } from "../../../../utils/toast";
+import { validateItemCreationEdition } from "./validations";
 
-export const ProductsForm = () => {
+interface ProductsFormProps {
+  itemId?: number;
+}
+
+export const ProductsForm: FC<ProductsFormProps> = ({ itemId }) => {
   const { authAxios } = useContext(AxiosContext);
   const productsContext = useContext(ProductsContext);
-  const params = useParams();
   const navigate = useNavigate();
-  const itemId = Number(params.itemId);
   const [isLoadingItem, setIsLoadingItem] = useState<boolean>(false);
   const [item, setItem] = useState<Item>({
     name: "",
     price: 0
   });
+
+  const title = itemId ? "Editar productos" : "Cargar productos";
 
   const createProduct = async (product: Item) => {
     try {
@@ -77,37 +82,34 @@ export const ProductsForm = () => {
       <Formik
         initialValues={item}
         onSubmit={(values, actions) => {
-          if (values.id) {
-            editProduct(values);
+          const errorMsg = validateItemCreationEdition(values);
+          if (!errorMsg) {
+            if (values.id) {
+              editProduct(values);
+            } else {
+              createProduct(values);
+            }
+            actions.setSubmitting(false);
+            navigate("/products");
           } else {
-            createProduct(values);
+            toast.warn(errorMsg, toastDefaultConfig);
           }
-          actions.setSubmitting(false);
-          navigate("/products");
         }}
       >
         <Form className="productForm">
-          <p className="productsFormTitle">Cargar/editar productos</p>
+          <p className="productsFormTitle">{title}</p>
           <div className="productFields">
             <ProductTypeField />
-            <ProductNameField />
-            <ProductPriceField />
-            <ProductSubmitField />
+            <div className="productAndPriceContainer">
+              <ProductNameField />
+              <ProductPriceField />
+            </div>
+            <div className="submitButtonContainer">
+              <ProductSubmitField />
+            </div>
           </div>
         </Form>
       </Formik>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 };

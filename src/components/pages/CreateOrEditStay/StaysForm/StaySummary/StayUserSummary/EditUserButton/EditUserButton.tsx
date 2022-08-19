@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { BiEditAlt } from "react-icons/bi";
-import { User } from "../../../../../../../types/types";
+import { ButtonTypes, User } from "../../../../../../../types/types";
 import "./EditUserButton.scss";
 
 interface EditUserButtonProps {
@@ -10,7 +10,11 @@ interface EditUserButtonProps {
 
 export const EditUserButton: FC<EditUserButtonProps> = ({ user, editUser }) => {
   return (
-    <button className="editUserButton" onClick={() => editUser(user)}>
+    <button
+      className="editUserButton"
+      type={ButtonTypes.Button}
+      onClick={() => editUser(user)}
+    >
       <BiEditAlt className="icon" />
     </button>
   );
