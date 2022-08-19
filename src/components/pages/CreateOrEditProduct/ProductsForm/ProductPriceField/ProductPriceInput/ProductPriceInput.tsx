@@ -9,12 +9,10 @@ export const ProductPriceInput: FC<FieldProps> = ({ field, form }) => {
     <TextField
       className={classes.textFieldInputStyle}
       type="number"
-      inputProps={{ min: 0, step: 0.1 }}
       value={field.value}
       onChange={event => {
         form.setFieldValue(field.name, event.target.value.replace(/^0+/, ""));
       }}
-      required
     />
   );
 };

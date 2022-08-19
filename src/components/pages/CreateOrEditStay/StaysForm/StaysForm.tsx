@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Form, Formik, FormikProps } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
-import { head } from "lodash";
 import "./StaysForm.scss";
+import { head, parseInt } from "lodash";
 import { DateTime } from "luxon";
 import { AxiosError } from "axios";
 import { toast, ToastContainer } from "react-toastify";
@@ -31,20 +31,26 @@ import { toastDefaultConfig } from "../../../../utils/toast";
 
 const formatBeneficts = (beneficts?: PlainBenefict[]): Optional<Benefict[]> => {
   if (!beneficts) return [];
-  const formattedBeneficts = Object.values(TypeOfBenefict)
-    .map(type => {
-      if (typeof type === "string") return undefined;
-      const matchedBenefict = beneficts.find(
-        benefict => head(Object.keys(benefict)) === type.toString()
+  const formattedBeneficts = beneficts
+    .map(benefict => {
+      const typeOfBenefict = Object.values(TypeOfBenefict).find(
+        type => head(Object.keys(benefict)) === type.toString()
       );
-      const quantity = matchedBenefict
-        ? (head(Object.values(matchedBenefict)) as number)
-        : 0;
-      if (quantity === undefined) return undefined;
-      return {
-        type_of_benefit: type,
-        quantity
-      };
+      let benefictQuantity = typeOfBenefict
+        ? benefict[typeOfBenefict]
+        : undefined;
+      if (typeof typeOfBenefict === "string") return undefined;
+      /* Por alguna razon en runtime se estan convirtiendo las quantities en string, 
+      a pesar de que vscode las marca como tipo number, y eso hace que se rompa en la 
+      creacion de estadias */
+      if (typeof benefictQuantity === "string")
+        benefictQuantity = parseInt(benefictQuantity);
+      return typeOfBenefict && benefictQuantity
+        ? {
+            type_of_benefit: typeOfBenefict,
+            quantity: benefictQuantity
+          }
+        : undefined;
     })
     .filter(notUndefined);
   return formattedBeneficts;

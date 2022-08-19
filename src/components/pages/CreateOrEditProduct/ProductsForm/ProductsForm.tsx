@@ -2,7 +2,7 @@ import React, { FC, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import "./ProductsForm.scss";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { Item } from "../../../../types/types";
 import { ProductNameField } from "./ProductNameField/ProductNameField";
 import { ProductPriceField } from "./ProductPriceField/ProductPriceField";
@@ -12,6 +12,7 @@ import { AxiosContext } from "../../../context/AxiosContext";
 import { ProductsContext } from "../../../context/ProductsContext";
 import { Spinner } from "../../../common/Spinner/Spinner";
 import { toastDefaultConfig } from "../../../../utils/toast";
+import { validateItemCreationEdition } from "./validations";
 
 interface ProductsFormProps {
   itemId?: number;
@@ -81,13 +82,18 @@ export const ProductsForm: FC<ProductsFormProps> = ({ itemId }) => {
       <Formik
         initialValues={item}
         onSubmit={(values, actions) => {
-          if (values.id) {
-            editProduct(values);
+          const errorMsg = validateItemCreationEdition(values);
+          if (!errorMsg) {
+            if (values.id) {
+              editProduct(values);
+            } else {
+              createProduct(values);
+            }
+            actions.setSubmitting(false);
+            navigate("/products");
           } else {
-            createProduct(values);
+            toast.warn(errorMsg, toastDefaultConfig);
           }
-          actions.setSubmitting(false);
-          navigate("/products");
         }}
       >
         <Form className="productForm">
@@ -104,18 +110,6 @@ export const ProductsForm: FC<ProductsFormProps> = ({ itemId }) => {
           </div>
         </Form>
       </Formik>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 };

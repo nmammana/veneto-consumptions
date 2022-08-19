@@ -14,7 +14,6 @@ export const ProductTypeInput: FC<FieldProps> = ({ field, form }) => {
         form.setFieldValue(field.name, event.target.value);
       }}
       labelId="productType"
-      required
     >
       {benefictList.map((benefict, index) => (
         // eslint-disable-next-line react/no-array-index-key

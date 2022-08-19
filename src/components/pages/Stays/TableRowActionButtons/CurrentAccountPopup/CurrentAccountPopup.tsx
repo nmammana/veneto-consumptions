@@ -2,6 +2,8 @@ import { Tooltip } from "@material-ui/core";
 import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { FiEye } from "react-icons/fi";
 import { IoMdClose } from "react-icons/io";
+import { Dictionary } from "lodash";
+import { groupBy } from "lodash-es";
 import Modal from "react-modal";
 import { Consumption } from "../../../../../types/types";
 import { ButtonLarge } from "../../../../common/buttons/ButtonLarge/ButtonLarge";
@@ -9,6 +11,7 @@ import { ButtonMiddle } from "../../../../common/buttons/ButtonMiddle/ButtonMidd
 import { Spinner } from "../../../../common/Spinner/Spinner";
 import { AxiosContext } from "../../../../context/AxiosContext";
 import "./CurrentAccountPopup.scss";
+import { ConsumptionListGuestCard } from "./ConsumptionListGuestCard/ConsumptionListGuestCard";
 
 Modal.setAppElement("#root");
 
@@ -28,7 +31,9 @@ export const CurrentAccountPopup: FC<CurrentAccountPopupProps> = ({
     event.stopPropagation();
     setIsCurrentAcccountPopupOpen(true);
   };
-  const [consumption, setConsumption] = useState<Consumption>();
+  const [groupedConsumptionList, setGroupedConsumptionList] = useState<
+    Dictionary<Consumption[]>
+  >({});
 
   const onClosePopup = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent
@@ -41,29 +46,30 @@ export const CurrentAccountPopup: FC<CurrentAccountPopupProps> = ({
 
   const onFullStayPayOffClick = () => {};
 
-  const getConsumptionsByStayId =
-    useCallback(async (): Promise<Consumption> => {
-      const consumptionsResponse = await authAxios.get(
-        `/consumption/${stayId}/`
-      );
-      return consumptionsResponse.data;
-    }, [authAxios, stayId]);
+  const getConsumptionsByStayId = useCallback(async (): Promise<
+    Consumption[]
+  > => {
+    const consumptionsResponse = await authAxios.get(
+      `/consumption/?stay=${stayId}`
+    );
+    return consumptionsResponse.data;
+  }, [authAxios, stayId]);
 
   useEffect(() => {
     if (stayId && iscurrentAccountPopupOpen) {
       const fetchStayById = async () => {
         setIsLoadingConsumptions(true);
         const consumptionRes = await getConsumptionsByStayId();
-        setConsumption(consumptionRes);
+        const groupedConsumptions = groupBy(
+          consumptionRes,
+          consumption => consumption.user_stay_id
+        );
+        setGroupedConsumptionList(groupedConsumptions);
         setIsLoadingConsumptions(false);
       };
       fetchStayById();
     }
   }, [getConsumptionsByStayId, iscurrentAccountPopupOpen, stayId]);
-
-  useEffect(() => {
-    console.log("consumption", consumption);
-  }, [consumption]);
 
   return (
     <>
@@ -105,70 +111,58 @@ export const CurrentAccountPopup: FC<CurrentAccountPopupProps> = ({
             <Spinner />
           ) : (
             <>
-              <div className="guestCard">
-                <div className="nameContainer">
-                  <p className="title">Nombre y apellido</p>
-                  <p className="content">Federico Gonzalez</p>
-                </div>
-                <div className="consumptionsContainer">
-                  <p className="title">Consumos</p>
-                  <div className="benefictsList">
-                    <p className="content">Almuerzo vegetariano x 2 $500</p>
-                    <p className="content">Desayuno completo x 3 $350</p>
-                  </div>
-                </div>
-                <div className="separator" />
-                <div className="accountSummary">
-                  <div className="totalAmountContainer">
-                    <p className="totalTitle">Total</p>
-                    <p className="totalValue">$2050</p>
-                  </div>
-                  <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
-                </div>
-              </div>
-              <div className="guestCard">
-                <div className="nameContainer">
-                  <p className="title">Nombre y apellido</p>
-                  <p className="content">Federico Gonzalez</p>
-                </div>
-                <div className="consumptionsContainer">
-                  <p className="title">Consumos</p>
-                  <div className="benefictsList">
-                    <p className="content">Almuerzo vegetariano x 2 $500</p>
-                    <p className="content">Desayuno completo x 3 $350</p>
-                  </div>
-                </div>
-                <div className="separator" />
-                <div className="accountSummary">
-                  <div className="totalAmountContainer">
-                    <p className="totalTitle">Total</p>
-                    <p className="totalValue">$2050</p>
-                  </div>
-                  <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
-                </div>
-              </div>
-              <div className="guestCard">
-                <div className="nameContainer">
-                  <p className="title">Nombre y apellido</p>
-                  <p className="content">Federico Gonzalez</p>
-                </div>
-                <div className="consumptionsContainer">
-                  <p className="title">Consumos</p>
-                  <div className="benefictsList">
-                    <p className="content">Almuerzo vegetariano x 2 $500</p>
-                    <p className="content">Desayuno completo x 3 $350</p>
-                  </div>
-                </div>
-                <div className="separator" />
-                <div className="accountSummary">
-                  <div className="totalAmountContainer">
-                    <p className="totalTitle">Total</p>
-                    <p className="totalValue">$2050</p>
-                  </div>
-                  <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
-                </div>
-              </div>
+              {Object.entries(groupedConsumptionList).map(
+                ([key, consumptions]) => (
+                  <ConsumptionListGuestCard
+                    key={key}
+                    consumptions={consumptions}
+                    onPayOffClick={onPayOffClick}
+                  />
+                )
+              )}
 
+              <div className="guestCard">
+                <div className="nameContainer">
+                  <p className="title">Nombre y apellido</p>
+                  <p className="content">Federico Gonzalez</p>
+                </div>
+                <div className="consumptionsContainer">
+                  <p className="title">Consumos</p>
+                  <div className="benefictsList">
+                    <p className="content">Almuerzo vegetariano x 2 $500</p>
+                    <p className="content">Desayuno completo x 3 $350</p>
+                  </div>
+                </div>
+                <div className="separator" />
+                <div className="accountSummary">
+                  <div className="totalAmountContainer">
+                    <p className="totalTitle">Total</p>
+                    <p className="totalValue">$2050</p>
+                  </div>
+                  <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
+                </div>
+              </div>
+              <div className="guestCard">
+                <div className="nameContainer">
+                  <p className="title">Nombre y apellido</p>
+                  <p className="content">Federico Gonzalez</p>
+                </div>
+                <div className="consumptionsContainer">
+                  <p className="title">Consumos</p>
+                  <div className="benefictsList">
+                    <p className="content">Almuerzo vegetariano x 2 $500</p>
+                    <p className="content">Desayuno completo x 3 $350</p>
+                  </div>
+                </div>
+                <div className="separator" />
+                <div className="accountSummary">
+                  <div className="totalAmountContainer">
+                    <p className="totalTitle">Total</p>
+                    <p className="totalValue">$2050</p>
+                  </div>
+                  <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
+                </div>
+              </div>
               <div className="stayTotalAmountContainer">
                 <p className="title">Total de consumos</p>
                 <div className="stayAccountSummary">
