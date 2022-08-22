@@ -1,0 +1,27 @@
+@import "../../../styles/Global.scss";
+
+.consumptionsHeaderContainer {
+  margin: 2em 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  .stayDataTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    .stayTitle {
+      font: $subtitle2;
+      color: $blue;
+    }
+    .apartmentName {
+      font: $subtitle3;
+      color: $blue;
+    }
+  }
+  .payButtonsContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+  }
+}

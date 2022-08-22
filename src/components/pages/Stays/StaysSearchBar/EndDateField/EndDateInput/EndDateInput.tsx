@@ -10,9 +10,9 @@ export const EndDateInput: React.FC<FieldProps> = ({ field, form }) => {
   return (
     <DatePicker
       value={field.value}
-      onChange={(date: MaterialUiPickersDate) =>
-        form.setFieldValue(field.name, date)
-      }
+      onChange={(date: MaterialUiPickersDate) => {
+        form.setFieldValue(field.name, date);
+      }}
       inputFormat="dd/MM/yyyy"
       renderInput={params => (
         <TextField

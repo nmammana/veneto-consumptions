@@ -1,11 +1,11 @@
 import { FieldProps } from "formik";
 import React, { FC } from "react";
 import { ButtonTypes } from "../../../../../types/types";
-import { ButtonMiddle } from "../../../../common/buttons/ButtonMiddle/ButtonMiddle";
+import { ButtonSmall } from "../../../../common/buttons/ButtonSmall/ButtonSmall";
 
 export const SubmitButton: FC<FieldProps> = ({ form }) => {
   return (
-    <ButtonMiddle
+    <ButtonSmall
       type={ButtonTypes.Submit}
       text="INGRESAR"
       disabled={!form.dirty}

@@ -2,7 +2,6 @@ import { DateTime } from "luxon";
 import { ReactElement as _ReactElement, ReactNode } from "react";
 
 // TODO: Ver si se puede hacer funcionar este tipado
-
 export type Children = ReactNode;
 export type ReactElement = _ReactElement;
 export type PropsWithChildren<P> = P & { children?: Children };
@@ -115,22 +114,22 @@ export interface StayInputs {
   beneficts?: PlainBenefict[];
 }
 
-export interface StayTableItem {
-  id: number;
-  apartmentName?: string;
-  startDate?: string;
-  endDate?: string;
-  guestsNumber?: number;
-}
-
 export interface StaySearchParams {
   apartment?: number;
   start_date: string;
   end_date: string;
 }
 
+interface ConsumptionItem {
+  item: Item;
+  item_id: number;
+  total: number;
+  quantity: number;
+  frees: number;
+}
+
 export interface Consumption {
-  items: Item[];
+  items: ConsumptionItem[];
   id?: number;
   extra_price?: number;
   total?: number;
@@ -139,4 +138,16 @@ export interface Consumption {
   stay?: number;
   payed?: boolean;
   user_stay_id: number;
+  // date: DateTime;
+}
+
+export interface ConsumptionTableItem {
+  id: number;
+  date?: string; // TODO: CAMBIAR CUANDO ESTE LA FECHA EN EL BACK
+  userName: string;
+  itemConsumptionList: string;
+  extraPrice?: string;
+  signature?: Url;
+  payed?: boolean;
+  consumptionTotal: string;
 }

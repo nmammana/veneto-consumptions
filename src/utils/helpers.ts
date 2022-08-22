@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import { benefictList } from "../models/beneficts";
-import { notUndefined, TypeOfBenefict } from "../types/types";
+import { notUndefined, Optional, TypeOfBenefict } from "../types/types";
 
 export const getFullNameFromPerson = (
   firstName?: string,
@@ -34,4 +34,10 @@ export const isEmail = (stringToTest: string): boolean => {
   const emailRegex =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return emailRegex.test(stringToTest);
+};
+
+export const roundNumberToSecondDecimal = (
+  value?: number
+): Optional<number> => {
+  return value && Math.round((value + Number.EPSILON) * 100) / 100;
 };

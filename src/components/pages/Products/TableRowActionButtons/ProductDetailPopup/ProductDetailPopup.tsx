@@ -3,7 +3,7 @@ import { FiEye } from "react-icons/fi";
 import { IoMdClose } from "react-icons/io";
 import Modal from "react-modal";
 import { ButtonLarge } from "../../../../common/buttons/ButtonLarge/ButtonLarge";
-import { ButtonMiddle } from "../../../../common/buttons/ButtonMiddle/ButtonMiddle";
+import { ButtonSmall } from "../../../../common/buttons/ButtonSmall/ButtonSmall";
 import "./ProductDetailPopup.scss";
 
 Modal.setAppElement("#root");
@@ -84,7 +84,7 @@ export const ProductDetailPopup = () => {
                 <p className="totalTitle">Total</p>
                 <p className="totalValue">$2050</p>
               </div>
-              <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
+              <ButtonSmall onClick={() => onPayOffClick()} text="Saldar" />
             </div>
           </div>
           <div className="guestCard">
@@ -105,7 +105,7 @@ export const ProductDetailPopup = () => {
                 <p className="totalTitle">Total</p>
                 <p className="totalValue">$2050</p>
               </div>
-              <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
+              <ButtonSmall onClick={() => onPayOffClick()} text="Saldar" />
             </div>
           </div>
           <div className="guestCard">
@@ -126,7 +126,7 @@ export const ProductDetailPopup = () => {
                 <p className="totalTitle">Total</p>
                 <p className="totalValue">$2050</p>
               </div>
-              <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
+              <ButtonSmall onClick={() => onPayOffClick()} text="Saldar" />
             </div>
           </div>
 

@@ -7,7 +7,7 @@ import { groupBy } from "lodash-es";
 import Modal from "react-modal";
 import { Consumption } from "../../../../../types/types";
 import { ButtonLarge } from "../../../../common/buttons/ButtonLarge/ButtonLarge";
-import { ButtonMiddle } from "../../../../common/buttons/ButtonMiddle/ButtonMiddle";
+import { ButtonSmall } from "../../../../common/buttons/ButtonSmall/ButtonSmall";
 import { Spinner } from "../../../../common/Spinner/Spinner";
 import { AxiosContext } from "../../../../context/AxiosContext";
 import "./CurrentAccountPopup.scss";
@@ -139,7 +139,7 @@ export const CurrentAccountPopup: FC<CurrentAccountPopupProps> = ({
                     <p className="totalTitle">Total</p>
                     <p className="totalValue">$2050</p>
                   </div>
-                  <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
+                  <ButtonSmall onClick={() => onPayOffClick()} text="Saldar" />
                 </div>
               </div>
               <div className="guestCard">
@@ -160,7 +160,7 @@ export const CurrentAccountPopup: FC<CurrentAccountPopupProps> = ({
                     <p className="totalTitle">Total</p>
                     <p className="totalValue">$2050</p>
                   </div>
-                  <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
+                  <ButtonSmall onClick={() => onPayOffClick()} text="Saldar" />
                 </div>
               </div>
               <div className="stayTotalAmountContainer">

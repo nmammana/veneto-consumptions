@@ -9,7 +9,7 @@ export const EndDateField = () => {
       <label className="staysFormLabel" htmlFor="endDate">
         Hasta
       </label>
-      <Field id="end_date" name="endDate" component={EndDateInput} />
+      <Field id="endDate" name="end_date" component={EndDateInput} />
     </div>
   );
 };

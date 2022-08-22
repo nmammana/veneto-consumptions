@@ -1,18 +1,18 @@
 @import "../../../../styles/Global.scss";
 
-.buttonMiddle {
+.buttonSmall {
   background-color: $green;
-  width: 192px;
-  height: 64px;
+  width: 128px;
+  height: 42px;
   border-style: none;
-  border-radius: 30px;
-  padding: 0.5em;
+  border-radius: 27px;
   cursor: pointer;
   p {
-    font: $button3;
+    font: $button2;
     color: $white;
   }
 }
+
 .disabled {
   background-color: $grayLightest;
   cursor: auto;
