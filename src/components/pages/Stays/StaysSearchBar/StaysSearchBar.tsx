@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Form, Formik } from "formik";
 import { DateTime } from "luxon";
-import { ButtonMiddle } from "../../../common/buttons/ButtonMiddle/ButtonMiddle";
+import { ButtonSmall } from "../../../common/buttons/ButtonSmall/ButtonSmall";
 import { ButtonTypes, StaySearchParams } from "../../../../types/types";
 import { StaysContext } from "../../../context/StaysContext";
 import "./StaySearchBar.scss";
@@ -43,7 +43,7 @@ export const StaysSearchBar = () => {
             <EndDateField />
           </div>
 
-          <ButtonMiddle
+          <ButtonSmall
             text="Buscar"
             className="submitButton"
             type={ButtonTypes.Submit}

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { ButtonTypes } from "../../../../../types/types";
-import { ButtonMiddle } from "../../../../common/buttons/ButtonMiddle/ButtonMiddle";
+import { ButtonSmall } from "../../../../common/buttons/ButtonSmall/ButtonSmall";
 import { GuestBenefictsFieldList } from "./GuestBenefictsFieldList/GuestBenefictsFieldList";
 import { GuestEmailField } from "./GuestEmailField/GuestEmailField";
 import "./GuestFields.scss";
@@ -24,8 +24,7 @@ export const GuestFields: FC<GuestFieldsProps> = ({ onAddGuestClick }) => {
       <GuestQRCodeField />
       <GuestBenefictsFieldList />
       <div className="addGuestButtonContainer">
-        {/* <Field id="submit" name="submit" component={AddGuestButtonInput} /> */}
-        <ButtonMiddle
+        <ButtonSmall
           type={ButtonTypes.Button}
           text="Agregar"
           onClick={onAddGuestClick}

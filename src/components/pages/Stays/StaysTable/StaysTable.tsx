@@ -1,11 +1,10 @@
 import MaterialTable from "@material-table/core";
 import React, { useContext, useEffect, useState } from "react";
-/* import { FilterList } from "@material-ui/icons"; */
 import { tableIcons } from "../../../../assets/icons/material-icons/MaterialIcons";
 import "./StaysTable.scss";
-import { columns } from "./ColumnConfig";
+import { columns, StayTableItem } from "./ColumnConfig";
 import { AxiosContext } from "../../../context/AxiosContext";
-import { notUndefined, Stay, StayTableItem } from "../../../../types/types";
+import { notUndefined, Stay } from "../../../../types/types";
 import { StaysContext } from "../../../context/StaysContext";
 import { StaysTableRowActionButtons } from "../TableRowActionButtons/StaysTableRowActionButtons";
 import { ApartmentsContext } from "../../../context/ApartmentsContext";

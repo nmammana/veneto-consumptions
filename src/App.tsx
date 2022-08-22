@@ -18,6 +18,7 @@ import { NotFound } from "./components/pages/NotFound/NotFound";
 import { PublicRoute } from "./components/routes/PublicRoute";
 import { ProductsContextProvider } from "./components/context/ProductsContext";
 import { ApartmentsContextProvider } from "./components/context/ApartmentsContext";
+import { Consumptions } from "./components/pages/Consumptions/Consumptions";
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== "undefined") {
@@ -76,6 +77,14 @@ export const App = () => {
                           element={
                             <PrivateRoute>
                               <CreateOrEditStay />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route
+                          path="/consumptions/:stayId"
+                          element={
+                            <PrivateRoute>
+                              <Consumptions />
                             </PrivateRoute>
                           }
                         />

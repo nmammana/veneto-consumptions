@@ -1,7 +1,14 @@
 import { Column } from "@material-table/core";
-import { StayTableItem } from "../../../../types/types";
 
 const bodyFontSize = 16;
+
+export interface StayTableItem {
+  id: number;
+  apartmentName?: string;
+  startDate?: string;
+  endDate?: string;
+  guestsNumber?: number;
+}
 
 export const columns: Column<StayTableItem>[] = [
   {

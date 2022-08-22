@@ -2,7 +2,7 @@ import { head } from "lodash";
 import React, { FC } from "react";
 import { Consumption } from "../../../../../../types/types";
 import { getFullNameFromPerson } from "../../../../../../utils/helpers";
-import { ButtonMiddle } from "../../../../../common/buttons/ButtonMiddle/ButtonMiddle";
+import { ButtonSmall } from "../../../../../common/buttons/ButtonSmall/ButtonSmall";
 
 interface ConsumptionListGuestCardProps {
   onPayOffClick: () => void;
@@ -37,7 +37,7 @@ export const ConsumptionListGuestCard: FC<ConsumptionListGuestCardProps> = ({
           <p className="totalTitle">Total</p>
           <p className="totalValue">$2050</p>
         </div>
-        <ButtonMiddle onClick={() => onPayOffClick()} text="Saldar" />
+        <ButtonSmall onClick={() => onPayOffClick()} text="Saldar" />
       </div>
     </div>
   );

@@ -1,0 +1,14 @@
+@import "../../../../../styles/Global.scss";
+
+.stayConsumptionsButton {
+  color: $blue;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .icon {
+    font-size: 1.2rem;
+  }
+}
+.stayConsumptionsButton:visited {
+  color: $blue;
+}
