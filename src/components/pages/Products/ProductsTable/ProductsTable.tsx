@@ -53,7 +53,7 @@ export const ProductsTable = () => {
     pageSizeOptions: [10, 20, 50],
     search: false,
     showTitle: false,
-    toolbar: true,
+    toolbar: false,
     /* sorting: true, */
     sorting: false,
     rowStyle: (data: Item, index: number) => {
@@ -81,7 +81,7 @@ export const ProductsTable = () => {
   };
 
   return (
-    <>
+    <div className="root">
       <MaterialTable
         columns={columns}
         icons={tableIcons}
@@ -148,6 +148,6 @@ export const ProductsTable = () => {
         pauseOnHover
         theme="light"
       />
-    </>
+    </div>
   );
 };

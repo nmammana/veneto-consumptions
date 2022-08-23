@@ -12,7 +12,7 @@ export const columns: Column<ConsumptionTableItem>[] = [
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
       border: "none",
-      width: "10%"
+      width: "20%"
     }
   },
   {
@@ -32,7 +32,7 @@ export const columns: Column<ConsumptionTableItem>[] = [
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
       border: "none",
-      width: "40%"
+      width: "25%"
     }
   },
   {

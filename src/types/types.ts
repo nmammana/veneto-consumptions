@@ -138,12 +138,12 @@ export interface Consumption {
   stay?: number;
   payed?: boolean;
   user_stay_id: number;
-  // date: DateTime;
+  added: string;
 }
 
 export interface ConsumptionTableItem {
   id: number;
-  date?: string; // TODO: CAMBIAR CUANDO ESTE LA FECHA EN EL BACK
+  date: string;
   userName: string;
   itemConsumptionList: string;
   extraPrice?: string;

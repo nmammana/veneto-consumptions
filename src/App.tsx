@@ -19,6 +19,7 @@ import { PublicRoute } from "./components/routes/PublicRoute";
 import { ProductsContextProvider } from "./components/context/ProductsContext";
 import { ApartmentsContextProvider } from "./components/context/ApartmentsContext";
 import { Consumptions } from "./components/pages/Consumptions/Consumptions";
+import { UserConsumptions } from "./components/pages/UserConsumptions/UserConsumptions";
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== "undefined") {
@@ -87,6 +88,10 @@ export const App = () => {
                               <Consumptions />
                             </PrivateRoute>
                           }
+                        />
+                        <Route
+                          path="/codigo/:qrCode"
+                          element={<UserConsumptions />}
                         />
                         <Route path="*" element={<NotFound />} />
                       </Routes>
