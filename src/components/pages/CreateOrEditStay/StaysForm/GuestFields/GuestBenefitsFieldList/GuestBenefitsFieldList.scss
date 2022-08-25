@@ -1,11 +1,11 @@
 @import "../../../../../../styles/Global.scss";
 
-.guestBenefictList {
+.guestBenefitList {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
   max-width: 400px;
-  .guestBenefictListTitle {
+  .guestBenefitListTitle {
     font: $subtitle4;
     color: $blue;
   }

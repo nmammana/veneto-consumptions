@@ -3,7 +3,7 @@ import { FieldProps } from "formik";
 import React, { FC } from "react";
 import { useTextFieldInputStyle } from "../../../../../../../../styles/muiStyles";
 
-export const GuestBenefictQuantityInput: FC<FieldProps> = ({ field, form }) => {
+export const GuestBenefitQuantityInput: FC<FieldProps> = ({ field, form }) => {
   const classes = useTextFieldInputStyle();
   return (
     <TextField

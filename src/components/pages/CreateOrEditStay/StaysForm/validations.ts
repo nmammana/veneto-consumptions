@@ -1,6 +1,6 @@
 import { head, isEmpty } from "lodash";
 import {
-  Benefict,
+  Benefit,
   notUndefined,
   Optional,
   StayInputs
@@ -13,7 +13,7 @@ import {
 
 export const validateUserAddition = (
   formValues: StayInputs,
-  beneficts?: Benefict[]
+  benefits?: Benefit[]
 ): Optional<string> => {
   const {
     startDate,
@@ -69,14 +69,14 @@ export const validateUserAddition = (
   if (!isEmail(email)) {
     return "Escriba una direccion válida de correo electrónico";
   }
-  const negativeBenefictError = beneficts
-    ?.map(benefict => {
-      if (benefict.quantity < 0)
+  const negativeBenefitError = benefits
+    ?.map(benefit => {
+      if (benefit.quantity < 0)
         return "Error: escriba una cantidad mayor o igual a 0 para el beneficio que desea otorgar";
       return undefined;
     })
     .filter(notUndefined);
-  if (!isEmpty(negativeBenefictError)) return head(negativeBenefictError);
+  if (!isEmpty(negativeBenefitError)) return head(negativeBenefitError);
 
   return undefined;
 };

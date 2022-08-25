@@ -8,7 +8,7 @@ import { Item, ProductTableItem } from "../../../../types/types";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { ProductsContext } from "../../../context/ProductsContext";
 import { ProductsTableRowActionButtons } from "../TableRowActionButtons/ProductsTableRowActionButtons";
-import { benefictList } from "../../../../models/beneficts";
+import { benefitList } from "../../../../models/benefits";
 
 export const ProductsTable = () => {
   const { authAxios } = useContext(AxiosContext);
@@ -33,8 +33,8 @@ export const ProductsTable = () => {
       const tableItemsList: ProductTableItem[] = items.map(item => ({
         ...item,
         type_of_benefit:
-          benefictList.find(
-            benefict => benefict.typeOfBenefict === item.type_of_benefit
+          benefitList.find(
+            benefit => benefit.typeOfBenefit === item.type_of_benefit
           )?.name ?? ""
       }));
       return tableItemsList;

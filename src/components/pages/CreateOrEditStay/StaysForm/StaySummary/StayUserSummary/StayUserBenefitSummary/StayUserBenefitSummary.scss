@@ -1,15 +1,15 @@
 @import "../../../../../../../styles/Global.scss";
 
-.benefictContainer {
+.benefitContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  .benefictName {
+  .benefitName {
     font: $caption;
     color: $gray;
   }
-  .benefictQuantity {
+  .benefitQuantity {
     font: $caption;
     color: $gray;
   }

@@ -1,41 +1,41 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import "./BenefictsPopup.scss";
+import "./BenefitsPopup.scss";
 import { IoMdClose } from "react-icons/io";
 
 Modal.setAppElement("#root");
 
-export const BenefictsPopup = () => {
-  const [isBenefictsPopupOpen, setIsBenefictsPopupOpen] =
+export const BenefitsPopup = () => {
+  const [isBenefitsPopupOpen, setIsBenefitsPopupOpen] =
     useState<boolean>(false);
 
-  const onViewBenefictsClick = (
+  const onViewBenefitsClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent
   ) => {
     event.stopPropagation();
-    setIsBenefictsPopupOpen(true);
+    setIsBenefitsPopupOpen(true);
   };
 
   const onClosePopup = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent
   ) => {
     event.stopPropagation();
-    setIsBenefictsPopupOpen(false);
+    setIsBenefitsPopupOpen(false);
   };
   return (
     <>
       <div
-        className="viewBenefictsButton"
-        onClick={e => onViewBenefictsClick(e)}
-        onKeyDown={onViewBenefictsClick}
+        className="viewBenefitsButton"
+        onClick={e => onViewBenefitsClick(e)}
+        onKeyDown={onViewBenefitsClick}
         role="button"
         tabIndex={0}
       >
         <p>Ver beneficios</p>
       </div>
       <Modal
-        isOpen={isBenefictsPopupOpen}
-        onRequestClose={() => setIsBenefictsPopupOpen(false)}
+        isOpen={isBenefitsPopupOpen}
+        onRequestClose={() => setIsBenefitsPopupOpen(false)}
         style={{
           overlay: {
             background: "rgba(0,0,0, .85)"
@@ -54,7 +54,7 @@ export const BenefictsPopup = () => {
           }
         }}
       >
-        <div className="benefictsPopupContent">
+        <div className="benefitsPopupContent">
           <div className="popupHeader">
             <p className="popupTitle">Beneficios de huéspedes</p>
           </div>
@@ -63,9 +63,9 @@ export const BenefictsPopup = () => {
               <p className="title">Nombre y apellido</p>
               <p className="content">Federico Gonzalez</p>
             </div>
-            <div className="benefictsContainer">
+            <div className="benefitsContainer">
               <p className="title">Beneficio</p>
-              <div className="benefictsList">
+              <div className="benefitsList">
                 <p className="content">Almuerzo vegetariano x 2</p>
                 <p className="content">Desayuno completo x 3</p>
               </div>
@@ -76,9 +76,9 @@ export const BenefictsPopup = () => {
               <p className="title">Nombre y apellido</p>
               <p className="content">Federico Gonzalez</p>
             </div>
-            <div className="benefictsContainer">
+            <div className="benefitsContainer">
               <p className="title">Beneficio</p>
-              <div className="benefictsList">
+              <div className="benefitsList">
                 <p className="content">Almuerzo vegetariano x 2</p>
                 <p className="content">Desayuno completo x 3</p>
               </div>
@@ -89,9 +89,9 @@ export const BenefictsPopup = () => {
               <p className="title">Nombre y apellido</p>
               <p className="content">Federico Gonzalez</p>
             </div>
-            <div className="benefictsContainer">
+            <div className="benefitsContainer">
               <p className="title">Beneficio</p>
-              <div className="benefictsList">
+              <div className="benefitsList">
                 <p className="content">Almuerzo vegetariano x 2</p>
                 <p className="content">Desayuno completo x 3</p>
               </div>
@@ -102,9 +102,9 @@ export const BenefictsPopup = () => {
               <p className="title">Nombre y apellido</p>
               <p className="content">Federico Gonzalez</p>
             </div>
-            <div className="benefictsContainer">
+            <div className="benefitsContainer">
               <p className="title">Beneficio</p>
-              <div className="benefictsList">
+              <div className="benefitsList">
                 <p className="content">Almuerzo vegetariano x 2</p>
                 <p className="content">Desayuno completo x 3</p>
               </div>
@@ -115,9 +115,9 @@ export const BenefictsPopup = () => {
               <p className="title">Nombre y apellido</p>
               <p className="content">Federico Gonzalez</p>
             </div>
-            <div className="benefictsContainer">
+            <div className="benefitsContainer">
               <p className="title">Beneficio</p>
-              <div className="benefictsList">
+              <div className="benefitsList">
                 <p className="content">Almuerzo vegetariano x 2</p>
                 <p className="content">Desayuno completo x 3</p>
               </div>
@@ -128,9 +128,9 @@ export const BenefictsPopup = () => {
               <p className="title">Nombre y apellido</p>
               <p className="content">Federico Gonzalez</p>
             </div>
-            <div className="benefictsContainer">
+            <div className="benefitsContainer">
               <p className="title">Beneficio</p>
-              <div className="benefictsList">
+              <div className="benefitsList">
                 <p className="content">Almuerzo vegetariano x 2</p>
                 <p className="content">Desayuno completo x 3</p>
               </div>

@@ -40,7 +40,7 @@ export interface Apartment {
   name: string;
 }
 
-export enum TypeOfBenefict {
+export enum TypeOfBenefit {
   Breakfast = 1, // 'Desayuno'
   Lunch = 2, // 'Almuerzo'
   Snack = 3, // 'Merienda'
@@ -49,9 +49,9 @@ export enum TypeOfBenefict {
   Store = 6 // 'Kiosco'
 }
 
-export interface BenefictName {
+export interface BenefitName {
   name: string;
-  typeOfBenefict: TypeOfBenefict;
+  typeOfBenefit: TypeOfBenefit;
 }
 
 export interface Item {
@@ -62,7 +62,7 @@ export interface Item {
 }
 export interface ProductTableItem {
   id?: number;
-  typeOfBenefict?: string;
+  typeOfBenefit?: string;
   name: string;
   price: number;
   actionItems?: ReactElement;
@@ -77,8 +77,8 @@ export interface Person {
   role?: number;
 }
 
-export interface Benefict {
-  type_of_benefit: TypeOfBenefict;
+export interface Benefit {
+  type_of_benefit: TypeOfBenefit;
   quantity: number;
   quantity_available?: number;
 }
@@ -87,7 +87,7 @@ export interface User {
   id?: number;
   user: Person;
   qr_code?: string;
-  benefits?: Benefict[];
+  benefits?: Benefit[];
 }
 
 export interface Stay {
@@ -98,7 +98,7 @@ export interface Stay {
   users: User[];
 }
 
-export interface PlainBenefict {
+export interface PlainBenefit {
   [key: string]: number;
 }
 export interface StayInputs {
@@ -111,7 +111,7 @@ export interface StayInputs {
   email?: string;
   identityNumber?: string;
   qrCode?: string;
-  beneficts?: PlainBenefict[];
+  benefits?: PlainBenefit[];
 }
 
 export interface StaySearchParams {

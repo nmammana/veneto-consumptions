@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { ButtonTypes } from "../../../../../types/types";
 import { ButtonSmall } from "../../../../common/buttons/ButtonSmall/ButtonSmall";
-import { GuestBenefictsFieldList } from "./GuestBenefictsFieldList/GuestBenefictsFieldList";
+import { GuestBenefitsFieldList } from "./GuestBenefitsFieldList/GuestBenefitsFieldList";
 import { GuestEmailField } from "./GuestEmailField/GuestEmailField";
 import "./GuestFields.scss";
 import { GuestFirstNameField } from "./GuestFirstNameField/GuestFirstNameField";
@@ -22,7 +22,7 @@ export const GuestFields: FC<GuestFieldsProps> = ({ onAddGuestClick }) => {
       <GuestEmailField />
       <GuestIdentityNumberField />
       <GuestQRCodeField />
-      <GuestBenefictsFieldList />
+      <GuestBenefitsFieldList />
       <div className="addGuestButtonContainer">
         <ButtonSmall
           type={ButtonTypes.Button}

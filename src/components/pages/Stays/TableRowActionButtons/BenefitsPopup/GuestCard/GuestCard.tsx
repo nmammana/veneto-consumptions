@@ -2,7 +2,7 @@ import { isEmpty } from "lodash";
 import React, { FC } from "react";
 import { User } from "../../../../../../types/types";
 import { getFullNameFromPerson } from "../../../../../../utils/helpers";
-import { BenefictItem } from "./BenefictItem/BenefictItem";
+import { BenefitItem } from "./BenefitItem/BenefitItem";
 import "./GuestCard.scss";
 
 interface GuestCardProps {
@@ -13,9 +13,8 @@ export const GuestCard: FC<GuestCardProps> = ({ guest }) => {
   const { user, benefits } = guest;
 
   const guestFullName = getFullNameFromPerson(user.first_name, user.last_name);
-  const benefictsWithQuantity =
-    benefits?.filter(benefict => benefict.quantity && benefict.quantity > 0) ??
-    [];
+  const benefitsWithQuantity =
+    benefits?.filter(benefit => benefit.quantity && benefit.quantity > 0) ?? [];
 
   return (
     <div className="guestCard">
@@ -23,12 +22,12 @@ export const GuestCard: FC<GuestCardProps> = ({ guest }) => {
         <p className="title">Nombre y apellido</p>
         <p className="guestName">{guestFullName}</p>
       </div>
-      <div className="benefictsContainer">
-        {!isEmpty(benefictsWithQuantity) && <p className="title">Beneficio</p>}
-        <div className="benefictsList">
-          {benefictsWithQuantity?.map((benefict, index) => (
+      <div className="benefitsContainer">
+        {!isEmpty(benefitsWithQuantity) && <p className="title">Beneficio</p>}
+        <div className="benefitsList">
+          {benefitsWithQuantity?.map((benefit, index) => (
             // eslint-disable-next-line react/no-array-index-key
-            <BenefictItem benefict={benefict} key={index} />
+            <BenefitItem benefit={benefit} key={index} />
           ))}
         </div>
       </div>
