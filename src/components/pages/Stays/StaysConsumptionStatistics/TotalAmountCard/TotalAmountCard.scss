@@ -1,0 +1,20 @@
+@import "../../../../../styles/Global.scss";
+
+.totalAmountCard {
+  border: 2px solid $green;
+  border-radius: 8px;
+  height: 88px;
+  width: 200px;
+  .title {
+    padding: 8px 0;
+    font: $body1;
+    color: $green;
+    text-align: center;
+  }
+  .value {
+    padding: 8px 0;
+    font: $body1;
+    color: $green;
+    text-align: center;
+  }
+}

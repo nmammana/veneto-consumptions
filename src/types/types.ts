@@ -151,3 +151,14 @@ export interface ConsumptionTableItem {
   payed?: boolean;
   consumptionTotal: string;
 }
+
+export interface BenefitStatistics {
+  name: string;
+  frees: number;
+  quantity: number;
+}
+export interface Totals {
+  amount?: number;
+  total?: number;
+  types: BenefitStatistics[];
+}
