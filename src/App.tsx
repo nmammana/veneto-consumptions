@@ -39,9 +39,9 @@ export const App = () => {
                     <Suspense fallback={<Loading />}>
                       <Routes>
                         {/* **** Public Routes **** */}
-                        <Route path="/" element={<Navigate to="/login" />} />
+                        <Route path="/" element={<Navigate to="/inicio" />} />
                         <Route
-                          path="/login"
+                          path="/inicio"
                           element={
                             <PublicRoute>
                               <Auth />
@@ -50,7 +50,7 @@ export const App = () => {
                         />
                         {/* **** Private Routes **** */}
                         <Route
-                          path="/stays"
+                          path="/estadias"
                           element={
                             <PrivateRoute>
                               <Stays />
@@ -58,7 +58,7 @@ export const App = () => {
                           }
                         />
                         <Route
-                          path="/products"
+                          path="/productos"
                           element={
                             <PrivateRoute>
                               <Products />
@@ -66,7 +66,7 @@ export const App = () => {
                           }
                         />
                         <Route
-                          path="/editStay"
+                          path="/editar-estadia"
                           element={
                             <PrivateRoute>
                               <CreateOrEditStay />
@@ -74,7 +74,7 @@ export const App = () => {
                           }
                         />
                         <Route
-                          path="/editStay/:stayId"
+                          path="/editar-estadia/:stayId"
                           element={
                             <PrivateRoute>
                               <CreateOrEditStay />
@@ -82,7 +82,7 @@ export const App = () => {
                           }
                         />
                         <Route
-                          path="/consumptions/:stayId"
+                          path="/consumos/:stayId"
                           element={
                             <PrivateRoute>
                               <Consumptions />

@@ -17,7 +17,7 @@ export const Stays = () => {
         <StaysTable />
       </Layout>
       <AddButton
-        onClick={() => navigate("/editStay")}
+        onClick={() => navigate("/editar-estadia")}
         className="floatingButton"
       />
     </div>

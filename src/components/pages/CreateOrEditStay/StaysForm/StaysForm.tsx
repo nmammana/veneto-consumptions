@@ -176,7 +176,7 @@ export const StaysForm = () => {
       const stayResponse = await authAxios.post("/stay/", newStay);
       if (stayResponse.data) {
         setStayList([...stayList, stayResponse.data]);
-        navigate("/stays");
+        navigate("/estadias");
       }
     } catch (e) {
       toast.error("Ocurrió un error al crear la estadía", toastDefaultConfig);
@@ -192,7 +192,7 @@ export const StaysForm = () => {
           return existingStay;
         })
       );
-      navigate("/stays");
+      navigate("/estadias");
     } catch (e) {
       const error = e as AxiosError;
       if (error.response) {

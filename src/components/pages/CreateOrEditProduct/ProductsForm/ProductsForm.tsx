@@ -90,7 +90,7 @@ export const ProductsForm: FC<ProductsFormProps> = ({ itemId }) => {
               createProduct(values);
             }
             actions.setSubmitting(false);
-            navigate("/products");
+            navigate("/productos");
           } else {
             toast.warn(errorMsg, toastDefaultConfig);
           }
