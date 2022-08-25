@@ -15,12 +15,14 @@ interface ConsumptionsTableProps {
   consumptionList?: Consumption[];
   isLoadingConsumptions: boolean;
   setConsumptionIdsSelected?: (consumptionIdsSelected: number[]) => void;
+  isDinamicTable?: boolean;
 }
 
 export const ConsumptionsTable: FC<ConsumptionsTableProps> = ({
   consumptionList,
   isLoadingConsumptions,
-  setConsumptionIdsSelected
+  setConsumptionIdsSelected,
+  isDinamicTable = false
 }) => {
   const [consumptionTableItemList, setConsumptionTableItemList] =
     useState<ConsumptionTableItem[]>();
@@ -47,7 +49,7 @@ export const ConsumptionsTable: FC<ConsumptionsTableProps> = ({
       }
       return { backgroundColor: "#FFFFFF" };
     },
-    selection: true,
+    selection: isDinamicTable,
     showSelectAllCheckbox: false,
     selectionProps: (rowData: ConsumptionTableItem) => {
       const checked = rowData.payed ? { checked: false } : {};
@@ -116,19 +118,6 @@ export const ConsumptionsTable: FC<ConsumptionsTableProps> = ({
           onClick: () => {}
         }
       ]}
-      /* components={{
-        Action: (props: any) => {
-          const { data } = props;
-          return (
-            <StaysTableRowActionButtons
-              stayId={data.id}
-              deleteStay={() => {
-                deleteStay(data.id);
-              }}
-            />
-          );
-        }
-      }} */
       style={{
         boxShadow: "none",
         border: "none"

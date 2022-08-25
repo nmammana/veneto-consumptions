@@ -1,6 +1,6 @@
 import React, { FC, useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
-import "./BenefictsPopup.scss";
+import "./BenefitsPopup.scss";
 import { IoMdClose } from "react-icons/io";
 import { Tooltip } from "@material-ui/core";
 import { isEmpty } from "lodash";
@@ -11,31 +11,31 @@ import { GuestCard } from "./GuestCard/GuestCard";
 
 Modal.setAppElement("#root");
 
-interface BenefictsPopupProps {
+interface BenefitsPopupProps {
   stayId: number;
 }
 
-export const BenefictsPopup: FC<BenefictsPopupProps> = ({ stayId }) => {
+export const BenefitsPopup: FC<BenefitsPopupProps> = ({ stayId }) => {
   const { authAxios } = useContext(AxiosContext);
-  const [isBenefictsPopupOpen, setIsBenefictsPopupOpen] =
+  const [isBenefitsPopupOpen, setIsBenefitsPopupOpen] =
     useState<boolean>(false);
   const [isLoadingStay, setIsLoadingStay] = useState<boolean>(false);
   const [stay, setStay] = useState<Stay>();
 
-  const onViewBenefictsClick = (event: React.MouseEvent) => {
+  const onViewBenefitsClick = (event: React.MouseEvent) => {
     event.stopPropagation();
-    setIsBenefictsPopupOpen(true);
+    setIsBenefitsPopupOpen(true);
   };
 
   const onClosePopup = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent
   ) => {
     event.stopPropagation();
-    setIsBenefictsPopupOpen(false);
+    setIsBenefitsPopupOpen(false);
   };
 
   useEffect(() => {
-    if (stayId && isBenefictsPopupOpen) {
+    if (stayId && isBenefitsPopupOpen) {
       const getStayById = async (): Promise<Stay> => {
         const stayResponse = await authAxios.get(`/stay/${stayId}/`);
         return stayResponse.data;
@@ -48,21 +48,21 @@ export const BenefictsPopup: FC<BenefictsPopupProps> = ({ stayId }) => {
       };
       fetchStayById();
     }
-  }, [stayId, authAxios, isBenefictsPopupOpen]);
+  }, [stayId, authAxios, isBenefitsPopupOpen]);
   return (
     <>
       <Tooltip title="Ver beneficios">
         <button
-          className="viewBenefictsButton"
-          onClick={e => onViewBenefictsClick(e)}
+          className="viewBenefitsButton"
+          onClick={e => onViewBenefitsClick(e)}
         >
           <p>Ver beneficios</p>
         </button>
       </Tooltip>
 
       <Modal
-        isOpen={isBenefictsPopupOpen}
-        onRequestClose={() => setIsBenefictsPopupOpen(false)}
+        isOpen={isBenefitsPopupOpen}
+        onRequestClose={() => setIsBenefitsPopupOpen(false)}
         style={{
           overlay: {
             background: "rgba(0,0,0, .85)"
@@ -81,7 +81,7 @@ export const BenefictsPopup: FC<BenefictsPopupProps> = ({ stayId }) => {
           }
         }}
       >
-        <div className="benefictsPopupContent">
+        <div className="benefitsPopupContent">
           <div className="popupHeader">
             <p className="popupTitle">Beneficios de huéspedes</p>
           </div>

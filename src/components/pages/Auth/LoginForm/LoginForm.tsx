@@ -48,7 +48,7 @@ export const LoginForm = () => {
           refresh: authResponse.data.refresh,
           authenticated: true
         });
-        navigate("/Stays");
+        navigate("/estadias");
       }
     } catch (error) {
       toast.error(

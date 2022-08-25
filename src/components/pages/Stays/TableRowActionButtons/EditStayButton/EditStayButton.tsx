@@ -11,7 +11,7 @@ interface EditStayButtonProps {
 export const EditStayButton: FC<EditStayButtonProps> = ({ stayId }) => {
   return (
     <Tooltip title="Editar estadía">
-      <Link to={`/editStay/${stayId}`} className="editStayButton">
+      <Link to={`/editar-estadia/${stayId}`} className="editStayButton">
         <BiEditAlt className="icon" />
       </Link>
     </Tooltip>

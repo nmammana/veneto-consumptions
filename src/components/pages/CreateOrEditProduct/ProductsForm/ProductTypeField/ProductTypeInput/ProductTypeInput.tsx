@@ -1,7 +1,7 @@
 import { MenuItem, Select } from "@material-ui/core";
 import { FieldProps } from "formik";
 import React, { FC } from "react";
-import { benefictList } from "../../../../../../models/beneficts";
+import { benefitList } from "../../../../../../models/benefits";
 import { useSelectFieldInputStyles } from "../../../../../../styles/muiStyles";
 
 export const ProductTypeInput: FC<FieldProps> = ({ field, form }) => {
@@ -15,10 +15,10 @@ export const ProductTypeInput: FC<FieldProps> = ({ field, form }) => {
       }}
       labelId="productType"
     >
-      {benefictList.map((benefict, index) => (
+      {benefitList.map((benefit, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <MenuItem key={index} value={benefict.typeOfBenefict}>
-          {benefict.name}
+        <MenuItem key={index} value={benefit.typeOfBenefit}>
+          {benefit.name}
         </MenuItem>
       ))}
     </Select>

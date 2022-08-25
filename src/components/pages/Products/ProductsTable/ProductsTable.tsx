@@ -8,7 +8,7 @@ import { Item, ProductTableItem } from "../../../../types/types";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { ProductsContext } from "../../../context/ProductsContext";
 import { ProductsTableRowActionButtons } from "../TableRowActionButtons/ProductsTableRowActionButtons";
-import { benefictList } from "../../../../models/beneficts";
+import { benefitList } from "../../../../models/benefits";
 
 export const ProductsTable = () => {
   const { authAxios } = useContext(AxiosContext);
@@ -33,8 +33,8 @@ export const ProductsTable = () => {
       const tableItemsList: ProductTableItem[] = items.map(item => ({
         ...item,
         type_of_benefit:
-          benefictList.find(
-            benefict => benefict.typeOfBenefict === item.type_of_benefit
+          benefitList.find(
+            benefit => benefit.typeOfBenefit === item.type_of_benefit
           )?.name ?? ""
       }));
       return tableItemsList;
@@ -53,7 +53,7 @@ export const ProductsTable = () => {
     pageSizeOptions: [10, 20, 50],
     search: false,
     showTitle: false,
-    toolbar: true,
+    toolbar: false,
     /* sorting: true, */
     sorting: false,
     rowStyle: (data: Item, index: number) => {
@@ -81,7 +81,7 @@ export const ProductsTable = () => {
   };
 
   return (
-    <>
+    <div className="root">
       <MaterialTable
         columns={columns}
         icons={tableIcons}
@@ -148,6 +148,6 @@ export const ProductsTable = () => {
         pauseOnHover
         theme="light"
       />
-    </>
+    </div>
   );
 };

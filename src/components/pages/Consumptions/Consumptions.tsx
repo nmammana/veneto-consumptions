@@ -232,6 +232,7 @@ export const Consumptions = () => {
         consumptionList={consumptionList}
         isLoadingConsumptions={isLoadingConsumptions}
         setConsumptionIdsSelected={setConsumptionIdsSelected}
+        isDinamicTable
       />
     </Layout>
   );

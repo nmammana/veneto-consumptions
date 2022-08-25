@@ -13,7 +13,7 @@ export const StayConsumptionsButton: FC<StayConsumptionsButtonProps> = ({
 }) => {
   return (
     <Tooltip title="Consumiciones">
-      <Link to={`/consumptions/${stayId}`} className="stayConsumptionsButton">
+      <Link to={`/consumos/${stayId}`} className="stayConsumptionsButton">
         <FiEye className="icon" />
       </Link>
     </Tooltip>

@@ -10,16 +10,16 @@ import { StayFields } from "./StayFields/StayFields";
 import { GuestFields } from "./GuestFields/GuestFields";
 import { StaySummary } from "./StaySummary/StaySummary";
 import {
-  Benefict,
+  Benefit,
   notUndefined,
   Optional,
-  PlainBenefict,
+  PlainBenefit,
   Stay,
   StayInputs,
-  TypeOfBenefict,
+  TypeOfBenefit,
   User
 } from "../../../../types/types";
-import { benefictList } from "../../../../models/beneficts";
+import { benefitList } from "../../../../models/benefits";
 import { AxiosContext } from "../../../context/AxiosContext";
 import { StaysContext } from "../../../context/StaysContext";
 import { Spinner } from "../../../common/Spinner/Spinner";
@@ -29,31 +29,29 @@ import {
 } from "./validations";
 import { toastDefaultConfig } from "../../../../utils/toast";
 
-const formatBeneficts = (beneficts?: PlainBenefict[]): Optional<Benefict[]> => {
-  if (!beneficts) return [];
-  const formattedBeneficts = beneficts
-    .map(benefict => {
-      const typeOfBenefict = Object.values(TypeOfBenefict).find(
-        type => head(Object.keys(benefict)) === type.toString()
+const formatBenefits = (benefits?: PlainBenefit[]): Optional<Benefit[]> => {
+  if (!benefits) return [];
+  const formattedBenefits = benefits
+    .map(benefit => {
+      const typeOfBenefit = Object.values(TypeOfBenefit).find(
+        type => head(Object.keys(benefit)) === type.toString()
       );
-      let benefictQuantity = typeOfBenefict
-        ? benefict[typeOfBenefict]
-        : undefined;
-      if (typeof typeOfBenefict === "string") return undefined;
+      let benefitQuantity = typeOfBenefit ? benefit[typeOfBenefit] : undefined;
+      if (typeof typeOfBenefit === "string") return undefined;
       /* Por alguna razon en runtime se estan convirtiendo las quantities en string, 
       a pesar de que vscode las marca como tipo number, y eso hace que se rompa en la 
       creacion de estadias */
-      if (typeof benefictQuantity === "string")
-        benefictQuantity = parseInt(benefictQuantity);
-      return typeOfBenefict && benefictQuantity
+      if (typeof benefitQuantity === "string")
+        benefitQuantity = parseInt(benefitQuantity);
+      return typeOfBenefit && benefitQuantity
         ? {
-            type_of_benefit: typeOfBenefict,
-            quantity: benefictQuantity
+            type_of_benefit: typeOfBenefit,
+            quantity: benefitQuantity
           }
         : undefined;
     })
     .filter(notUndefined);
-  return formattedBeneficts;
+  return formattedBenefits;
 };
 
 export const StaysForm = () => {
@@ -72,8 +70,8 @@ export const StaysForm = () => {
     email: "",
     identityNumber: "",
     qrCode: "",
-    beneficts: benefictList.map(benefict => ({
-      [`${benefict.typeOfBenefict}`]: 0
+    benefits: benefitList.map(benefit => ({
+      [`${benefit.typeOfBenefit}`]: 0
     }))
   };
   const [stayFormValues, setStayFormValues] =
@@ -92,12 +90,12 @@ export const StaysForm = () => {
         email,
         identityNumber,
         qrCode,
-        beneficts
+        benefits
       } = ref.current.values;
-      const formattedBeneficts = formatBeneficts(beneficts);
+      const formattedBenefits = formatBenefits(benefits);
       const errorMsg = validateUserAddition(
         ref.current.values,
-        formattedBeneficts
+        formattedBenefits
       );
       const formattedStartDate = startDate
         ? DateTime.fromISO(startDate).toFormat("dd/MM/yyyy")
@@ -121,7 +119,7 @@ export const StaysForm = () => {
                 document: identityNumber
               },
               qr_code: qrCode,
-              benefits: formattedBeneficts
+              benefits: formattedBenefits
             }
           ]
         });
@@ -135,9 +133,9 @@ export const StaysForm = () => {
         ref.current.setFieldValue("identityNumber", "");
         ref.current.setFieldValue("qrCode", "");
         ref.current.setFieldValue(
-          "beneficts",
-          benefictList.map(benefict => ({
-            [`${benefict.typeOfBenefict}`]: 0
+          "benefits",
+          benefitList.map(benefit => ({
+            [`${benefit.typeOfBenefit}`]: 0
           }))
         );
       } else {
@@ -164,10 +162,10 @@ export const StaysForm = () => {
       ref.current.setFieldValue("email", userToEdit.user.email);
       ref.current.setFieldValue("identityNumber", userToEdit.user.document);
       ref.current.setFieldValue("qrCode", userToEdit.qr_code);
-      userToEdit.benefits?.forEach((benefict, index) => {
+      userToEdit.benefits?.forEach((benefit, index) => {
         ref.current?.setFieldValue(
-          `beneficts[${index}].${benefict.type_of_benefit}`,
-          benefict.quantity
+          `benefits[${index}].${benefit.type_of_benefit}`,
+          benefit.quantity
         );
       });
     }
@@ -178,7 +176,8 @@ export const StaysForm = () => {
       const stayResponse = await authAxios.post("/stay/", newStay);
       if (stayResponse.data) {
         setStayList([...stayList, stayResponse.data]);
-        navigate("/stays");
+        setCurrentStay({ users: [] });
+        navigate("/estadias");
       }
     } catch (e) {
       toast.error("Ocurrió un error al crear la estadía", toastDefaultConfig);
@@ -194,7 +193,8 @@ export const StaysForm = () => {
           return existingStay;
         })
       );
-      navigate("/stays");
+      setCurrentStay({ users: [] });
+      navigate("/estadias");
     } catch (e) {
       const error = e as AxiosError;
       if (error.response) {

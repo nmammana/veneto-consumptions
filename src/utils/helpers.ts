@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
-import { benefictList } from "../models/beneficts";
-import { notUndefined, Optional, TypeOfBenefict } from "../types/types";
+import { benefitList } from "../models/benefits";
+import { notUndefined, Optional, TypeOfBenefit } from "../types/types";
 
 export const getFullNameFromPerson = (
   firstName?: string,
@@ -9,11 +9,11 @@ export const getFullNameFromPerson = (
   return [firstName, lastName].filter(notUndefined).join(" ");
 };
 
-export const getBenefictNameFromType = (
-  typeOfBenefict: TypeOfBenefict
+export const getBenefitNameFromType = (
+  typeOfBenefit: TypeOfBenefit
 ): string => {
   return (
-    benefictList.find(benefict => typeOfBenefict === benefict.typeOfBenefict)
+    benefitList.find(benefit => typeOfBenefit === benefit.typeOfBenefit)
       ?.name ?? ""
   );
 };

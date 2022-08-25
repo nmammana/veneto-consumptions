@@ -19,6 +19,7 @@ import { PublicRoute } from "./components/routes/PublicRoute";
 import { ProductsContextProvider } from "./components/context/ProductsContext";
 import { ApartmentsContextProvider } from "./components/context/ApartmentsContext";
 import { Consumptions } from "./components/pages/Consumptions/Consumptions";
+import { UserConsumptions } from "./components/pages/UserConsumptions/UserConsumptions";
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== "undefined") {
@@ -38,9 +39,9 @@ export const App = () => {
                     <Suspense fallback={<Loading />}>
                       <Routes>
                         {/* **** Public Routes **** */}
-                        <Route path="/" element={<Navigate to="/login" />} />
+                        <Route path="/" element={<Navigate to="/inicio" />} />
                         <Route
-                          path="/login"
+                          path="/inicio"
                           element={
                             <PublicRoute>
                               <Auth />
@@ -49,7 +50,7 @@ export const App = () => {
                         />
                         {/* **** Private Routes **** */}
                         <Route
-                          path="/stays"
+                          path="/estadias"
                           element={
                             <PrivateRoute>
                               <Stays />
@@ -57,7 +58,7 @@ export const App = () => {
                           }
                         />
                         <Route
-                          path="/products"
+                          path="/productos"
                           element={
                             <PrivateRoute>
                               <Products />
@@ -65,7 +66,7 @@ export const App = () => {
                           }
                         />
                         <Route
-                          path="/editStay"
+                          path="/editar-estadia"
                           element={
                             <PrivateRoute>
                               <CreateOrEditStay />
@@ -73,7 +74,7 @@ export const App = () => {
                           }
                         />
                         <Route
-                          path="/editStay/:stayId"
+                          path="/editar-estadia/:stayId"
                           element={
                             <PrivateRoute>
                               <CreateOrEditStay />
@@ -81,12 +82,16 @@ export const App = () => {
                           }
                         />
                         <Route
-                          path="/consumptions/:stayId"
+                          path="/consumos/:stayId"
                           element={
                             <PrivateRoute>
                               <Consumptions />
                             </PrivateRoute>
                           }
+                        />
+                        <Route
+                          path="/codigo/:qrCode"
+                          element={<UserConsumptions />}
                         />
                         <Route path="*" element={<NotFound />} />
                       </Routes>

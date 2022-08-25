@@ -23,9 +23,9 @@ export const HeaderToolbar = () => {
   ) => {
     event.stopPropagation();
     if (type === TableType.Stays) {
-      navigate("/stays");
+      navigate("/estadias");
     } else if (type === TableType.Products) {
-      navigate("/products");
+      navigate("/productos");
     }
   };
 

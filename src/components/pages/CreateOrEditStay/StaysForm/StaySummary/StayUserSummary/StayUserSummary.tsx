@@ -3,7 +3,7 @@ import { User } from "../../../../../../types/types";
 import { getFullNameFromPerson } from "../../../../../../utils/helpers";
 import { DeleteUserButton } from "./DeleteUserButton/DeleteUserButton";
 import { EditUserButton } from "./EditUserButton/EditUserButton";
-import { StayUserBenefictSummary } from "./StayUserBenefictSummary/StayUserBenefictSummary";
+import { StayUserBenefitSummary } from "./StayUserBenefitSummary/StayUserBenefitSummary";
 import "./StayUserSummary.scss";
 
 interface StayUserSummaryProps {
@@ -31,10 +31,10 @@ export const StayUserSummary: FC<StayUserSummaryProps> = ({
         </div>
       </div>
       {benefits
-        ?.filter(benefict => benefict.quantity > 0)
-        .map((benefict, index) => (
+        ?.filter(benefit => benefit.quantity > 0)
+        .map((benefit, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <StayUserBenefictSummary key={index} benefict={benefict} />
+          <StayUserBenefitSummary key={index} benefit={benefit} />
         ))}
     </div>
   );

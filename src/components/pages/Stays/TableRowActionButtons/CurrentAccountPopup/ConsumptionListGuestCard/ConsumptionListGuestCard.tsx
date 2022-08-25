@@ -26,7 +26,7 @@ export const ConsumptionListGuestCard: FC<ConsumptionListGuestCardProps> = ({
       </div>
       <div className="consumptionsContainer">
         <p className="title">Consumos</p>
-        <div className="benefictsList">
+        <div className="benefitsList">
           <p className="content">Almuerzo vegetariano x 2 $500</p>
           <p className="content">Desayuno completo x 3 $350</p>
         </div>

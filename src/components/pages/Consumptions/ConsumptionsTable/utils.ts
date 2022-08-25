@@ -1,4 +1,5 @@
 import { isEmpty } from "lodash";
+import { DateTime } from "luxon";
 import {
   Consumption,
   ConsumptionTableItem,
@@ -13,6 +14,9 @@ export const formatConsumptionList = (
   return consumptions
     .map(consumption => {
       if (!consumption.total || !consumption.id) return undefined;
+      const consumptionDateTime = consumption.added;
+      const consumptionDate =
+        DateTime.fromISO(consumptionDateTime).toFormat("dd/MM/yyyy HH:mm");
       const userName = getFullNameFromPerson(
         consumption.user_stay.user.first_name,
         consumption.user_stay.user.last_name
@@ -34,6 +38,7 @@ export const formatConsumptionList = (
       const consumptionTotal = consumption.total ? `$${consumption.total}` : "";
       return {
         id: consumption.id,
+        date: consumptionDate,
         userName,
         itemConsumptionList,
         extraPrice,
