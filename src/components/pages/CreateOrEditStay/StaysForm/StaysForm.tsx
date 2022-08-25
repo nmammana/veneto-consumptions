@@ -176,6 +176,7 @@ export const StaysForm = () => {
       const stayResponse = await authAxios.post("/stay/", newStay);
       if (stayResponse.data) {
         setStayList([...stayList, stayResponse.data]);
+        setCurrentStay({ users: [] });
         navigate("/estadias");
       }
     } catch (e) {
@@ -192,6 +193,7 @@ export const StaysForm = () => {
           return existingStay;
         })
       );
+      setCurrentStay({ users: [] });
       navigate("/estadias");
     } catch (e) {
       const error = e as AxiosError;
