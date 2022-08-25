@@ -47,7 +47,7 @@ export const UserConsumptions = () => {
 
   return (
     <Layout>
-      <div className="root">
+      <div className="userConsumptions">
         <ConsumptionsTable
           consumptionList={consumptionList}
           isLoadingConsumptions={isLoadingConsumptions}

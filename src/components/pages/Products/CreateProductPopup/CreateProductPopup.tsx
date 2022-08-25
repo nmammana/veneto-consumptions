@@ -15,7 +15,7 @@ export const CreateProductPopup = () => {
   };
 
   return (
-    <div className="root">
+    <div className="createProductPopup">
       <AddButton
         onClick={() => onCreateProductClick()}
         className="floatingButton"

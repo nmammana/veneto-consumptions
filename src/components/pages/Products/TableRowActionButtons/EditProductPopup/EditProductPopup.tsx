@@ -21,7 +21,7 @@ export const EditProductPopup: FC<EditProductPopupProps> = ({ itemId }) => {
   };
 
   return (
-    <div className="root">
+    <div className="editProductPopup">
       <Tooltip title="Editar producto">
         <button
           type={ButtonTypes.Button}

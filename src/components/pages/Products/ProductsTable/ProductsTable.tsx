@@ -81,7 +81,7 @@ export const ProductsTable = () => {
   };
 
   return (
-    <div className="root">
+    <div className="productsTable">
       <MaterialTable
         columns={columns}
         icons={tableIcons}
