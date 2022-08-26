@@ -14,8 +14,15 @@ export const BenefitItem: FC<BenefitItemProps> = ({ benefit }) => {
   const benefitName = benefitList.find(
     benefitItem => benefitItem.typeOfBenefit === typeOfBenefit
   )?.name;
-  const benefitData = benefitName
-    ? `${benefitName} : Cant. total: ${quantity} | Cant. restante: ${quantityAvailable}`
-    : "-";
-  return <p className="benefitItem">{benefitData}</p>;
+  return (
+    <div className="benefitItem">
+      <p className="benefitName">{benefitName}:</p>
+      <p className="quantity">
+        Total: <span className="value">{quantity}</span>
+      </p>
+      <p className="quantityAvailable">
+        Restante: <span className="value">{quantityAvailable}</span>
+      </p>
+    </div>
+  );
 };
