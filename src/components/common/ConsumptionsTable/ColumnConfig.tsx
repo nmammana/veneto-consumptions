@@ -49,7 +49,9 @@ export const columns: Column<ConsumptionTableItem>[] = [
     title: "Firma",
     field: "signature",
     render: item => (
-      <img src={item.signature} alt="firma" height="50" width="100" />
+      <a href={item.signature} target="_blank" rel="noopener noreferrer">
+        <img src={item.signature} alt="firma" height="50" width="100" />
+      </a>
     ),
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
