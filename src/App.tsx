@@ -91,7 +91,11 @@ export const App = () => {
                         />
                         <Route
                           path="/codigo/:qrCode"
-                          element={<UserConsumptions />}
+                          element={
+                            <PrivateRoute>
+                              <UserConsumptions />
+                            </PrivateRoute>
+                          }
                         />
                         <Route path="*" element={<NotFound />} />
                       </Routes>

@@ -4,7 +4,7 @@ import { Consumption } from "../../../types/types";
 import { Layout } from "../../common/Layout/Layout";
 import { Spinner } from "../../common/Spinner/Spinner";
 import { AxiosContext } from "../../context/AxiosContext";
-import { ConsumptionsTable } from "../Consumptions/ConsumptionsTable/ConsumptionsTable";
+import { ConsumptionsTable } from "../../common/ConsumptionsTable/ConsumptionsTable";
 import "./UserConsumptions.scss";
 
 export const UserConsumptions = () => {

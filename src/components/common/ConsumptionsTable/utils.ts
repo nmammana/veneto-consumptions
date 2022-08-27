@@ -4,8 +4,8 @@ import {
   Consumption,
   ConsumptionTableItem,
   notUndefined
-} from "../../../../types/types";
-import { getFullNameFromPerson } from "../../../../utils/helpers";
+} from "../../../types/types";
+import { getFullNameFromPerson } from "../../../utils/helpers";
 
 export const formatConsumptionList = (
   consumptions: Consumption[]

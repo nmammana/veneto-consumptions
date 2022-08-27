@@ -74,7 +74,7 @@ export const BenefitsPopup: FC<BenefitsPopupProps> = ({ stayId }) => {
             transform: "translate(-50%, -50%)",
             borderRadius: "8px",
             background: "#fff",
-            width: "30%",
+            width: "32%",
             height: "700px",
             padding: "36px",
             overflow: "hidden"

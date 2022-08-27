@@ -1,6 +1,6 @@
 import { Column } from "@material-table/core";
-import { ConsumptionTableItem } from "../../../../types/types";
-import { PayingTag } from "../../../common/tag/PayingTag/PayingTag";
+import { ConsumptionTableItem } from "../../../types/types";
+import { PayingTag } from "../tag/PayingTag/PayingTag";
 
 const bodyFontSize = 16;
 

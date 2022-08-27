@@ -10,7 +10,8 @@ export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
   const { setCurrentStay } = useContext(StaysContext);
   const { form, field } = props;
   const { error, helperText } = props;
-  const apartmentsContext = useContext(ApartmentsContext);
+  const { isLoadingApartmentList, apartmentList } =
+    useContext(ApartmentsContext);
   const classes = useTextFieldInputStyle();
 
   return (
@@ -22,12 +23,11 @@ export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
           apartment: value?.id
         }));
       }}
-      loading={apartmentsContext?.isLoadingApartmentList}
-      options={apartmentsContext?.apartmentList ?? []}
+      loading={isLoadingApartmentList}
+      options={apartmentList ?? []}
       value={
-        apartmentsContext?.apartmentList.find(
-          apartment => apartment.id === field.value
-        ) ?? undefined
+        apartmentList.find(apartment => apartment.id === field.value) ??
+        undefined
       }
       getOptionLabel={value =>
         typeof value.name === "undefined" ? "" : value.name

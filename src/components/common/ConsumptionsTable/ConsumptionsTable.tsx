@@ -1,14 +1,10 @@
 import MaterialTable from "@material-table/core";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { isEmpty } from "lodash";
-import { tableIcons } from "../../../../assets/icons/material-icons/MaterialIcons";
+import { tableIcons } from "../../../assets/icons/material-icons/MaterialIcons";
 import "./ConsumptionsTable.scss";
 import { columns } from "./ColumnConfig";
-import {
-  Consumption,
-  ConsumptionTableItem,
-  Stay
-} from "../../../../types/types";
+import { Consumption, ConsumptionTableItem, Stay } from "../../../types/types";
 import { formatConsumptionList } from "./utils";
 
 interface ConsumptionsTableProps {

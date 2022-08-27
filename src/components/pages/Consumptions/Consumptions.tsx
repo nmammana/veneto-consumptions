@@ -13,7 +13,7 @@ import {
 import { Layout } from "../../common/Layout/Layout";
 import { Spinner } from "../../common/Spinner/Spinner";
 import { AxiosContext } from "../../context/AxiosContext";
-import { ConsumptionsTable } from "./ConsumptionsTable/ConsumptionsTable";
+import { ConsumptionsTable } from "../../common/ConsumptionsTable/ConsumptionsTable";
 import "./Consumptions.scss";
 import { ButtonMiddle } from "../../common/buttons/ButtonMiddle/ButtonMiddle";
 import { toastDefaultConfig } from "../../../utils/toast";
