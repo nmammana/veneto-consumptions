@@ -101,9 +101,9 @@ export const Consumptions = () => {
         stay_id: stayId
       });
       if (paymentResponse.data) {
-        toast.success(paymentResponse.data.details);
+        toast.success(paymentResponse.data.details, toastDefaultConfig);
       }
-    } catch (e) {
+    } catch (error) {
       toast.error(
         "Ocurrió un error al saldar los consumos",
         toastDefaultConfig
@@ -130,9 +130,9 @@ export const Consumptions = () => {
         consumptions: consumptionIdsSelected
       });
       if (paymentResponse.data) {
-        toast.success(paymentResponse.data.details);
+        toast.success(paymentResponse.data.details, toastDefaultConfig);
       }
-    } catch (e) {
+    } catch (error) {
       toast.error(
         "Ocurrió un error al saldar los consumos",
         toastDefaultConfig

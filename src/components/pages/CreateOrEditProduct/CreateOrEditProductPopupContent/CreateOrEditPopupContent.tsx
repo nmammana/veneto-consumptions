@@ -41,7 +41,7 @@ export const CreateOrEditPopupContent: FC<CreateOrEditPopupContentProps> = ({
       }}
     >
       <div className="productsCreationEditionPopupContent">
-        <ProductsForm itemId={itemId} />
+        <ProductsForm itemId={itemId} setIsOpen={setIsOpen} />
         <button
           className="floatingCloseButton"
           onClick={() => setIsOpen(false)}

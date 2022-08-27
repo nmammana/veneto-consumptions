@@ -5,7 +5,7 @@ import "./StaysForm.scss";
 import { head, parseInt } from "lodash";
 import { DateTime } from "luxon";
 import { AxiosError } from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { StayFields } from "./StayFields/StayFields";
 import { GuestFields } from "./GuestFields/GuestFields";
 import { StaySummary } from "./StaySummary/StaySummary";
@@ -178,6 +178,7 @@ export const StaysForm = () => {
         setStayList([...stayList, stayResponse.data]);
         setCurrentStay({ users: [] });
         navigate("/estadias");
+        toast.success("Estadía creada con éxito!", toastDefaultConfig);
       }
     } catch (e) {
       toast.error("Ocurrió un error al crear la estadía", toastDefaultConfig);
@@ -195,6 +196,7 @@ export const StaysForm = () => {
       );
       setCurrentStay({ users: [] });
       navigate("/estadias");
+      toast.success("Estadía modificada con éxito!", toastDefaultConfig);
     } catch (e) {
       const error = e as AxiosError;
       if (error.response) {
@@ -285,18 +287,6 @@ export const StaysForm = () => {
           />
         </Form>
       </Formik>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 };

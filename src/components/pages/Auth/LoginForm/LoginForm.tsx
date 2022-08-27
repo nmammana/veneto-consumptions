@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Formik, Form, Field } from "formik";
 import { useNavigate } from "react-router-dom";
 import "./LoginForm.scss";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { AuthContext } from "../../../context/AuthContext";
 import { AuthInput } from "./AuthInput/AuthInput";
 import { SubmitButton } from "./SubmitButton/SubmitButton";
@@ -52,7 +52,7 @@ export const LoginForm = () => {
       }
     } catch (error) {
       toast.error(
-        "Error de autenticación, intente nuevamente",
+        "Error de autenticación: intente nuevamente",
         toastDefaultConfig
       );
     }
@@ -96,18 +96,6 @@ export const LoginForm = () => {
           />
         </Form>
       </Formik>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 };
