@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { DeleteProductButton } from "./DeleteProductButton/DeleteProductButton";
+import { DeleteProductPopup } from "./DeleteProductPopup/DeleteProductPopup";
 import { EditProductPopup } from "./EditProductPopup/EditProductPopup";
 import "./ProductsTableRowActionButtons.scss";
 
@@ -14,7 +14,7 @@ export const ProductsTableRowActionButtons: FC<
   return (
     <div className="actionItems">
       <EditProductPopup itemId={itemId} />
-      <DeleteProductButton
+      <DeleteProductPopup
         deleteItem={() => deleteItem(itemId)}
         itemId={itemId}
       />

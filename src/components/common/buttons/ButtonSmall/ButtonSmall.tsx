@@ -20,7 +20,7 @@ export const ButtonSmall: FC<ButtonSmallProps> = ({
   return (
     <button
       type={type}
-      className={`buttonSmall ${className} ${disabled && "disabled"}`}
+      className={`${className} buttonSmall ${disabled && "disabled"}`}
       onClick={onClick}
       disabled={disabled}
     >

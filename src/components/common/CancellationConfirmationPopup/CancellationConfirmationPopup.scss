@@ -1,0 +1,45 @@
+@import "../../../styles/Global.scss";
+
+.popupContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  position: relative;
+  height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .floatingCloseButton {
+    position: fixed;
+    top: 1em;
+    right: 1em;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    .closeIcon {
+      font-size: 2.5rem;
+      color: $gray;
+    }
+  }
+  .popupHeader {
+    padding: 0.5em 2.5em;
+    display: inline-block;
+    top: 0;
+    position: sticky;
+    background-color: $white;
+    .popupTitle {
+      font: $subtitle2;
+      color: $blue;
+    }
+  }
+  .actionButtonsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5em;
+    padding: 2em 0 0;
+    .actionButton {
+      background-color: $blue;
+      width: 25%;
+    }
+  }
+}

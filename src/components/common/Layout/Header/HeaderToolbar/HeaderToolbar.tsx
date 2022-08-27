@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { TableType } from "../../../../../types/types";
+import { ButtonTypes, TableType } from "../../../../../types/types";
 import { AuthContext } from "../../../../context/AuthContext";
 import "./HeaderToolbar.scss";
+import { LogoutPopup } from "./LogoutPopup/LogoutPopup";
 
 interface HeaderItem {
   title: string;
@@ -17,11 +18,7 @@ export const HeaderToolbar = () => {
     { title: "Productos", type: TableType.Products }
   ];
 
-  const onItemClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent,
-    type?: TableType
-  ) => {
-    event.stopPropagation();
+  const onItemClick = (type?: TableType) => {
     if (type === TableType.Stays) {
       navigate("/estadias");
     } else if (type === TableType.Products) {
@@ -29,10 +26,7 @@ export const HeaderToolbar = () => {
     }
   };
 
-  const onLogoutClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent
-  ) => {
-    event.stopPropagation();
+  const onLogoutClick = () => {
     authContext?.logout();
     navigate("/");
   };
@@ -40,28 +34,21 @@ export const HeaderToolbar = () => {
   return (
     <div className="headerToolbar">
       {items.map((item, index) => (
-        <div
-          className="item"
-          onClick={e => onItemClick(e, item.type)}
-          onKeyDown={onItemClick}
+        <button
+          className="button"
+          onClick={() => onItemClick(item.type)}
           // eslint-disable-next-line react/no-array-index-key
           key={index}
-          role="button"
-          tabIndex={0}
+          type={ButtonTypes.Button}
         >
-          <p className="itemText">{item.title}</p>
-        </div>
+          <p className="buttonText">{item.title}</p>
+        </button>
       ))}
-      <div
-        className="item"
-        onClick={onLogoutClick}
-        onKeyDown={onLogoutClick}
-        // eslint-disable-next-line react/no-array-index-key
-        role="button"
-        tabIndex={0}
-      >
-        <p className="itemText">Salir</p>
-      </div>
+      <LogoutPopup
+        onLogoutClick={() => {
+          onLogoutClick();
+        }}
+      />
     </div>
   );
 };

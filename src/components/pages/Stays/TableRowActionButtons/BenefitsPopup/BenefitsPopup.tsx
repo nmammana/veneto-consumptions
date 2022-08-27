@@ -4,7 +4,7 @@ import "./BenefitsPopup.scss";
 import { IoMdClose } from "react-icons/io";
 import { Tooltip } from "@material-ui/core";
 import { isEmpty } from "lodash";
-import { Stay } from "../../../../../types/types";
+import { ButtonTypes, Stay } from "../../../../../types/types";
 import { AxiosContext } from "../../../../context/AxiosContext";
 import { Spinner } from "../../../../common/Spinner/Spinner";
 import { GuestCard } from "./GuestCard/GuestCard";
@@ -28,7 +28,7 @@ export const BenefitsPopup: FC<BenefitsPopupProps> = ({ stayId }) => {
   };
 
   const onClosePopup = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.stopPropagation();
     setIsBenefitsPopupOpen(false);
@@ -93,15 +93,13 @@ export const BenefitsPopup: FC<BenefitsPopupProps> = ({ stayId }) => {
               <GuestCard key={index} guest={user} />
             ))
           )}
-          <div
+          <button
             className="floatingCloseButton"
             onClick={e => onClosePopup(e)}
-            onKeyDown={onClosePopup}
-            role="button"
-            tabIndex={0}
+            type={ButtonTypes.Button}
           >
             <IoMdClose className="closeIcon" />
-          </div>
+          </button>
         </div>
       </Modal>
     </>
