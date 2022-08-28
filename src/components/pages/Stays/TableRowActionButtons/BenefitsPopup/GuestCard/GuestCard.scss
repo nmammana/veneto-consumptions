@@ -24,5 +24,10 @@
     display: flex;
     flex-direction: column;
     gap: 0.5em;
+    .benefitsList {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25em;
+    }
   }
 }

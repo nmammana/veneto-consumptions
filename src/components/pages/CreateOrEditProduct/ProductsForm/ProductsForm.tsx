@@ -16,9 +16,10 @@ import { validateItemCreationEdition } from "./validations";
 
 interface ProductsFormProps {
   itemId?: number;
+  setIsOpen: (value: boolean) => void;
 }
 
-export const ProductsForm: FC<ProductsFormProps> = ({ itemId }) => {
+export const ProductsForm: FC<ProductsFormProps> = ({ itemId, setIsOpen }) => {
   const { authAxios } = useContext(AxiosContext);
   const productsContext = useContext(ProductsContext);
   const navigate = useNavigate();
@@ -38,8 +39,10 @@ export const ProductsForm: FC<ProductsFormProps> = ({ itemId }) => {
           ...productsContext.productList,
           itemResponse.data
         ]);
+        setIsOpen(false);
+        toast.success("Producto creado con éxito!", toastDefaultConfig);
       }
-    } catch (e) {
+    } catch (error) {
       toast.error(
         "Ocurrió un error al crear un nuevo producto",
         toastDefaultConfig
@@ -56,7 +59,9 @@ export const ProductsForm: FC<ProductsFormProps> = ({ itemId }) => {
           return productItem;
         })
       );
-    } catch (e) {
+      setIsOpen(false);
+      toast.success("Producto modificado con éxito!", toastDefaultConfig);
+    } catch (error) {
       toast.error("Ocurrió un error al editar el producto", toastDefaultConfig);
     }
   };

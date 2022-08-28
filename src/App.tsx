@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 import { injectStyle } from "react-toastify/dist/inject-style";
-import Loading from "./components/common/Loading/Loading";
+import { ToastContainer } from "react-toastify";
 import { CreateOrEditStay } from "./components/pages/CreateOrEditStay/CreateOrEditStay";
 import "./styles/Reset.scss";
 import { Auth } from "./components/pages/Auth/Auth";
@@ -20,6 +20,7 @@ import { ProductsContextProvider } from "./components/context/ProductsContext";
 import { ApartmentsContextProvider } from "./components/context/ApartmentsContext";
 import { Consumptions } from "./components/pages/Consumptions/Consumptions";
 import { UserConsumptions } from "./components/pages/UserConsumptions/UserConsumptions";
+import { Spinner } from "./components/common/Spinner/Spinner";
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== "undefined") {
@@ -36,7 +37,7 @@ export const App = () => {
               <StaysContextProvider>
                 <ProductsContextProvider>
                   <BrowserRouter>
-                    <Suspense fallback={<Loading />}>
+                    <Suspense fallback={<Spinner />}>
                       <Routes>
                         {/* **** Public Routes **** */}
                         <Route path="/" element={<Navigate to="/inicio" />} />
@@ -91,10 +92,26 @@ export const App = () => {
                         />
                         <Route
                           path="/codigo/:qrCode"
-                          element={<UserConsumptions />}
+                          element={
+                            <PrivateRoute>
+                              <UserConsumptions />
+                            </PrivateRoute>
+                          }
                         />
                         <Route path="*" element={<NotFound />} />
                       </Routes>
+                      <ToastContainer
+                        position="bottom-center"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                      />
                     </Suspense>
                   </BrowserRouter>
                 </ProductsContextProvider>

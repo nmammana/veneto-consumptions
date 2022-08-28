@@ -4,8 +4,8 @@ import {
   Consumption,
   ConsumptionTableItem,
   notUndefined
-} from "../../../../types/types";
-import { getFullNameFromPerson } from "../../../../utils/helpers";
+} from "../../../types/types";
+import { getFullNameFromPerson } from "../../../utils/helpers";
 
 export const formatConsumptionList = (
   consumptions: Consumption[]
@@ -13,7 +13,7 @@ export const formatConsumptionList = (
   if (isEmpty(consumptions)) return [];
   return consumptions
     .map(consumption => {
-      if (!consumption.total || !consumption.id) return undefined;
+      if (!consumption.id) return undefined;
       const consumptionDateTime = consumption.added;
       const consumptionDate =
         DateTime.fromISO(consumptionDateTime).toFormat("dd/MM/yyyy HH:mm");
@@ -34,8 +34,10 @@ export const formatConsumptionList = (
         .join(", \n");
       const extraPrice = consumption.extra_price
         ? `$${consumption.extra_price}`
-        : "";
-      const consumptionTotal = consumption.total ? `$${consumption.total}` : "";
+        : "-";
+      const consumptionTotal = consumption.total
+        ? `$${consumption.total}`
+        : "$0";
       return {
         id: consumption.id,
         date: consumptionDate,

@@ -6,18 +6,18 @@ import {
   Consumption,
   notUndefined,
   Stay,
-  ButtonTypes,
   Optional,
   Apartment
 } from "../../../types/types";
 import { Layout } from "../../common/Layout/Layout";
 import { Spinner } from "../../common/Spinner/Spinner";
 import { AxiosContext } from "../../context/AxiosContext";
-import { ConsumptionsTable } from "./ConsumptionsTable/ConsumptionsTable";
+import { ConsumptionsTable } from "../../common/ConsumptionsTable/ConsumptionsTable";
 import "./Consumptions.scss";
-import { ButtonMiddle } from "../../common/buttons/ButtonMiddle/ButtonMiddle";
 import { toastDefaultConfig } from "../../../utils/toast";
 import { roundNumberToSecondDecimal } from "../../../utils/helpers";
+import { PayOffAllConsumptionsPopup } from "./PayOffAllConsumptionsPopup/PayOffAllConsumptionsPopup";
+import { PayOffSelectedConsumptionsPopup } from "./PayOffSelectedConsumptionsPopup/PayOffSelectedConsumptionsPopup";
 
 const getTotalValuesFromConsumptionList = (
   consumptionList?: Consumption[]
@@ -101,9 +101,9 @@ export const Consumptions = () => {
         stay_id: stayId
       });
       if (paymentResponse.data) {
-        toast.success(paymentResponse.data.details);
+        toast.success(paymentResponse.data.details, toastDefaultConfig);
       }
-    } catch (e) {
+    } catch (error) {
       toast.error(
         "Ocurrió un error al saldar los consumos",
         toastDefaultConfig
@@ -130,9 +130,9 @@ export const Consumptions = () => {
         consumptions: consumptionIdsSelected
       });
       if (paymentResponse.data) {
-        toast.success(paymentResponse.data.details);
+        toast.success(paymentResponse.data.details, toastDefaultConfig);
       }
-    } catch (e) {
+    } catch (error) {
       toast.error(
         "Ocurrió un error al saldar los consumos",
         toastDefaultConfig
@@ -190,6 +190,7 @@ export const Consumptions = () => {
   const payTotalText = total
     ? `Pagar estadía: $${roundNumberToSecondDecimal(total)}`
     : "No tiene pagos pendientes";
+  const isPayTotalButtonDisabled = !total;
   const totalSelected = reduce(
     getTotalValuesFromConsumptionSelectedList(
       consumptionIdsSelected,
@@ -214,16 +215,16 @@ export const Consumptions = () => {
           )}
         </div>
         <div className="payButtonsContainer">
-          <ButtonMiddle
-            text={payTotalText}
-            type={ButtonTypes.Button}
-            onClick={onPayOffAllConsumptionsClick}
-            disabled={!total}
+          <PayOffAllConsumptionsPopup
+            payTotalText={payTotalText}
+            onPayOffAllConsumptionsClick={onPayOffAllConsumptionsClick}
+            disabled={isPayTotalButtonDisabled}
           />
-          <ButtonMiddle
-            text={paySelectedText}
-            type={ButtonTypes.Button}
-            onClick={onPayOffSelectedConsumptionsClick}
+          <PayOffSelectedConsumptionsPopup
+            paySelectedText={paySelectedText}
+            onPayOffSelectedConsumptionsClick={
+              onPayOffSelectedConsumptionsClick
+            }
             disabled={isEmpty(consumptionIdsSelected)}
           />
         </div>

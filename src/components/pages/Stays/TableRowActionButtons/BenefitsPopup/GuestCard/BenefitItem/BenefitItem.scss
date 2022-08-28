@@ -1,6 +1,26 @@
 @import "../../../../../../../styles/Global.scss";
 
 .benefitItem {
-  font: $body2;
-  color: $gray;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: center;
+  .benefitName {
+    grid-column: 1/5;
+    font: $body2;
+    color: $gray;
+  }
+  .quantity {
+    grid-column: 5/9;
+    font: $body2;
+    color: $gray;
+  }
+  .quantityAvailable {
+    grid-column: 9/13;
+    font: $body2;
+    color: $gray;
+  }
+  .value {
+    font: $body1;
+    color: $blue;
+  }
 }

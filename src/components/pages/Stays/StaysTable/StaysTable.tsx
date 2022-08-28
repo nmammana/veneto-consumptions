@@ -1,5 +1,6 @@
 import MaterialTable from "@material-table/core";
 import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { tableIcons } from "../../../../assets/icons/material-icons/MaterialIcons";
 import "./StaysTable.scss";
 import { columns, StayTableItem } from "./ColumnConfig";
@@ -8,22 +9,23 @@ import { notUndefined, Stay } from "../../../../types/types";
 import { StaysContext } from "../../../context/StaysContext";
 import { StaysTableRowActionButtons } from "../TableRowActionButtons/StaysTableRowActionButtons";
 import { ApartmentsContext } from "../../../context/ApartmentsContext";
+import { toastDefaultConfig } from "../../../../utils/toast";
 
 export const StaysTable = () => {
   const { authAxios } = useContext(AxiosContext);
-  const apartmentsContext = useContext(ApartmentsContext);
-  const staysContext = useContext(StaysContext);
+  const { apartmentList } = useContext(ApartmentsContext);
+  const { stayList, setStayList, isLoadingStayList } = useContext(StaysContext);
   const [stayTableList, setStayTableList] = useState<StayTableItem[]>([]);
 
   const deleteStay = async (stayId: number) => {
     try {
       await authAxios.delete(`/stay/${stayId}/`);
-      const updatedStays = staysContext?.stayList.filter(
-        stay => stay.id !== stayId
-      );
-      if (updatedStays) staysContext?.setStayList(updatedStays);
+      const updatedStays = stayList.filter(stay => stay.id !== stayId);
+      if (updatedStays) setStayList(updatedStays);
+      toast.success("Estadía eliminada con éxito!", toastDefaultConfig);
     } catch (error) {
-      /* console.error("ERROR: ", error); */
+      /* console.error("CANCEL RESERVATION ERROR: ", e); */
+      toast.error("Error: No se pudo eliminar la estadía", toastDefaultConfig);
     }
   };
 
@@ -32,7 +34,7 @@ export const StaysTable = () => {
       if (!stays) return [];
       const tableStayList = stays.map(stay => {
         if (!stay.apartment || !stay.id) return undefined;
-        const apartment = apartmentsContext?.apartmentList.find(
+        const apartment = apartmentList.find(
           apartmentItem => apartmentItem.id === stay.apartment
         );
         return {
@@ -47,9 +49,9 @@ export const StaysTable = () => {
       return tableStayList.filter(notUndefined);
     };
 
-    const formattedStayList = formatStayList(staysContext?.stayList);
+    const formattedStayList = formatStayList(stayList);
     setStayTableList(formattedStayList);
-  }, [staysContext, apartmentsContext?.apartmentList]);
+  }, [apartmentList, stayList]);
 
   const options = {
     paging: true,
@@ -91,7 +93,7 @@ export const StaysTable = () => {
       data={stayTableList}
       title=""
       options={options}
-      isLoading={staysContext?.isLoadingStayList}
+      isLoading={isLoadingStayList}
       localization={{
         toolbar: {
           searchPlaceholder: "Buscar por nombre o DNI...",

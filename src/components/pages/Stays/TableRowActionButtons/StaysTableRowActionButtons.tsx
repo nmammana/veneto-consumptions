@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { BenefitsPopup } from "./BenefitsPopup/BenefitsPopup";
-import { DeleteStayButton } from "./DeleteStayButton/DeleteStayButton";
+import { DeleteStayPopup } from "./DeleteStayPopup/DeleteStayPopup";
 import { EditStayButton } from "./EditStayButton/EditStayButton";
 import { StayConsumptionsButton } from "./StayConsumptionsButton/StayConsumptionsButton";
 import "./StaysTableRowActionButtons.scss";
@@ -18,7 +18,7 @@ export const StaysTableRowActionButtons: FC<
       <BenefitsPopup stayId={stayId} />
       <StayConsumptionsButton stayId={stayId} />
       <EditStayButton stayId={stayId} />
-      <DeleteStayButton deleteStay={() => deleteStay(stayId)} stayId={stayId} />
+      <DeleteStayPopup deleteStay={() => deleteStay(stayId)} stayId={stayId} />
     </div>
   );
 };

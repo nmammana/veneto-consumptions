@@ -23,9 +23,9 @@ interface ApartmentsContextProviderProps {
   children: ReactNode;
 }
 
-export const ApartmentsContext = createContext<
-  ApartmentsContextProps | undefined
->(undefined);
+export const ApartmentsContext = createContext<ApartmentsContextProps>(
+  undefined as any
+);
 
 export const ApartmentsContextProvider: FC<ApartmentsContextProviderProps> = ({
   children

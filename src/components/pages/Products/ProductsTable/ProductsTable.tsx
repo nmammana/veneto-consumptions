@@ -1,6 +1,6 @@
 import MaterialTable from "@material-table/core";
 import React, { useContext, useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { tableIcons } from "../../../../assets/icons/material-icons/MaterialIcons";
 import "./ProductsTable.scss";
 import { columns } from "./ColumnConfig";
@@ -9,21 +9,23 @@ import { AxiosContext } from "../../../context/AxiosContext";
 import { ProductsContext } from "../../../context/ProductsContext";
 import { ProductsTableRowActionButtons } from "../TableRowActionButtons/ProductsTableRowActionButtons";
 import { benefitList } from "../../../../models/benefits";
+import { toastDefaultConfig } from "../../../../utils/toast";
 
 export const ProductsTable = () => {
   const { authAxios } = useContext(AxiosContext);
-  const productsContext = useContext(ProductsContext);
+  const { productList, setProductList, isLoadingProductList } =
+    useContext(ProductsContext);
   const [itemTableList, setItemTableList] = useState<ProductTableItem[]>([]);
 
   const deleteItem = async (itemId: number) => {
     try {
       await authAxios.delete(`/items/${itemId}/`);
-      const updatedItems = productsContext?.productList.filter(
-        item => item.id !== itemId
-      );
-      if (updatedItems) productsContext?.setProductList(updatedItems);
+      const updatedItems = productList.filter(item => item.id !== itemId);
+      if (updatedItems) setProductList(updatedItems);
+      toast.success("Producto eliminado con éxito!", toastDefaultConfig);
     } catch (error) {
       /* console.error("ERROR: ", error); */
+      toast.error("Error: No se pudo eliminar el producto", toastDefaultConfig);
     }
   };
 
@@ -40,11 +42,11 @@ export const ProductsTable = () => {
       return tableItemsList;
     };
     const createItemTableList = () => {
-      const formattedItemList = formatItemList(productsContext?.productList);
+      const formattedItemList = formatItemList(productList);
       setItemTableList(formattedItemList);
     };
     createItemTableList();
-  }, [productsContext]);
+  }, [productList]);
 
   const options = {
     paging: true,
@@ -81,14 +83,14 @@ export const ProductsTable = () => {
   };
 
   return (
-    <div className="root">
+    <div className="productsTable">
       <MaterialTable
         columns={columns}
         icons={tableIcons}
         data={itemTableList}
         title=""
         options={options}
-        isLoading={productsContext?.isLoadingProductList}
+        isLoading={isLoadingProductList}
         localization={{
           toolbar: {
             searchPlaceholder: "Buscar por nombre o DNI...",
@@ -135,18 +137,6 @@ export const ProductsTable = () => {
           boxShadow: "none",
           border: "none"
         }}
-      />
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
       />
     </div>
   );

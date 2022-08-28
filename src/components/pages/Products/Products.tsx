@@ -5,11 +5,11 @@ import { ProductsTable } from "./ProductsTable/ProductsTable";
 
 export const Products = () => {
   return (
-    <div className="root">
+    <>
       <Layout>
         <ProductsTable />
       </Layout>
       <CreateProductPopup />
-    </div>
+    </>
   );
 };

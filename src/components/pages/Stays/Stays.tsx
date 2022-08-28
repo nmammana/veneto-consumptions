@@ -10,7 +10,7 @@ import { StaysTable } from "./StaysTable/StaysTable";
 export const Stays = () => {
   const navigate = useNavigate();
   return (
-    <div className="root">
+    <div className="stays">
       <Layout>
         <StaysSearchBar />
         <StayConsumptionStatistics />
