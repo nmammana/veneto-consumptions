@@ -1,5 +1,13 @@
 .stays {
   position: relative;
+  .staysContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  .spinner {
+    position: relative;
+    margin-top: 5em;
+  }
 }
 
 .floatingButton {

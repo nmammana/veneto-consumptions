@@ -63,8 +63,7 @@ export const ConsumptionsTable: FC<ConsumptionsTableProps> = ({
       border: "none",
       font: "normal normal 400 20px/27px Poppins",
       color: "#008dc8",
-      height: 20,
-      maxHeight: 20
+      height: "64px"
     },
     filterCellStyle: {
       border: "none"

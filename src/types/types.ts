@@ -145,7 +145,7 @@ export interface ConsumptionTableItem {
   id: number;
   date: string;
   userName: string;
-  itemConsumptionList: string;
+  itemConsumptionList: string[];
   extraPrice?: string;
   signature?: Url;
   payed?: boolean;

@@ -30,8 +30,7 @@ export const formatConsumptionList = (
             ? `${quantity} x ${itemName}: ${totalPayed}`
             : undefined;
         })
-        .filter(notUndefined)
-        .join(", \n");
+        .filter(notUndefined);
       const extraPrice = consumption.extra_price
         ? `$${consumption.extra_price}`
         : "-";

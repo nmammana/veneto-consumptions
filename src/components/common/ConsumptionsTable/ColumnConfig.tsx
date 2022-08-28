@@ -1,6 +1,8 @@
 import { Column } from "@material-table/core";
+import { Tooltip, Typography } from "@material-ui/core";
 import { ConsumptionTableItem } from "../../../types/types";
 import { PayingTag } from "../tag/PayingTag/PayingTag";
+import "./ColumnConfig.scss";
 
 const bodyFontSize = 16;
 
@@ -28,11 +30,24 @@ export const columns: Column<ConsumptionTableItem>[] = [
   {
     title: "Consumos",
     field: "itemConsumptionList",
+    render: item => (
+      <Tooltip
+        title={
+          <Typography style={{ fontSize: 14 }}>
+            {item.itemConsumptionList.join(", ")}
+          </Typography>
+        }
+      >
+        <p className="itemConsumptionList">
+          {item.itemConsumptionList.join(", ")}
+        </p>
+      </Tooltip>
+    ),
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
       border: "none",
-      width: "25%"
+      width: "280px"
     }
   },
   {

@@ -29,9 +29,7 @@ export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
         apartmentList.find(apartment => apartment.id === field.value) ??
         undefined
       }
-      getOptionLabel={value =>
-        typeof value.name === "undefined" ? "" : value.name
-      }
+      getOptionLabel={value => value.name ?? ""}
       renderInput={textFieldProps => (
         <TextField
           className={classes.textFieldInputStyle}
