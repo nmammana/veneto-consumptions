@@ -11,7 +11,7 @@ import { StaysTable } from "./StaysTable/StaysTable";
 
 export const Stays = () => {
   const navigate = useNavigate();
-  const { isLoadingStayList } = useContext(StaysContext);
+  const { isLoadingStayList, setCurrentStay } = useContext(StaysContext);
 
   return (
     <div className="stays">
@@ -29,7 +29,10 @@ export const Stays = () => {
         </div>
       </Layout>
       <AddButton
-        onClick={() => navigate("/editar-estadia")}
+        onClick={() => {
+          setCurrentStay({ users: [] });
+          navigate("/editar-estadia");
+        }}
         className="floatingButton"
       />
     </div>

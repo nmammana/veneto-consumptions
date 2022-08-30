@@ -101,6 +101,7 @@ export interface Stay {
 export interface PlainBenefit {
   [key: string]: number;
 }
+
 export interface StayInputs {
   id?: number;
   startDate?: string;

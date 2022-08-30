@@ -28,7 +28,6 @@ import {
   validateUserAddition
 } from "./validations";
 import { toastDefaultConfig } from "../../../../utils/toast";
-import { Layout } from "../../../common/Layout/Layout";
 
 const formatBenefits = (benefits?: PlainBenefit[]): Optional<Benefit[]> => {
   if (!benefits) return [];
@@ -255,12 +254,7 @@ export const StaysForm = () => {
     }
   }, [stayId, authAxios, setCurrentStay]);
 
-  if (isLoadingStay)
-    return (
-      <Layout>
-        <Spinner />
-      </Layout>
-    );
+  if (isLoadingStay) return <Spinner />;
   return (
     <div className="stayFormContainer">
       <Formik
