@@ -27,6 +27,10 @@ export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
       options={apartmentList ?? []}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       getOptionLabel={value => value.name ?? ""}
+      value={
+        apartmentList.find(apartment => apartment.id === field.value) ?? null
+      }
+      defaultValue={null}
       renderOption={(renderProps, option) => {
         return (
           <li {...renderProps} key={option.id}>

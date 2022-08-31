@@ -270,21 +270,21 @@ export const StaysForm = () => {
             const formattedEndDate = endDate
               ? DateTime.fromISO(endDate).toFormat("dd/MM/yyyy")
               : "";
-            if (!errorMsg) {
+            if (errorMsg) {
+              toast.warn(errorMsg, toastDefaultConfig);
+            } else {
               setCurrentStay({
                 ...currentStay,
                 start_date: formattedStartDate,
                 end_date: formattedEndDate,
                 apartment
               });
-            } else {
-              toast.warn(errorMsg, toastDefaultConfig);
+              if (currentStay.id) {
+                editStay(currentStay);
+              } else {
+                createStay(currentStay);
+              }
             }
-          }
-          if (currentStay.id) {
-            editStay(currentStay);
-          } else {
-            createStay(currentStay);
           }
         }}
         innerRef={ref}
