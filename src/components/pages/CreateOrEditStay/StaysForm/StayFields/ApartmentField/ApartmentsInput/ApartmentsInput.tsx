@@ -5,8 +5,9 @@ import { FieldProps } from "formik";
 import { ApartmentsContext } from "../../../../../../context/ApartmentsContext";
 import { StaysContext } from "../../../../../../context/StaysContext";
 import { useTextFieldInputStyle } from "../../../../../../../styles/muiStyles";
+import { withMemo } from "../../../../../../../utils/withMemo";
 
-export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
+export const ApartmentsInputInt: FC<FieldProps & TextFieldProps> = props => {
   const { setCurrentStay } = useContext(StaysContext);
   const { form, field } = props;
   const { error, helperText } = props;
@@ -49,3 +50,7 @@ export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
     />
   );
 };
+
+export const ApartmentsInput = withMemo(
+  ApartmentsInputInt
+) as typeof ApartmentsInputInt;

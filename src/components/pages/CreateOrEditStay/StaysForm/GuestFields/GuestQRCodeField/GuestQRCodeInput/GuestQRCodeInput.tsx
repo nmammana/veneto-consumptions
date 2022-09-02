@@ -2,8 +2,9 @@ import { TextField } from "@material-ui/core";
 import { FieldProps } from "formik";
 import React, { FC } from "react";
 import { useTextFieldInputStyle } from "../../../../../../../styles/muiStyles";
+import { withMemo } from "../../../../../../../utils/withMemo";
 
-export const GuestQRCodeInput: FC<FieldProps> = ({ field, form }) => {
+export const GuestQRCodeInputInt: FC<FieldProps> = ({ field, form }) => {
   const classes = useTextFieldInputStyle();
   return (
     <TextField
@@ -15,3 +16,7 @@ export const GuestQRCodeInput: FC<FieldProps> = ({ field, form }) => {
     />
   );
 };
+
+export const GuestQRCodeInput = withMemo(
+  GuestQRCodeInputInt
+) as typeof GuestQRCodeInputInt;

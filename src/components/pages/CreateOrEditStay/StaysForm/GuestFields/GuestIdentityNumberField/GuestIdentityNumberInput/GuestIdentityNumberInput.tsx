@@ -2,8 +2,12 @@ import { TextField } from "@material-ui/core";
 import { FieldProps } from "formik";
 import React, { FC } from "react";
 import { useTextFieldInputStyle } from "../../../../../../../styles/muiStyles";
+import { withMemo } from "../../../../../../../utils/withMemo";
 
-export const GuestIdentityNumberInput: FC<FieldProps> = ({ field, form }) => {
+export const GuestIdentityNumberInputInt: FC<FieldProps> = ({
+  field,
+  form
+}) => {
   const classes = useTextFieldInputStyle();
   return (
     <TextField
@@ -15,3 +19,7 @@ export const GuestIdentityNumberInput: FC<FieldProps> = ({ field, form }) => {
     />
   );
 };
+
+export const GuestIdentityNumberInput = withMemo(
+  GuestIdentityNumberInputInt
+) as typeof GuestIdentityNumberInputInt;

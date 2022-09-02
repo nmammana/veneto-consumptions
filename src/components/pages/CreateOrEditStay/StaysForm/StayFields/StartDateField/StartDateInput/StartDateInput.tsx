@@ -6,8 +6,9 @@ import TextField from "@mui/material/TextField";
 import { MaterialUiPickersDate } from "material-ui-pickers";
 import { StaysContext } from "../../../../../../context/StaysContext";
 import { useTextFieldInputStyle } from "../../../../../../../styles/muiStyles";
+import { withMemo } from "../../../../../../../utils/withMemo";
 
-export const StartDateInput: React.FC<FieldProps> = ({ field, form }) => {
+export const StartDateInputInt: React.FC<FieldProps> = ({ field, form }) => {
   const { setCurrentStay } = useContext(StaysContext);
   const classes = useTextFieldInputStyle();
   return (
@@ -31,3 +32,7 @@ export const StartDateInput: React.FC<FieldProps> = ({ field, form }) => {
     />
   );
 };
+
+export const StartDateInput = withMemo(
+  StartDateInputInt
+) as typeof StartDateInputInt;
