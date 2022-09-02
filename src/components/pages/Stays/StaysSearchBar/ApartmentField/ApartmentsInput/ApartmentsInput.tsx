@@ -8,7 +8,8 @@ import { useTextFieldInputStyle } from "../../../../../../styles/muiStyles";
 export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
   const { form, field } = props;
   const { error, helperText } = props;
-  const apartmentsContext = useContext(ApartmentsContext);
+  const { isLoadingApartmentList, apartmentList } =
+    useContext(ApartmentsContext);
   const classes = useTextFieldInputStyle();
 
   return (
@@ -16,19 +17,25 @@ export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
       onChange={(_, value) => {
         form.setFieldValue(field.name, value?.id);
       }}
-      loading={apartmentsContext?.isLoadingApartmentList}
-      options={apartmentsContext?.apartmentList ?? []}
-      value={
-        apartmentsContext?.apartmentList.find(
-          apartment => apartment.id === field.value
-        ) ?? undefined
-      }
+      loading={isLoadingApartmentList}
+      options={apartmentList ?? []}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
       getOptionLabel={value => value.name ?? ""}
+      value={
+        apartmentList.find(apartment => apartment.id === field.value) ?? null
+      }
+      defaultValue={null}
+      renderOption={(renderProps, option) => {
+        return (
+          <li {...renderProps} key={option.id}>
+            {option.name}
+          </li>
+        );
+      }}
       renderInput={textFieldProps => (
         <TextField
-          className={classes.textFieldInputStyle}
-          {...props}
           {...textFieldProps}
+          className={classes.textFieldInputStyle}
           helperText={helperText}
           error={error}
         />

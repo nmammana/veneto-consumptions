@@ -181,7 +181,17 @@ export const StaysForm = () => {
         toast.success("Estadía creada con éxito!", toastDefaultConfig);
       }
     } catch (e) {
-      toast.error("Ocurrió un error al crear la estadía", toastDefaultConfig);
+      const error = e as AxiosError;
+      if (error.response) {
+        const errorData = error.response?.data as any;
+        const errorMsg = [
+          "Ocurrió un error al editar la estadía",
+          errorData.details
+        ]
+          .filter(notUndefined)
+          .join(": ");
+        toast.error(errorMsg, toastDefaultConfig);
+      }
     }
   };
 
@@ -201,11 +211,13 @@ export const StaysForm = () => {
       const error = e as AxiosError;
       if (error.response) {
         const errorData = error.response?.data as any;
-        const errorMsg = errorData.details;
-        toast.error(
-          `Ocurrió un error al editar la estadía: ${errorMsg}`,
-          toastDefaultConfig
-        );
+        const errorMsg = [
+          "Ocurrió un error al editar la estadía",
+          errorData.details
+        ]
+          .filter(notUndefined)
+          .join(": ");
+        toast.error(errorMsg, toastDefaultConfig);
       }
     }
   };
@@ -258,21 +270,21 @@ export const StaysForm = () => {
             const formattedEndDate = endDate
               ? DateTime.fromISO(endDate).toFormat("dd/MM/yyyy")
               : "";
-            if (!errorMsg) {
+            if (errorMsg) {
+              toast.warn(errorMsg, toastDefaultConfig);
+            } else {
               setCurrentStay({
                 ...currentStay,
                 start_date: formattedStartDate,
                 end_date: formattedEndDate,
                 apartment
               });
-            } else {
-              toast.warn(errorMsg, toastDefaultConfig);
+              if (currentStay.id) {
+                editStay(currentStay);
+              } else {
+                createStay(currentStay);
+              }
             }
-          }
-          if (currentStay.id) {
-            editStay(currentStay);
-          } else {
-            createStay(currentStay);
           }
         }}
         innerRef={ref}

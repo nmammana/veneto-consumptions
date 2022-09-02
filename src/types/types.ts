@@ -101,6 +101,7 @@ export interface Stay {
 export interface PlainBenefit {
   [key: string]: number;
 }
+
 export interface StayInputs {
   id?: number;
   startDate?: string;
@@ -145,7 +146,7 @@ export interface ConsumptionTableItem {
   id: number;
   date: string;
   userName: string;
-  itemConsumptionList: string;
+  itemConsumptionList: string[];
   extraPrice?: string;
   signature?: Url;
   payed?: boolean;

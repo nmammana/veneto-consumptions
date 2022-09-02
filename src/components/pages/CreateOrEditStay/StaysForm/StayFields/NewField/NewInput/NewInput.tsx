@@ -1,40 +1,36 @@
-import React, { FC, useContext } from "react";
+import React, { FC } from "react";
 import { Autocomplete } from "@mui/material";
 import { TextField, TextFieldProps } from "@material-ui/core";
 import { FieldProps } from "formik";
-import { ApartmentsContext } from "../../../../../../context/ApartmentsContext";
-import { StaysContext } from "../../../../../../context/StaysContext";
 import { useTextFieldInputStyle } from "../../../../../../../styles/muiStyles";
 
-export const ApartmentsInput: FC<FieldProps & TextFieldProps> = props => {
-  const { setCurrentStay } = useContext(StaysContext);
+export const NewInput: FC<FieldProps & TextFieldProps> = props => {
   const { form, field } = props;
   const { error, helperText } = props;
-  const { isLoadingApartmentList, apartmentList } =
-    useContext(ApartmentsContext);
   const classes = useTextFieldInputStyle();
+
+  const fieldValues = [
+    { id: 1, value: "rojo" },
+    { id: 2, value: "amarillo" },
+    { id: 3, value: "verde" }
+  ];
+
+  /* TODO: ESTE COMPONENTE SE UTILIZA DE PRUEBA PARA EL AUTOCOMPLETE, 
+  UNA VEZ QUE FUNCIONE 100% BIEN HAY QUE BORRARLO
+ */
 
   return (
     <Autocomplete
       onChange={(_, value) => {
         form.setFieldValue(field.name, value?.id);
-        setCurrentStay(currentStay => ({
-          ...currentStay,
-          apartment: value?.id
-        }));
       }}
-      loading={isLoadingApartmentList}
-      options={apartmentList ?? []}
+      options={fieldValues ?? []}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      getOptionLabel={value => value.name ?? ""}
-      value={
-        apartmentList.find(apartment => apartment.id === field.value) ?? null
-      }
-      defaultValue={null}
+      getOptionLabel={value => value.value ?? ""}
       renderOption={(renderProps, option) => {
         return (
           <li {...renderProps} key={option.id}>
-            {option.name}
+            {option.value}
           </li>
         );
       }}

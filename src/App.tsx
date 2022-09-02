@@ -21,6 +21,7 @@ import { ApartmentsContextProvider } from "./components/context/ApartmentsContex
 import { Consumptions } from "./components/pages/Consumptions/Consumptions";
 import { UserConsumptions } from "./components/pages/UserConsumptions/UserConsumptions";
 import { Spinner } from "./components/common/Spinner/Spinner";
+import { Layout } from "./components/common/Layout/Layout";
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== "undefined") {
@@ -37,7 +38,13 @@ export const App = () => {
               <StaysContextProvider>
                 <ProductsContextProvider>
                   <BrowserRouter>
-                    <Suspense fallback={<Spinner />}>
+                    <Suspense
+                      fallback={
+                        <Layout>
+                          <Spinner />
+                        </Layout>
+                      }
+                    >
                       <Routes>
                         {/* **** Public Routes **** */}
                         <Route path="/" element={<Navigate to="/inicio" />} />
