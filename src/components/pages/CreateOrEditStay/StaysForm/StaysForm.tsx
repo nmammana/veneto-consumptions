@@ -156,6 +156,17 @@ export const StaysForm = () => {
       const updatedUserList = currentStay.users.filter(
         user => user !== userToEdit
       );
+      ref.current.setFieldValue("firstName", "");
+      ref.current.setFieldValue("lastName", "");
+      ref.current.setFieldValue("email", "");
+      ref.current.setFieldValue("identityNumber", "");
+      ref.current.setFieldValue("qrCode", "");
+      ref.current.setFieldValue(
+        "benefits",
+        benefitList.map(benefit => ({
+          [`${benefit.typeOfBenefit}`]: 0
+        }))
+      );
       setCurrentStay({ ...currentStay, users: updatedUserList });
       ref.current.setFieldValue("firstName", userToEdit.user.first_name);
       ref.current.setFieldValue("lastName", userToEdit.user.last_name);

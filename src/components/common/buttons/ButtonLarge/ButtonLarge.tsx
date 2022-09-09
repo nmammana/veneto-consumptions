@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { ButtonTypes } from "../../../../types/types";
+import { withMemo } from "../../../../utils/withMemo";
 import "./ButtonLarge.scss";
 
 export interface ButtonLargeProps {
@@ -10,7 +11,7 @@ export interface ButtonLargeProps {
   disabled?: boolean;
 }
 
-export const ButtonLarge: FC<ButtonLargeProps> = ({
+export const ButtonLargeInt: FC<ButtonLargeProps> = ({
   onClick,
   text,
   type,
@@ -28,3 +29,5 @@ export const ButtonLarge: FC<ButtonLargeProps> = ({
     </button>
   );
 };
+
+export const ButtonLarge = withMemo(ButtonLargeInt);

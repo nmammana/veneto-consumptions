@@ -3,10 +3,10 @@ import { FieldProps } from "formik";
 import { DatePicker } from "@mui/x-date-pickers";
 import TextField from "@mui/material/TextField";
 import { MaterialUiPickersDate } from "material-ui-pickers";
-import { useTextFieldInputStyle } from "../../../../../../styles/muiStyles";
+import { useTextInputStyle } from "../../../../../../styles/muiStyles";
 
 export const StartDateInput: React.FC<FieldProps> = ({ field, form }) => {
-  const classes = useTextFieldInputStyle();
+  const classes = useTextInputStyle();
   return (
     <DatePicker
       value={field.value}
@@ -17,7 +17,7 @@ export const StartDateInput: React.FC<FieldProps> = ({ field, form }) => {
       renderInput={params => (
         <TextField
           {...params}
-          className={classes.textFieldInputStyle}
+          className={classes.textInputStyle}
           variant="standard"
         />
       )}

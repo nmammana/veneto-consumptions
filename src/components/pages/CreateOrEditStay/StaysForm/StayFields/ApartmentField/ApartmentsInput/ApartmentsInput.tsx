@@ -4,7 +4,7 @@ import { TextField, TextFieldProps } from "@material-ui/core";
 import { FieldProps } from "formik";
 import { ApartmentsContext } from "../../../../../../context/ApartmentsContext";
 import { StaysContext } from "../../../../../../context/StaysContext";
-import { useTextFieldInputStyle } from "../../../../../../../styles/muiStyles";
+import { useTextInputStyle } from "../../../../../../../styles/muiStyles";
 import { withMemo } from "../../../../../../../utils/withMemo";
 
 export const ApartmentsInputInt: FC<FieldProps & TextFieldProps> = props => {
@@ -13,7 +13,7 @@ export const ApartmentsInputInt: FC<FieldProps & TextFieldProps> = props => {
   const { error, helperText } = props;
   const { isLoadingApartmentList, apartmentList } =
     useContext(ApartmentsContext);
-  const classes = useTextFieldInputStyle();
+  const classes = useTextInputStyle();
 
   return (
     <Autocomplete
@@ -42,7 +42,7 @@ export const ApartmentsInputInt: FC<FieldProps & TextFieldProps> = props => {
       renderInput={textFieldProps => (
         <TextField
           {...textFieldProps}
-          className={classes.textFieldInputStyle}
+          className={classes.textInputStyle}
           helperText={helperText}
           error={error}
         />

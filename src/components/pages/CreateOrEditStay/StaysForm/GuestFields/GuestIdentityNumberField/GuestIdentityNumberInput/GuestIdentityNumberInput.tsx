@@ -1,25 +1,17 @@
-import { TextField } from "@material-ui/core";
 import { FieldProps } from "formik";
 import React, { FC } from "react";
-import { useTextFieldInputStyle } from "../../../../../../../styles/muiStyles";
-import { withMemo } from "../../../../../../../utils/withMemo";
+import { useTextInputStyle } from "../../../../../../../styles/muiStyles";
+import { TextInput } from "../../../../../../common/TextInput/TextInput";
 
-export const GuestIdentityNumberInputInt: FC<FieldProps> = ({
-  field,
-  form
-}) => {
-  const classes = useTextFieldInputStyle();
+export const GuestIdentityNumberInput: FC<FieldProps> = ({ field, form }) => {
+  const classes = useTextInputStyle();
   return (
-    <TextField
-      className={classes.textFieldInputStyle}
+    <TextInput
+      className={classes.textInputStyle}
       value={field.value}
-      onChange={event => {
-        form.setFieldValue(field.name, event.target.value);
+      onChange={value => {
+        form.setFieldValue(field.name, value);
       }}
     />
   );
 };
-
-export const GuestIdentityNumberInput = withMemo(
-  GuestIdentityNumberInputInt
-) as typeof GuestIdentityNumberInputInt;

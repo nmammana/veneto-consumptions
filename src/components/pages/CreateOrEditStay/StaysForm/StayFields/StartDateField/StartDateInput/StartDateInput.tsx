@@ -5,12 +5,12 @@ import { DatePicker } from "@mui/x-date-pickers";
 import TextField from "@mui/material/TextField";
 import { MaterialUiPickersDate } from "material-ui-pickers";
 import { StaysContext } from "../../../../../../context/StaysContext";
-import { useTextFieldInputStyle } from "../../../../../../../styles/muiStyles";
+import { useTextInputStyle } from "../../../../../../../styles/muiStyles";
 import { withMemo } from "../../../../../../../utils/withMemo";
 
 export const StartDateInputInt: React.FC<FieldProps> = ({ field, form }) => {
   const { setCurrentStay } = useContext(StaysContext);
-  const classes = useTextFieldInputStyle();
+  const classes = useTextInputStyle();
   return (
     <DatePicker
       value={field.value}
@@ -26,7 +26,7 @@ export const StartDateInputInt: React.FC<FieldProps> = ({ field, form }) => {
         <TextField
           {...params}
           variant="standard"
-          className={classes.textFieldInputStyle}
+          className={classes.textInputStyle}
         />
       )}
     />
