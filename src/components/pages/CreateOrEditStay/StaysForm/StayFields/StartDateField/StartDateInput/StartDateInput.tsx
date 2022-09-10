@@ -13,7 +13,7 @@ export const StartDateInputInt: React.FC<FieldProps> = ({ field, form }) => {
   const classes = useTextInputStyle();
   return (
     <DatePicker
-      value={field.value}
+      value={field.value ?? null}
       onChange={(date: MaterialUiPickersDate) => {
         form.setFieldValue(field.name, date);
         setCurrentStay(currentStay => ({
