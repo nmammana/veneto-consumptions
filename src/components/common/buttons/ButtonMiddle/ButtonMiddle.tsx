@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { ButtonTypes } from "../../../../types/types";
+import { withMemo } from "../../../../utils/withMemo";
 import "./ButtonMiddle.scss";
 
 export interface ButtonMiddleProps {
@@ -10,7 +11,7 @@ export interface ButtonMiddleProps {
   disabled?: boolean;
 }
 
-export const ButtonMiddle: FC<ButtonMiddleProps> = ({
+export const ButtonMiddleInt: FC<ButtonMiddleProps> = ({
   onClick,
   text,
   type,
@@ -28,3 +29,5 @@ export const ButtonMiddle: FC<ButtonMiddleProps> = ({
     </button>
   );
 };
+
+export const ButtonMiddle = withMemo(ButtonMiddleInt);

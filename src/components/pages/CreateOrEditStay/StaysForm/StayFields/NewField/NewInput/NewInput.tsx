@@ -2,12 +2,12 @@ import React, { FC } from "react";
 import { Autocomplete } from "@mui/material";
 import { TextField, TextFieldProps } from "@material-ui/core";
 import { FieldProps } from "formik";
-import { useTextFieldInputStyle } from "../../../../../../../styles/muiStyles";
+import { useTextInputStyle } from "../../../../../../../styles/muiStyles";
 
 export const NewInput: FC<FieldProps & TextFieldProps> = props => {
   const { form, field } = props;
   const { error, helperText } = props;
-  const classes = useTextFieldInputStyle();
+  const classes = useTextInputStyle();
 
   const fieldValues = [
     { id: 1, value: "rojo" },
@@ -37,7 +37,7 @@ export const NewInput: FC<FieldProps & TextFieldProps> = props => {
       renderInput={textFieldProps => (
         <TextField
           {...textFieldProps}
-          className={classes.textFieldInputStyle}
+          className={classes.textInputStyle}
           helperText={helperText}
           error={error}
         />

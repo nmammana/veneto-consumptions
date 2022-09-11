@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useTextFieldInputStyle = makeStyles(() => ({
-  textFieldInputStyle: {
+export const useTextInputStyle = makeStyles(() => ({
+  textInputStyle: {
     "& .MuiInputBase-root": {
       "&::after": {
         borderColor: "#008dc8"

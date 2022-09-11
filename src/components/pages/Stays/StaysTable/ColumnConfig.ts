@@ -19,7 +19,9 @@ export const columns: Column<StayTableItem>[] = [
       color: "#817185",
       border: "none",
       width: "10%"
-    }
+    },
+    sorting: true,
+    defaultSort: "desc"
   },
   {
     title: "Depto",
@@ -29,7 +31,8 @@ export const columns: Column<StayTableItem>[] = [
       color: "#2d0836",
       border: "none",
       width: "30%"
-    }
+    },
+    sorting: false
   },
   {
     title: "Desde",
@@ -39,7 +42,8 @@ export const columns: Column<StayTableItem>[] = [
       color: "#817185",
       border: "none",
       width: "15%"
-    }
+    },
+    sorting: false
   },
   {
     title: "Hasta",
@@ -49,6 +53,7 @@ export const columns: Column<StayTableItem>[] = [
       color: "#817185",
       border: "none",
       width: "15%"
-    }
+    },
+    sorting: false
   }
 ];

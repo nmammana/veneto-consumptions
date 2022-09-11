@@ -1,6 +1,10 @@
 import React, { FC } from "react";
-import { makeStyles, TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import { FieldProps } from "formik";
+import {
+  TextInputVariant,
+  TextInput
+} from "../../../../common/TextInput/TextInput";
 
 interface AuthInputProps {
   placeholder?: string;
@@ -32,16 +36,16 @@ export const AuthInput: FC<FieldProps & AuthInputProps> = ({
 }) => {
   const classes = useAuthInputStyles();
   return (
-    <TextField
+    <TextInput
       className={classes.authInput}
       type={type}
       value={field.value}
-      onChange={event => {
-        form.setFieldValue(field.name, event.target.value);
+      onChange={value => {
+        form.setFieldValue(field.name, value);
       }}
       placeholder={placeholder}
-      variant="outlined"
-      required
+      variant={TextInputVariant.Outlined}
+      isRequired
     />
   );
 };

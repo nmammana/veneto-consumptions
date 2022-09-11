@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { ButtonTypes } from "../../../../types/types";
+import { withMemo } from "../../../../utils/withMemo";
 import "./ButtonSmall.scss";
 
 export interface ButtonSmallProps {
@@ -10,7 +11,7 @@ export interface ButtonSmallProps {
   disabled?: boolean;
 }
 
-export const ButtonSmall: FC<ButtonSmallProps> = ({
+export const ButtonSmallInt: FC<ButtonSmallProps> = ({
   onClick,
   text,
   type,
@@ -28,3 +29,5 @@ export const ButtonSmall: FC<ButtonSmallProps> = ({
     </button>
   );
 };
+
+export const ButtonSmall = withMemo(ButtonSmallInt);

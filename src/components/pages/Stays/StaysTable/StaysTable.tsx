@@ -61,7 +61,7 @@ export const StaysTable = () => {
     search: false,
     showTitle: false,
     toolbar: false,
-    sorting: false,
+    sorting: true,
     rowStyle: (data: Stay, index: number) => {
       if (index % 2 === 0) {
         return { backgroundColor: "#F9F8F9" };

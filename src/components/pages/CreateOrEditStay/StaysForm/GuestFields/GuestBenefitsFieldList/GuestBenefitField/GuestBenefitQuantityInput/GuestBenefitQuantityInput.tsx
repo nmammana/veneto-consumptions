@@ -1,18 +1,17 @@
-import { TextField } from "@material-ui/core";
 import { FieldProps } from "formik";
 import React, { FC } from "react";
-import { useTextFieldInputStyle } from "../../../../../../../../styles/muiStyles";
+import { useTextInputStyle } from "../../../../../../../../styles/muiStyles";
+import { TextInput } from "../../../../../../../common/TextInput/TextInput";
 
 export const GuestBenefitQuantityInput: FC<FieldProps> = ({ field, form }) => {
-  const classes = useTextFieldInputStyle();
+  const classes = useTextInputStyle();
   return (
-    <TextField
-      className={classes.textFieldInputStyle}
+    <TextInput
+      className={classes.textInputStyle}
       type="number"
-      inputProps={{ min: 0, max: 500 }}
       value={field.value}
-      onChange={event => {
-        form.setFieldValue(field.name, event.target.value);
+      onChange={value => {
+        form.setFieldValue(field.name, value);
       }}
     />
   );
