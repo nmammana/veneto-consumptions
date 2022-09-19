@@ -1,6 +1,7 @@
 import MaterialTable from "@material-table/core";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { createTheme, ThemeProvider } from "@mui/material";
 import { tableIcons } from "../../../../assets/icons/material-icons/MaterialIcons";
 import "./StaysTable.scss";
 import { columns, StayTableItem } from "./ColumnConfig";
@@ -53,6 +54,33 @@ export const StaysTable = () => {
     setStayTableList(formattedStayList);
   }, [apartmentList, stayList]);
 
+  const theme = createTheme({
+    components: {
+      MuiTableSortLabel: {
+        styleOverrides: {
+          root: {
+            color: "#008dc8",
+            "&:hover": {
+              color: "#008dc8"
+            },
+            "&.Mui-active": {
+              "&&": {
+                color: "#008dc8",
+
+                "& * ": {
+                  color: "#008dc8"
+                }
+              }
+            }
+          },
+          icon: {
+            color: "#008dc8"
+          }
+        }
+      }
+    }
+  });
+
   const options = {
     paging: true,
     pageSize: 10,
@@ -62,6 +90,7 @@ export const StaysTable = () => {
     showTitle: false,
     toolbar: false,
     sorting: true,
+    thirdSortClick: false,
     rowStyle: (data: Stay, index: number) => {
       if (index % 2 === 0) {
         return { backgroundColor: "#F9F8F9" };
@@ -87,62 +116,64 @@ export const StaysTable = () => {
   };
 
   return (
-    <MaterialTable
-      columns={columns}
-      icons={tableIcons}
-      data={stayTableList}
-      title=""
-      options={options}
-      isLoading={isLoadingStayList}
-      localization={{
-        toolbar: {
-          searchPlaceholder: "Buscar por nombre o DNI...",
-          searchTooltip: "Búsqueda por nombre o DNI"
-        },
-        pagination: {
-          labelRowsSelect: "Filas",
-          firstTooltip: "Primera página",
-          previousTooltip: "Anterior",
-          nextTooltip: "Siguiente",
-          lastTooltip: "Última página",
-          labelDisplayedRows: ""
-        },
-        body: {
-          filterRow: {
-            filterTooltip: "Filtrar"
+    <ThemeProvider theme={theme}>
+      <MaterialTable
+        columns={columns}
+        icons={tableIcons}
+        data={stayTableList}
+        title=""
+        options={options}
+        isLoading={isLoadingStayList}
+        localization={{
+          toolbar: {
+            searchPlaceholder: "Buscar por nombre o DNI...",
+            searchTooltip: "Búsqueda por nombre o DNI"
           },
-          emptyDataSourceMessage:
-            "No hay estadías para la búsqueda seleccionada"
-        },
-        header: {
-          actions: ""
-        }
-      }}
-      actions={[
-        {
-          icon: "",
-          tooltip: "",
-          onClick: () => {}
-        }
-      ]}
-      components={{
-        // eslint-disable-next-line react/no-unstable-nested-components
-        Action: (props: any) => {
-          const { data } = props;
-          return (
-            <StaysTableRowActionButtons
-              stayId={data.id}
-              deleteStay={() => {
-                deleteStay(data.id);
-              }}
-            />
-          );
-        }
-      }}
-      style={{
-        boxShadow: "none",
-        border: "none"
-      }}
-    />
+          pagination: {
+            labelRowsSelect: "Filas",
+            firstTooltip: "Primera página",
+            previousTooltip: "Anterior",
+            nextTooltip: "Siguiente",
+            lastTooltip: "Última página",
+            labelDisplayedRows: ""
+          },
+          body: {
+            filterRow: {
+              filterTooltip: "Filtrar"
+            },
+            emptyDataSourceMessage:
+              "No hay estadías para la búsqueda seleccionada"
+          },
+          header: {
+            actions: ""
+          }
+        }}
+        actions={[
+          {
+            icon: "",
+            tooltip: "",
+            onClick: () => {}
+          }
+        ]}
+        components={{
+          // eslint-disable-next-line react/no-unstable-nested-components
+          Action: (props: any) => {
+            const { data } = props;
+            return (
+              <StaysTableRowActionButtons
+                stayId={data.id}
+                deleteStay={() => {
+                  deleteStay(data.id);
+                }}
+              />
+            );
+          }
+        }}
+        style={{
+          boxShadow: "none",
+          border: "none"
+        }}
+      />
+    </ThemeProvider>
   );
 };

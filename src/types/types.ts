@@ -1,3 +1,4 @@
+import { SvgIconProps } from "@material-ui/core";
 import { DateTime } from "luxon";
 import { ReactElement as _ReactElement, ReactNode } from "react";
 
@@ -14,6 +15,7 @@ export const notUndefined = <T>(x: Optional<T>): x is T => x !== undefined;
 export type ApiDate = string;
 export type DateInput = DateTime | ApiDate;
 export type Url = string;
+export type IconC = FC<SvgIconProps>;
 
 export interface UserAuth {
   email: string;
@@ -29,6 +31,13 @@ export enum ButtonTypes {
   Button = "button",
   Submit = "submit",
   Reset = "reset"
+}
+
+export enum SizeVariant {
+  ExtraSmall = "ExtraSmall",
+  Small = "Small",
+  Medium = "Medium",
+  Large = "Large"
 }
 
 export interface Apartment {
@@ -118,7 +127,7 @@ export interface StayInputs {
 export interface StaySearchParams {
   apartment?: number;
   start_date: string;
-  end_date: string;
+  end_date?: string;
 }
 
 interface ConsumptionItem {

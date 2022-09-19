@@ -12,8 +12,7 @@ import { EndDateField } from "./EndDateField/EndDateField";
 export const StaysSearchBar = () => {
   const { setStaySearchParams } = useContext(StaysContext);
   const searchInitialValues: StaySearchParams = {
-    start_date: DateTime.local().minus({ months: 1 }).toISO(),
-    end_date: DateTime.local().toISO()
+    start_date: DateTime.local().minus({ months: 1 }).toISO()
   };
 
   const setSearchParamsByUrl = async (values: StaySearchParams) => {
