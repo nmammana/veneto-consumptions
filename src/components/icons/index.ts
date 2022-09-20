@@ -87,5 +87,6 @@ export {
   Restore as RestoreIcon,
   AddCircleOutline as AddCircleOutlineIcon,
   GetApp as DownloadIcon,
-  Delete as DeleteIcon
+  Delete as DeleteIcon,
+  AttachMoney as Money
 } from "@material-ui/icons";

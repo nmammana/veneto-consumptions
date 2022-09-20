@@ -33,7 +33,7 @@ export const CreateOrEditPopupContent: FC<CreateOrEditPopupContentProps> = ({
           transform: "translate(-50%, -50%)",
           borderRadius: "8px",
           background: "#fff",
-          width: "25%",
+          width: "40%",
           height: "520px",
           padding: "36px",
           overflow: "hidden"
