@@ -126,7 +126,7 @@ export interface StayInputs {
 
 export interface StaySearchParams {
   apartment?: number;
-  start_date: string;
+  start_date?: string;
   end_date?: string;
 }
 
@@ -171,4 +171,10 @@ export interface Totals {
   amount?: number;
   total?: number;
   types: BenefitStatistics[];
+}
+
+export enum TypeVariant {
+  Contained = "Contained",
+  Outlined = "Outlined",
+  Text = "Text"
 }

@@ -1,56 +1,43 @@
-import React, { FC, useContext } from "react";
-import { Autocomplete } from "@mui/material";
-import { TextField, TextFieldProps } from "@material-ui/core";
+import React, { FC, useContext, useState } from "react";
 import { FieldProps } from "formik";
 import { ApartmentsContext } from "../../../../../../context/ApartmentsContext";
 import { StaysContext } from "../../../../../../context/StaysContext";
-import { useTextInputStyle } from "../../../../../../../styles/muiStyles";
-import { withMemo } from "../../../../../../../utils/withMemo";
+import { Autocomplete } from "../../../../../../common/Autocomplete/Autocomplete";
+import { Apartment } from "../../../../../../../types/types";
 
-export const ApartmentsInputInt: FC<FieldProps & TextFieldProps> = props => {
+export const ApartmentsInput: FC<FieldProps> = ({ field, form }) => {
   const { setCurrentStay } = useContext(StaysContext);
-  const { form, field } = props;
-  const { error, helperText } = props;
   const { isLoadingApartmentList, apartmentList } =
     useContext(ApartmentsContext);
-  const classes = useTextInputStyle();
+
+  const apartmentOptions = apartmentList.map(apartment => ({
+    text: apartment.name,
+    title: apartment.name,
+    value: apartment
+  }));
+  const [apartment, setApartment] = useState<Apartment>();
+  const compareApartments = (val1: Apartment, val2: Apartment) =>
+    val1.id === val2.id;
 
   return (
-    <Autocomplete
-      onChange={(_, value) => {
+    <Autocomplete<Apartment>
+      options={apartmentOptions}
+      loading={isLoadingApartmentList}
+      loadingText="Cargando departamentos..."
+      clearText="Limpiar"
+      closeText="Cerrar"
+      noOptionsText="No hay opciones"
+      openText="Abrir"
+      onChange={value => {
         form.setFieldValue(field.name, value?.id);
         setCurrentStay(currentStay => ({
           ...currentStay,
           apartment: value?.id
         }));
+        setApartment(value);
       }}
-      loading={isLoadingApartmentList}
-      options={apartmentList ?? []}
-      isOptionEqualToValue={(option, value) => option.id === value.id}
-      getOptionLabel={value => value.name ?? ""}
-      value={
-        apartmentList.find(apartment => apartment.id === field.value) ?? null
-      }
-      defaultValue={null}
-      renderOption={(renderProps, option) => {
-        return (
-          <li {...renderProps} key={option.id}>
-            {option.name}
-          </li>
-        );
-      }}
-      renderInput={textFieldProps => (
-        <TextField
-          {...textFieldProps}
-          className={classes.textInputStyle}
-          helperText={helperText}
-          error={error}
-        />
-      )}
+      value={apartment}
+      compareValues={compareApartments}
     />
   );
 };
-
-export const ApartmentsInput = withMemo(
-  ApartmentsInputInt
-) as typeof ApartmentsInputInt;

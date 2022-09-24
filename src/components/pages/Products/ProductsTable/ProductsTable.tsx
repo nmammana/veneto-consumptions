@@ -67,9 +67,6 @@ export const ProductsTable = () => {
     cellStyle: {
       border: "none"
     },
-    filterCellStyle: {
-      border: "none"
-    },
     actionsCellStyle: {
       border: "none"
     },
@@ -77,6 +74,9 @@ export const ProductsTable = () => {
       border: "none",
       font: "normal normal 400 20px/27px Poppins",
       color: "#008dc8"
+    },
+    filterCellStyle: {
+      border: "none"
     },
     filtering: true,
     actionsColumnIndex: -1

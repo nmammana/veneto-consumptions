@@ -45,8 +45,7 @@ export const StaysContextProvider: FC<StaysContextProviderProps> = ({
     apartment: undefined,
     start_date: DateTime.fromISO(
       DateTime.local().minus({ months: 1 }).toISO()
-    ).toFormat("yyyy-MM-dd"),
-    end_date: ""
+    ).toFormat("yyyy-MM-dd")
   });
 
   const getStaysQueryParams = useCallback(() => {
