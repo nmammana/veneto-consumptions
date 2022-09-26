@@ -27,7 +27,7 @@ const getStateData = (
   hover: colorChangeAlpha(mainColor, 0.08),
   focus: colorChangeAlpha(mainColor, 0.24),
   selected: colorChangeAlpha(mainColor, 0.16),
-  active: colorChangeAlpha(mainColor, 0.24),
+  active: colorChangeAlpha(mainColor, 0.5),
   disabledOpacity: 0.38,
   disabled,
   disabledBackground
