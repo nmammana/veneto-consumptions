@@ -1,6 +1,7 @@
 import { SvgIconProps } from "@material-ui/core";
 import { DateTime } from "luxon";
 import { ReactElement as _ReactElement, ReactNode } from "react";
+import { isString as lodashIsString } from "lodash-es";
 
 // TODO: Ver si se puede hacer funcionar este tipado
 export type Children = ReactNode;
@@ -11,6 +12,9 @@ export type FCC<P = unknown> = FC<PropsWithChildren<P>>;
 
 export type Optional<T> = T | undefined;
 export const notUndefined = <T>(x: Optional<T>): x is T => x !== undefined;
+
+export const isString = (value: unknown): value is string =>
+  lodashIsString(value);
 
 export type ApiDate = string;
 export type DateInput = DateTime | ApiDate;

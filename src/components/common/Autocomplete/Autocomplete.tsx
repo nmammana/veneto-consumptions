@@ -8,7 +8,6 @@ import { KeyboardArrowDown } from "@material-ui/icons";
 import { Autocomplete as MuiAutocomplete } from "@material-ui/lab";
 import { differenceWith, isEmpty, isEqual } from "lodash";
 import { FocusEventHandler, useMemo } from "react";
-import { useTextInputStyle } from "../../../styles/muiStyles";
 import { IconC, notUndefined, ReactElement } from "../../../types/types";
 
 export enum AutoCompleteTypeVariant {
@@ -112,7 +111,6 @@ export const Autocomplete = <V,>({
     return option?.title ? option.title : "";
   };
   const hasEndIcon = Boolean(EndIcon);
-  const inputLabelClasses = useTextInputStyle();
 
   return (
     <FormControl className={className} error={hasError} fullWidth={fullWidth}>
@@ -144,7 +142,6 @@ export const Autocomplete = <V,>({
             <TextField
               {...params}
               placeholder={label}
-              className={inputLabelClasses.textInputStyle}
               InputLabelProps={{
                 ...params.InputLabelProps
               }}

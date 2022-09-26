@@ -24,7 +24,8 @@ export enum IconButtonType {
 
 enum IconSize {
   Small = "small",
-  Medium = "medium",
+  Inherit = "inherit",
+  Default = "default",
   Large = "large"
 }
 
@@ -41,8 +42,8 @@ const BaseIconButtonInt: FC<BaseIconButtonProps> = ({
     const sizes = getMapValueBuilder({
       [SizeVariant.ExtraSmall]: IconSize.Small,
       [SizeVariant.Small]: IconSize.Small,
-      [SizeVariant.Medium]: IconSize.Medium,
-      [SizeVariant.Large]: IconSize.Medium
+      [SizeVariant.Medium]: IconSize.Default,
+      [SizeVariant.Large]: IconSize.Large
     });
     return sizes(buttonSize);
   };
