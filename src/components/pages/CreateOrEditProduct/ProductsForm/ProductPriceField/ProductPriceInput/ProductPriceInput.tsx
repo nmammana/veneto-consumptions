@@ -13,6 +13,7 @@ export const ProductPriceInput: FC<FieldProps> = ({ field, form }) => {
       }}
       StartIcon={Money}
       startIconClassname="startIcon"
+      type="number"
     />
   );
 };
