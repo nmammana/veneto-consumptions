@@ -20,15 +20,14 @@ interface AuthContextProviderProps {
   children: ReactNode;
 }
 
-// TODO: Check typing issue when create context (type any???)
-/* interface AuthContextProps {
+interface AuthContextProps {
   authState: AuthState;
   setAuthState: React.Dispatch<React.SetStateAction<AuthState>>;
   logout: () => void;
   getAccess: () => string;
-} */
+}
 
-export const AuthContext = createContext<any>(undefined);
+export const AuthContext = createContext<AuthContextProps>(undefined as any);
 
 export const AuthContextProvider: FC<AuthContextProviderProps> = ({
   children

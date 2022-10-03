@@ -62,6 +62,7 @@ export const StaysTable = () => {
     showTitle: false,
     toolbar: false,
     sorting: true,
+    thirdSortClick: false,
     rowStyle: (data: Stay, index: number) => {
       if (index % 2 === 0) {
         return { backgroundColor: "#F9F8F9" };
@@ -83,7 +84,9 @@ export const StaysTable = () => {
       border: "none"
     },
     filtering: false,
-    actionsColumnIndex: -1
+    actionsColumnIndex: -1,
+    showFirstLastPageButtons: true,
+    showDisplayedRows: false
   };
 
   return (
@@ -105,7 +108,12 @@ export const StaysTable = () => {
           previousTooltip: "Anterior",
           nextTooltip: "Siguiente",
           lastTooltip: "Última página",
-          labelDisplayedRows: ""
+          labelDisplayedRows: "",
+          labelRowsPerPage: "",
+          firstAriaLabel: "",
+          previousAriaLabel: "",
+          nextAriaLabel: "",
+          lastAriaLabel: ""
         },
         body: {
           filterRow: {

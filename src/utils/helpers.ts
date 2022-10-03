@@ -41,3 +41,11 @@ export const roundNumberToSecondDecimal = (
 ): Optional<number> => {
   return value && Math.round((value + Number.EPSILON) * 100) / 100;
 };
+
+export const getMapValueBuilder =
+  <K extends string, V>(map: Record<K, V>) =>
+  (key: K): V =>
+    map[key];
+
+export const getClassName = (...classnames: Optional<string>[]): string =>
+  classnames.filter(Boolean).join(" ");

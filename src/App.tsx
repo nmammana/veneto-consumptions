@@ -1,7 +1,5 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 import { injectStyle } from "react-toastify/dist/inject-style";
 import { ToastContainer } from "react-toastify";
 import { CreateOrEditStay } from "./components/pages/CreateOrEditStay/CreateOrEditStay";
@@ -30,103 +28,101 @@ if (typeof window !== "undefined") {
 
 export const App = () => {
   return (
-    <LocalizationProvider dateAdapter={AdapterLuxon} adapterLocale="es">
-      <AuthContextProvider>
-        <AxiosContextProvider>
-          <AdminPageContextProvider>
-            <ApartmentsContextProvider>
-              <StaysContextProvider>
-                <ProductsContextProvider>
-                  <BrowserRouter>
-                    <Suspense
-                      fallback={
-                        <Layout>
-                          <Spinner />
-                        </Layout>
-                      }
-                    >
-                      <Routes>
-                        {/* **** Public Routes **** */}
-                        <Route path="/" element={<Navigate to="/inicio" />} />
-                        <Route
-                          path="/inicio"
-                          element={
-                            <PublicRoute>
-                              <Auth />
-                            </PublicRoute>
-                          }
-                        />
-                        {/* **** Private Routes **** */}
-                        <Route
-                          path="/estadias"
-                          element={
-                            <PrivateRoute>
-                              <Stays />
-                            </PrivateRoute>
-                          }
-                        />
-                        <Route
-                          path="/productos"
-                          element={
-                            <PrivateRoute>
-                              <Products />
-                            </PrivateRoute>
-                          }
-                        />
-                        <Route
-                          path="/editar-estadia"
-                          element={
-                            <PrivateRoute>
-                              <CreateOrEditStay />
-                            </PrivateRoute>
-                          }
-                        />
-                        <Route
-                          path="/editar-estadia/:stayId"
-                          element={
-                            <PrivateRoute>
-                              <CreateOrEditStay />
-                            </PrivateRoute>
-                          }
-                        />
-                        <Route
-                          path="/consumos/:stayId"
-                          element={
-                            <PrivateRoute>
-                              <Consumptions />
-                            </PrivateRoute>
-                          }
-                        />
-                        <Route
-                          path="/codigo/:qrCode"
-                          element={
-                            <PrivateRoute>
-                              <UserConsumptions />
-                            </PrivateRoute>
-                          }
-                        />
-                        <Route path="*" element={<NotFound />} />
-                      </Routes>
-                      <ToastContainer
-                        position="bottom-center"
-                        autoClose={5000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        theme="light"
+    <AuthContextProvider>
+      <AxiosContextProvider>
+        <AdminPageContextProvider>
+          <ApartmentsContextProvider>
+            <StaysContextProvider>
+              <ProductsContextProvider>
+                <BrowserRouter>
+                  <Suspense
+                    fallback={
+                      <Layout>
+                        <Spinner />
+                      </Layout>
+                    }
+                  >
+                    <Routes>
+                      {/* **** Public Routes **** */}
+                      <Route path="/" element={<Navigate to="/inicio" />} />
+                      <Route
+                        path="/inicio"
+                        element={
+                          <PublicRoute>
+                            <Auth />
+                          </PublicRoute>
+                        }
                       />
-                    </Suspense>
-                  </BrowserRouter>
-                </ProductsContextProvider>
-              </StaysContextProvider>
-            </ApartmentsContextProvider>
-          </AdminPageContextProvider>
-        </AxiosContextProvider>
-      </AuthContextProvider>
-    </LocalizationProvider>
+                      {/* **** Private Routes **** */}
+                      <Route
+                        path="/estadias"
+                        element={
+                          <PrivateRoute>
+                            <Stays />
+                          </PrivateRoute>
+                        }
+                      />
+                      <Route
+                        path="/productos"
+                        element={
+                          <PrivateRoute>
+                            <Products />
+                          </PrivateRoute>
+                        }
+                      />
+                      <Route
+                        path="/editar-estadia"
+                        element={
+                          <PrivateRoute>
+                            <CreateOrEditStay />
+                          </PrivateRoute>
+                        }
+                      />
+                      <Route
+                        path="/editar-estadia/:stayId"
+                        element={
+                          <PrivateRoute>
+                            <CreateOrEditStay />
+                          </PrivateRoute>
+                        }
+                      />
+                      <Route
+                        path="/consumos/:stayId"
+                        element={
+                          <PrivateRoute>
+                            <Consumptions />
+                          </PrivateRoute>
+                        }
+                      />
+                      <Route
+                        path="/codigo/:qrCode"
+                        element={
+                          <PrivateRoute>
+                            <UserConsumptions />
+                          </PrivateRoute>
+                        }
+                      />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                    <ToastContainer
+                      position="bottom-center"
+                      autoClose={5000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      theme="light"
+                    />
+                  </Suspense>
+                </BrowserRouter>
+              </ProductsContextProvider>
+            </StaysContextProvider>
+          </ApartmentsContextProvider>
+        </AdminPageContextProvider>
+      </AxiosContextProvider>
+    </AuthContextProvider>
   );
 };

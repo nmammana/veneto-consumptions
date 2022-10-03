@@ -12,18 +12,17 @@ import { EndDateField } from "./EndDateField/EndDateField";
 export const StaysSearchBar = () => {
   const { setStaySearchParams } = useContext(StaysContext);
   const searchInitialValues: StaySearchParams = {
-    start_date: DateTime.local().minus({ months: 1 }).toISO(),
-    end_date: DateTime.local().toISO()
+    start_date: DateTime.local().minus({ months: 1 }).toISO()
   };
 
-  const setSearchParamsByUrl = async (values: StaySearchParams) => {
+  const setSearchParamsByUrl = (values: StaySearchParams) => {
     setStaySearchParams({
       start_date: values.start_date
         ? DateTime.fromISO(values.start_date).toFormat("yyyy-MM-dd")
-        : "",
+        : undefined,
       end_date: values.end_date
         ? DateTime.fromISO(values.end_date).toFormat("yyyy-MM-dd")
-        : "",
+        : undefined,
       apartment: values.apartment
     });
   };
