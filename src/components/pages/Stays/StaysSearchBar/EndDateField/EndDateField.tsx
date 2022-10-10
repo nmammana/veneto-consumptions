@@ -1,13 +1,17 @@
 import { Field } from "formik";
-import React from "react";
+import React, { FC } from "react";
 import { EndDateInput } from "./EndDateInput/EndDateInput";
 import "./EndDateField.scss";
 
-export const EndDateField = () => {
+interface EndDateFieldProps {
+  className?: string;
+}
+
+export const EndDateField: FC<EndDateFieldProps> = ({ className }) => {
   return (
-    <div className="endDateField">
+    <div className={`endDateField ${className}`}>
       <label className="staysFormLabel" htmlFor="endDate">
-        Hasta
+        Ingreso hasta
       </label>
       <Field id="endDate" name="end_date" component={EndDateInput} />
     </div>

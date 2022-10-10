@@ -1,7 +1,7 @@
 import { Column } from "@material-table/core";
 import { Tooltip, Typography } from "@material-ui/core";
 import { ConsumptionTableItem } from "../../../types/types";
-import { PayingTag } from "../tag/PayingTag/PayingTag";
+import { Tag } from "../tag/Tag/Tag";
 import "./ColumnConfig.scss";
 
 const bodyFontSize = 16;
@@ -78,7 +78,13 @@ export const columns: Column<ConsumptionTableItem>[] = [
   {
     title: "",
     field: "payed",
-    render: item => <PayingTag payed={item.payed} />,
+    render: item => (
+      <Tag
+        text={item.payed ? "Pagado" : "No Pagado"}
+        title={item.payed ? "Pagado" : "No Pagado"}
+        color={item.payed ? "#00b745" : "#bcb0be"}
+      />
+    ),
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",

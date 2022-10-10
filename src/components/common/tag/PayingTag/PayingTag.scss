@@ -2,14 +2,14 @@
 
 .payingTag {
   border: solid 2px;
-  border-radius: 12px;
-  padding: 0.25em 0.5em;
+  border-radius: 8px;
+  padding: 0.5em;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   .tagText {
-    font: $body1;
+    font: $caption2;
   }
 }
 

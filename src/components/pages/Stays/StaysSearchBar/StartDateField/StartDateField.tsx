@@ -1,13 +1,17 @@
 import { Field } from "formik";
-import React from "react";
+import React, { FC } from "react";
 import { StartDateInput } from "./StartDateInput/StartDateInput";
 import "./StartDateField.scss";
 
-export const StartDateField = () => {
+interface StartDateFieldProps {
+  className?: string;
+}
+
+export const StartDateField: FC<StartDateFieldProps> = ({ className }) => {
   return (
-    <div className="startDateField">
+    <div className={`startDateField ${className}`}>
       <label className="staysFormLabel" htmlFor="startDate">
-        Desde
+        Ingreso desde
       </label>
       <Field name="start_date" id="startDate" component={StartDateInput} />
     </div>

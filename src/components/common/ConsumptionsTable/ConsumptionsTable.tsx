@@ -1,6 +1,5 @@
 import MaterialTable from "@material-table/core";
 import React, { FC, useEffect, useRef, useState } from "react";
-import { isEmpty } from "lodash";
 import { tableIcons } from "../../../assets/icons/material-icons/MaterialIcons";
 import "./ConsumptionsTable.scss";
 import { columns } from "./ColumnConfig";
@@ -25,7 +24,7 @@ export const ConsumptionsTable: FC<ConsumptionsTableProps> = ({
   const tableRef = useRef<HTMLTableElement>(null);
 
   useEffect(() => {
-    if (consumptionList && !isEmpty(consumptionList)) {
+    if (consumptionList) {
       setConsumptionTableItemList(formatConsumptionList(consumptionList));
     }
   }, [consumptionList]);

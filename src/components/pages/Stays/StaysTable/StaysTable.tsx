@@ -42,7 +42,7 @@ export const StaysTable = () => {
           startDate: stay.start_date,
           endDate: stay.end_date,
           apartmentName: apartment?.name,
-          guestsNumber: stay.users?.length
+          payed: stay.payed
         };
       });
 

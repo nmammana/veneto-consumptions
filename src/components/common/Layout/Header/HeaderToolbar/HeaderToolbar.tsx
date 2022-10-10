@@ -15,14 +15,23 @@ export const HeaderToolbar = () => {
   const navigate = useNavigate();
   const items: HeaderItem[] = [
     { title: "Estadías", type: TableType.Stays },
+    { title: "Consumos", type: TableType.Consumptions },
     { title: "Productos", type: TableType.Products }
   ];
 
   const onItemClick = (type?: TableType) => {
-    if (type === TableType.Stays) {
-      navigate("/estadias");
-    } else if (type === TableType.Products) {
-      navigate("/productos");
+    switch (type) {
+      case TableType.Stays:
+        navigate("/estadias");
+        return;
+      case TableType.Products:
+        navigate("/productos");
+        return;
+      case TableType.Consumptions:
+        navigate("/consumos");
+        return;
+      default:
+        navigate("/estadias");
     }
   };
 

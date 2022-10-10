@@ -1,239 +1,95 @@
-import { isEmpty, reduce, some } from "lodash";
+import { DateTime } from "luxon";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import {
   Consumption,
-  notUndefined,
-  Stay,
-  Optional,
-  Apartment
+  ConsumptionSearchParams,
+  notUndefined
 } from "../../../types/types";
+import { ConsumptionsTable } from "../../common/ConsumptionsTable/ConsumptionsTable";
 import { Layout } from "../../common/Layout/Layout";
 import { Spinner } from "../../common/Spinner/Spinner";
+import { AuthContext } from "../../context/AuthContext";
 import { AxiosContext } from "../../context/AxiosContext";
-import { ConsumptionsTable } from "../../common/ConsumptionsTable/ConsumptionsTable";
-import "./Consumptions.scss";
-import { toastDefaultConfig } from "../../../utils/toast";
-import { roundNumberToSecondDecimal } from "../../../utils/helpers";
-import { PayOffAllConsumptionsPopup } from "./PayOffAllConsumptionsPopup/PayOffAllConsumptionsPopup";
-import { PayOffSelectedConsumptionsPopup } from "./PayOffSelectedConsumptionsPopup/PayOffSelectedConsumptionsPopup";
-
-const getTotalValuesFromConsumptionList = (
-  consumptionList?: Consumption[]
-): Optional<number[]> => {
-  return consumptionList
-    ?.filter(consumption => consumption.payed === false)
-    .map(consumption => consumption.total)
-    .filter(notUndefined);
-};
-
-const getTotalValuesFromConsumptionSelectedList = (
-  consumptionSelectedIdList: number[],
-  consumptionList?: Consumption[]
-): Optional<number[]> => {
-  return consumptionSelectedIdList
-    .map(
-      id => consumptionList?.find(consumption => consumption.id === id)?.total
-    )
-    .filter(notUndefined);
-};
+import { StayConsumptionStatistics } from "../Stays/StaysConsumptionStatistics/StaysConsumptionStatistics";
+import { ConsumptionsSearchBar } from "./ConsumptionsSearchBar/ConsumptionsSearchBar";
 
 export const Consumptions = () => {
-  const params = useParams();
-  const stayId = Number(params.stayId);
-
+  const { authState } = useContext(AuthContext);
+  const { authenticated } = authState;
   const { authAxios } = useContext(AxiosContext);
   const [isLoadingConsumptions, setIsLoadingConsumptions] =
     useState<boolean>(false);
   const [consumptionList, setConsumptionList] = useState<Consumption[]>();
-  const [stay, setStay] = useState<Stay>();
-  const [apartment, setApartment] = useState<Apartment>();
-  const [consumptionIdsSelected, setConsumptionIdsSelected] = useState<
-    number[]
-  >([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [consumptionSearchParams, setConsumptionSearchParams] =
+    useState<ConsumptionSearchParams>({
+      added_after: DateTime.fromISO(
+        DateTime.local().minus({ months: 1 }).toISO()
+      ).toFormat("yyyy-MM-dd"),
+      added_before: undefined
+    });
 
-  const getStayById = useCallback(async (): Promise<Stay> => {
-    const stayResponse = await authAxios.get(`stay/${stayId}`);
-    return stayResponse.data;
-  }, [authAxios, stayId]);
+  const getConsumptionsQueryParams = useCallback(() => {
+    const addedAfterSearchParam = consumptionSearchParams.added_after
+      ? `added_after=${consumptionSearchParams.added_after}`
+      : undefined;
+    const addedBeforeSearchParam = consumptionSearchParams.added_before
+      ? `added_before=${consumptionSearchParams.added_before}`
+      : undefined;
+    return [addedAfterSearchParam, addedBeforeSearchParam]
+      .filter(notUndefined)
+      .join("&");
+  }, [consumptionSearchParams]);
 
-  const fetchStay = useCallback(async () => {
-    const stayRes = await getStayById();
-    setStay(stayRes);
-  }, [getStayById]);
+  const setSearchParamsByUrl = (values: ConsumptionSearchParams) => {
+    setConsumptionSearchParams({
+      added_after: values.added_after
+        ? DateTime.fromISO(values.added_after).toFormat("yyyy-MM-dd")
+        : undefined,
+      added_before: values.added_before
+        ? DateTime.fromISO(values.added_before).toFormat("yyyy-MM-dd")
+        : undefined
+    });
+  };
 
-  const getConsumptionsByStayId = useCallback(async (): Promise<
-    Consumption[]
-  > => {
+  const getConsumptionList = useCallback(async (): Promise<Consumption[]> => {
     const consumptionsResponse = await authAxios.get(
-      `/consumption/?stay=${stayId}`
+      `/consumption?${getConsumptionsQueryParams()}`
     );
     return consumptionsResponse.data;
-  }, [authAxios, stayId]);
+  }, [authAxios, getConsumptionsQueryParams]);
 
-  const fetchConsumptionsTableItems = useCallback(async () => {
-    const consumptionRes = await getConsumptionsByStayId();
+  const fetchConsumptionList = useCallback(async () => {
+    const consumptionRes = await getConsumptionList();
     setConsumptionList(consumptionRes);
-  }, [getConsumptionsByStayId]);
-
-  const getApartmentById = useCallback(
-    async (apartmentId: number): Promise<Apartment> => {
-      const apartmentResponse = await authAxios.get(
-        `/apartments/${apartmentId}`
-      );
-      return apartmentResponse.data;
-    },
-    [authAxios]
-  );
-
-  const fetchApartment = useCallback(
-    async (apartmentId: number) => {
-      const apartmentRes = await getApartmentById(apartmentId);
-      setApartment(apartmentRes);
-    },
-    [getApartmentById]
-  );
-
-  const payOffAllConsumptions = async () => {
-    try {
-      const paymentResponse = await authAxios.post("/consumption/pay/", {
-        stay_id: stayId
-      });
-      if (paymentResponse.data) {
-        toast.success(paymentResponse.data.details, toastDefaultConfig);
-      }
-    } catch (error) {
-      toast.error(
-        "Ocurrió un error al saldar los consumos",
-        toastDefaultConfig
-      );
-    }
-  };
-
-  const onPayOffAllConsumptionsClick = () => {
-    payOffAllConsumptions();
-    setConsumptionList(
-      consumptionList?.map(consumption => {
-        return {
-          ...consumption,
-          payed: true
-        };
-      })
-    );
-    setConsumptionIdsSelected([]);
-  };
-
-  const payOffSelectedConsumptions = async () => {
-    try {
-      const paymentResponse = await authAxios.post("/consumption/pay/", {
-        consumptions: consumptionIdsSelected
-      });
-      if (paymentResponse.data) {
-        toast.success(paymentResponse.data.details, toastDefaultConfig);
-      }
-    } catch (error) {
-      toast.error(
-        "Ocurrió un error al saldar los consumos",
-        toastDefaultConfig
-      );
-    }
-  };
-
-  const onPayOffSelectedConsumptionsClick = () => {
-    payOffSelectedConsumptions();
-    setConsumptionList(
-      consumptionList?.map(consumption => {
-        if (some(consumptionIdsSelected, id => id === consumption.id)) {
-          return {
-            ...consumption,
-            payed: true
-          };
-        }
-        return {
-          ...consumption
-        };
-      })
-    );
-    setConsumptionIdsSelected([]);
-  };
+  }, [getConsumptionList]);
 
   useEffect(() => {
-    if (stayId) {
+    if (authenticated) {
       setIsLoadingConsumptions(true);
-      fetchStay();
-      fetchConsumptionsTableItems();
+      fetchConsumptionList();
+      setIsLoadingConsumptions(false);
     }
-    setIsLoadingConsumptions(false);
-  }, [fetchConsumptionsTableItems, fetchStay, stayId]);
+  }, [fetchConsumptionList, authenticated]);
 
-  useEffect(() => {
-    if (stay?.apartment) {
-      fetchApartment(stay?.apartment);
-    }
-  }, [fetchApartment, stay?.apartment]);
-
-  if (!stay && !consumptionList)
+  if (!consumptionList)
     return (
       <Layout>
         <Spinner />
       </Layout>
     );
-  const stayName = stay?.id ? `Estadía ${stay?.id}` : undefined;
-  const stayTitle = [stayName, stay?.start_date, stay?.end_date]
-    .filter(notUndefined)
-    .join(" - ");
-  const total = reduce(
-    getTotalValuesFromConsumptionList(consumptionList),
-    (sum, n) => sum + n
-  );
-  const payTotalText = total
-    ? `Pagar estadía: $${roundNumberToSecondDecimal(total)}`
-    : "No tiene pagos pendientes";
-  const isPayTotalButtonDisabled = !total;
-  const totalSelected = reduce(
-    getTotalValuesFromConsumptionSelectedList(
-      consumptionIdsSelected,
-      consumptionList
-    ),
-    (sum, n) => sum + n
-  );
-  const paySelectedText = [
-    "Pagar seleccionados",
-    roundNumberToSecondDecimal(totalSelected)
-  ]
-    .filter(notUndefined)
-    .join(": $");
 
   return (
     <Layout>
-      <div className="consumptionsHeaderContainer">
-        <div className="stayDataTitle">
-          <p className="stayTitle">{stayTitle}</p>
-          {apartment?.name && (
-            <p className="apartmentName">{apartment?.name}</p>
-          )}
-        </div>
-        <div className="payButtonsContainer">
-          <PayOffAllConsumptionsPopup
-            payTotalText={payTotalText}
-            onPayOffAllConsumptionsClick={onPayOffAllConsumptionsClick}
-            disabled={isPayTotalButtonDisabled}
-          />
-          <PayOffSelectedConsumptionsPopup
-            paySelectedText={paySelectedText}
-            onPayOffSelectedConsumptionsClick={
-              onPayOffSelectedConsumptionsClick
-            }
-            disabled={isEmpty(consumptionIdsSelected)}
-          />
-        </div>
-      </div>
+      <ConsumptionsSearchBar
+        setSearchParamsByUrl={(values: ConsumptionSearchParams) =>
+          setSearchParamsByUrl(values)
+        }
+      />
+      <StayConsumptionStatistics />
       <ConsumptionsTable
         consumptionList={consumptionList}
         isLoadingConsumptions={isLoadingConsumptions}
-        setConsumptionIdsSelected={setConsumptionIdsSelected}
-        isDinamicTable
       />
     </Layout>
   );

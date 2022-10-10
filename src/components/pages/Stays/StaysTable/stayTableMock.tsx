@@ -31,6 +31,7 @@ export const staysTable: Stay[] = [
         ]
       }
     ],
-    apartment: 1
+    apartment: 1,
+    payed: true
   }
 ];
