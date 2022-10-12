@@ -1,5 +1,5 @@
 import MaterialTable from "@material-table/core";
-import React, { useContext, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { tableIcons } from "../../../../assets/icons/material-icons/MaterialIcons";
 import "./ProductsTable.scss";
@@ -11,10 +11,14 @@ import { ProductsTableRowActionButtons } from "../TableRowActionButtons/Products
 import { benefitList } from "../../../../models/benefits";
 import { toastDefaultConfig } from "../../../../utils/toast";
 
-export const ProductsTable = () => {
+interface ProductsTableProps {
+  productList: Item[];
+}
+
+export const ProductsTable: FC<ProductsTableProps> = ({ productList }) => {
   const { authAxios } = useContext(AxiosContext);
-  const { productList, setProductList, isLoadingProductList } =
-    useContext(ProductsContext);
+  const { setProductList, isLoadingProductList } = useContext(ProductsContext);
+
   const [itemTableList, setItemTableList] = useState<ProductTableItem[]>([]);
 
   const deleteItem = async (itemId: number) => {
@@ -56,8 +60,8 @@ export const ProductsTable = () => {
     search: false,
     showTitle: false,
     toolbar: false,
-    /* sorting: true, */
-    sorting: false,
+    sorting: true,
+    thirdSortClick: false,
     rowStyle: (data: Item, index: number) => {
       if (index % 2 === 0) {
         return { backgroundColor: "#F9F8F9" };
@@ -78,7 +82,7 @@ export const ProductsTable = () => {
     filterCellStyle: {
       border: "none"
     },
-    filtering: true,
+    filtering: false,
     actionsColumnIndex: -1
   };
 

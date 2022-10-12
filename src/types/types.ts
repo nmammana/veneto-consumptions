@@ -137,6 +137,11 @@ export interface StaySearchParams {
   payed?: boolean;
 }
 
+export interface ProductSearchParams {
+  productName?: string;
+  typeOfBenefit?: number;
+}
+
 interface ConsumptionItem {
   item: Item;
   item_id: number;

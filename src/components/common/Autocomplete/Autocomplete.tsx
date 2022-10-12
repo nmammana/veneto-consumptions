@@ -2,12 +2,15 @@ import {
   FormControl,
   FormHelperText,
   InputAdornment,
-  TextField
+  TextField,
+  ThemeProvider
 } from "@material-ui/core";
 import { KeyboardArrowDown } from "@material-ui/icons";
 import { Autocomplete as MuiAutocomplete } from "@material-ui/lab";
 import { differenceWith, isEmpty, isEqual } from "lodash";
 import { FocusEventHandler, useMemo } from "react";
+import { StyleVariant } from "../../../styles/model/themeVariant";
+import { useMuiTheme } from "../../../styles/model/useMuiTheme";
 import { IconC, notUndefined, ReactElement } from "../../../types/types";
 
 export enum AutoCompleteTypeVariant {
@@ -111,91 +114,95 @@ export const Autocomplete = <V,>({
     return option?.title ? option.title : "";
   };
   const hasEndIcon = Boolean(EndIcon);
+  const style = StyleVariant.Primary;
+  const muiTheme = useMuiTheme(style);
 
   return (
-    <FormControl className={className} error={hasError} fullWidth={fullWidth}>
-      <MuiAutocomplete
-        disableClearable={!clearable}
-        /* classes={autocompleteClasses} */
-        clearText={clearText}
-        closeText={closeText}
-        disabled={disabled}
-        id={id}
-        inputValue={inputValue}
-        getOptionLabel={getOptionLabel}
-        loading={loading}
-        loadingText={loadingText}
-        noOptionsText={noOptionsText}
-        onBlur={onBlur}
-        onChange={(_, val) => {
-          const option = filteredOptions.find(elem => elem.value === val);
-          onChange?.(option?.value);
-        }}
-        onInputChange={(_event, searchText, reason) => {
-          onInputChange?.(searchText, reason === "reset");
-        }}
-        openText={openText}
-        options={filteredOptions.map(option => option.value)}
-        popupIcon={<EndIcon />}
-        renderInput={params => (
-          <>
-            <TextField
-              {...params}
-              placeholder={label}
-              InputLabelProps={{
-                ...params.InputLabelProps
-              }}
-              disabled={disabled}
-              error={hasError}
-              InputProps={{
-                ...params.InputProps,
-                /* classes: inputClasses, */
-                ...(StartIcon && {
-                  startAdornment: (
-                    <InputAdornment
-                      /* classes={endIconClasses} */ position="start"
-                    >
-                      <StartIcon />
-                    </InputAdornment>
-                  )
-                })
-              }}
-              variant={variant}
-              size="small"
-            />
-            {showHelperOrErrorText && (
-              <FormHelperText
+    <ThemeProvider theme={muiTheme}>
+      <FormControl className={className} error={hasError} fullWidth={fullWidth}>
+        <MuiAutocomplete
+          disableClearable={!clearable}
+          /* classes={autocompleteClasses} */
+          clearText={clearText}
+          closeText={closeText}
+          disabled={disabled}
+          id={id}
+          inputValue={inputValue}
+          getOptionLabel={getOptionLabel}
+          loading={loading}
+          loadingText={loadingText}
+          noOptionsText={noOptionsText}
+          onBlur={onBlur}
+          onChange={(_, val) => {
+            const option = filteredOptions.find(elem => elem.value === val);
+            onChange?.(option?.value);
+          }}
+          onInputChange={(_event, searchText, reason) => {
+            onInputChange?.(searchText, reason === "reset");
+          }}
+          openText={openText}
+          options={filteredOptions.map(option => option.value)}
+          popupIcon={<EndIcon />}
+          renderInput={params => (
+            <>
+              <TextField
+                {...params}
+                placeholder={label}
+                InputLabelProps={{
+                  ...params.InputLabelProps
+                }}
+                disabled={disabled}
                 error={hasError}
-                /* className={formHelperTextClasses.root} */
-                margin="dense"
-              >
-                {showableHelperText}
-              </FormHelperText>
-            )}
-          </>
-        )}
-        renderOption={option => (
-          <span
-            /* className={labelTextClasses.optionLabelText} */
-            title={getOptionTitle(option)}
-          >
-            {getOptionLabel(option)}
-          </span>
-        )}
-        value={value ?? null}
-        forcePopupIcon={hasEndIcon}
-        getOptionSelected={compareValues}
-        clearOnBlur={clearOnBlur}
-        // this prop is needed because mui filter the possible options to select
-        // doing a fuzzy search with the text input content by default
-        filterOptions={
-          localSearch
-            ? undefined
-            : (internalOptions: V[]) => {
-                return internalOptions;
-              }
-        }
-      />
-    </FormControl>
+                InputProps={{
+                  ...params.InputProps,
+                  /* classes: inputClasses, */
+                  ...(StartIcon && {
+                    startAdornment: (
+                      <InputAdornment
+                        /* classes={endIconClasses} */ position="start"
+                      >
+                        <StartIcon />
+                      </InputAdornment>
+                    )
+                  })
+                }}
+                variant={variant}
+                size="small"
+              />
+              {showHelperOrErrorText && (
+                <FormHelperText
+                  error={hasError}
+                  /* className={formHelperTextClasses.root} */
+                  margin="dense"
+                >
+                  {showableHelperText}
+                </FormHelperText>
+              )}
+            </>
+          )}
+          renderOption={option => (
+            <span
+              /* className={labelTextClasses.optionLabelText} */
+              title={getOptionTitle(option)}
+            >
+              {getOptionLabel(option)}
+            </span>
+          )}
+          value={value ?? null}
+          forcePopupIcon={hasEndIcon}
+          getOptionSelected={compareValues}
+          clearOnBlur={clearOnBlur}
+          // this prop is needed because mui filter the possible options to select
+          // doing a fuzzy search with the text input content by default
+          filterOptions={
+            localSearch
+              ? undefined
+              : (internalOptions: V[]) => {
+                  return internalOptions;
+                }
+          }
+        />
+      </FormControl>
+    </ThemeProvider>
   );
 };

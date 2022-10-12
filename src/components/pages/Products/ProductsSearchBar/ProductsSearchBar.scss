@@ -1,19 +1,20 @@
-.consumptionsSearchBar {
+.productSearchBar {
   margin: 2em 0;
-  .consumptionsSearchForm {
+  .productSearchForm {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
     width: 100%;
+    gap: 2em;
     .formFields {
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
       gap: 1em;
-      .apartmentField {
-        width: 280px;
+      .field {
+        width: 254px;
       }
     }
   }
