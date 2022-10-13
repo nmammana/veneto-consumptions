@@ -4,14 +4,18 @@ import { FieldProps } from "formik";
 import React, { FC } from "react";
 import { StyleVariant } from "../../../../../../styles/model/themeVariant";
 import { useMuiTheme } from "../../../../../../styles/model/useMuiTheme";
+import { AccountState } from "../../../../../../types/types";
 
 export const AccountStateInput: FC<FieldProps> = ({ field, form }) => {
   const style = StyleVariant.Primary;
   const muiTheme = useMuiTheme(style);
-  const accountState = [
-    { payed: true, label: "Sin deudas" },
-    { payed: false, label: "Tiene deudas" }
+
+  const accountStateList = [
+    { state: AccountState.Payed, label: "Pagado" },
+    { state: AccountState.Unpayed, label: "No pagado" },
+    { state: AccountState.WithoutConsumptions, label: "Sin consumos" }
   ];
+
   return (
     <ThemeProvider theme={muiTheme}>
       <Select
@@ -23,10 +27,10 @@ export const AccountStateInput: FC<FieldProps> = ({ field, form }) => {
         labelId="payed"
         IconComponent={KeyboardArrowDown}
       >
-        {accountState.map((state, index) => (
+        {accountStateList.map((accountState, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <MenuItem key={index} /* value={state.payed} */>
-            {state.label}
+          <MenuItem key={index} value={accountState.state}>
+            {accountState.label}
           </MenuItem>
         ))}
       </Select>

@@ -111,6 +111,7 @@ export interface Stay {
   apartment?: number;
   users: User[];
   payed?: boolean;
+  has_consumption?: boolean;
 }
 
 export interface PlainBenefit {
@@ -161,6 +162,7 @@ export interface Consumption {
   payed?: boolean;
   user_stay_id: number;
   added: string;
+  apartment: Apartment;
 }
 
 export interface ConsumptionTableItem {
@@ -172,6 +174,7 @@ export interface ConsumptionTableItem {
   signature?: Url;
   payed?: boolean;
   consumptionTotal: string;
+  apartmentName: string;
 }
 export interface ConsumptionSearchParams {
   added_after?: string;
@@ -193,4 +196,10 @@ export enum TypeVariant {
   Contained = "Contained",
   Outlined = "Outlined",
   Text = "Text"
+}
+
+export enum AccountState {
+  Payed = "Payed",
+  Unpayed = "Unpayed",
+  WithoutConsumptions = "WithoutConsumptions"
 }

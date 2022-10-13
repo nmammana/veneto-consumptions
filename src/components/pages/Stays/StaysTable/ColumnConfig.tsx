@@ -1,7 +1,7 @@
 import { Column } from "@material-table/core";
 import { Tag } from "../../../common/tag/Tag/Tag";
 
-const bodyFontSize = 16;
+const bodyFontSize = 14;
 
 export interface StayTableItem {
   id: number;
@@ -9,6 +9,7 @@ export interface StayTableItem {
   startDate?: string;
   endDate?: string;
   payed?: boolean;
+  has_consumption?: boolean;
 }
 
 export const columns: Column<StayTableItem>[] = [
@@ -60,13 +61,20 @@ export const columns: Column<StayTableItem>[] = [
   {
     title: "",
     field: "payed",
-    render: stay => (
-      <Tag
-        text={stay.payed ? "Pagado" : "No Pagado"}
-        title={stay.payed ? "Pagado" : "No Pagado"}
-        color={stay.payed ? "#00b745" : "#bcb0be"}
-      />
-    ),
+    render: stay => {
+      const label = !stay.has_consumption
+        ? "Sin consumos"
+        : stay.payed
+        ? "Pagado"
+        : "No Pagado";
+      const color = !stay.has_consumption
+        ? "#bcb0be"
+        : stay.payed
+        ? "#00b745"
+        : "#ffab04";
+      return <Tag text={label} title={label} color={color} />;
+    },
+
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",

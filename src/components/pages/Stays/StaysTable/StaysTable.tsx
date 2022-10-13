@@ -42,7 +42,8 @@ export const StaysTable = () => {
           startDate: stay.start_date,
           endDate: stay.end_date,
           apartmentName: apartment?.name,
-          payed: stay.payed
+          payed: stay.payed,
+          has_consumption: stay.has_consumption
         };
       });
 

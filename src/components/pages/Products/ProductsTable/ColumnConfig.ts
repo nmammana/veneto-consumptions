@@ -1,7 +1,7 @@
 import { Column } from "@material-table/core";
 import { ProductTableItem } from "../../../../types/types";
 
-const bodyFontSize = 16;
+const bodyFontSize = 14;
 
 export const columns: Column<ProductTableItem>[] = [
   {

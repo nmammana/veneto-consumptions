@@ -45,7 +45,8 @@ export const formatConsumptionList = (
         extraPrice,
         signature: consumption.signature,
         payed: consumption.payed,
-        consumptionTotal
+        consumptionTotal,
+        apartmentName: consumption.apartment.name
       };
     })
     .filter(notUndefined);

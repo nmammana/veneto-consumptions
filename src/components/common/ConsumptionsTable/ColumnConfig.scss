@@ -1,3 +1,8 @@
+.consumptionListContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 .itemConsumptionList {
   max-width: 280px;
   display: inline-block;
