@@ -1,20 +1,19 @@
-.staySearchBar {
+.consumptionsSearchBar {
   margin: 2em 0;
-  .staySearchForm {
+  .consumptionsSearchForm {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
     width: 100%;
-    gap: 2em;
     .formFields {
       display: flex;
       flex-direction: row;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
       gap: 1em;
-      .field {
-        width: 254px;
+      .apartmentField {
+        width: 280px;
       }
     }
   }

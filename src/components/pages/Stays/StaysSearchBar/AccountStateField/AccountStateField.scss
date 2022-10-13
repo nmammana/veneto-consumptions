@@ -1,12 +1,11 @@
 @import "../../../../../styles/Global.scss";
 
-.productNameField {
+.accountStateField {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  width: 70%;
-}
-.productFormLabel {
-  font: $subtitle4;
-  color: $blue;
+  .staysFormLabel {
+    font: $subtitle4;
+    color: $blue;
+  }
 }

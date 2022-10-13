@@ -58,7 +58,15 @@ export const StaysContextProvider: FC<StaysContextProviderProps> = ({
     const endDateSearchParam = staySearchParams.end_date
       ? `end_date=${staySearchParams.end_date}`
       : undefined;
-    return [apartmentSearchParam, startDateSearchParam, endDateSearchParam]
+    const accountStateSearchParam = staySearchParams.payed
+      ? `payed=${staySearchParams.payed}`
+      : undefined;
+    return [
+      apartmentSearchParam,
+      startDateSearchParam,
+      endDateSearchParam,
+      accountStateSearchParam
+    ]
       .filter(notUndefined)
       .join("&");
   }, [staySearchParams]);

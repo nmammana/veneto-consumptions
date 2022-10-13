@@ -8,6 +8,7 @@ import "./StaySearchBar.scss";
 import { ApartmentsField } from "./ApartmentField/ApartmentsField";
 import { StartDateField } from "./StartDateField/StartDateField";
 import { EndDateField } from "./EndDateField/EndDateField";
+import { AccountStateField } from "./AccountStateField/AccountStateField";
 
 export const StaysSearchBar = () => {
   const { setStaySearchParams } = useContext(StaysContext);
@@ -23,7 +24,8 @@ export const StaysSearchBar = () => {
       end_date: values.end_date
         ? DateTime.fromISO(values.end_date).toFormat("yyyy-MM-dd")
         : undefined,
-      apartment: values.apartment
+      apartment: values.apartment,
+      payed: values.payed
     });
   };
 
@@ -37,9 +39,10 @@ export const StaysSearchBar = () => {
       >
         <Form className="staySearchForm">
           <div className="formFields">
-            <ApartmentsField className="apartmentField" />
-            <StartDateField />
-            <EndDateField />
+            <ApartmentsField className="field" />
+            <StartDateField className="field" />
+            <EndDateField className="field" />
+            <AccountStateField className="field" />
           </div>
 
           <ButtonSmall

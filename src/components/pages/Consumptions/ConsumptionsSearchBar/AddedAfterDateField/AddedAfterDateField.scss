@@ -1,12 +1,12 @@
 @import "../../../../../styles/Global.scss";
 
-.productNameField {
+.addedAfterDateField {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  width: 70%;
-}
-.productFormLabel {
-  font: $subtitle4;
-  color: $blue;
+  max-width: 400px;
+  .formLabel {
+    font: $subtitle4;
+    color: $blue;
+  }
 }

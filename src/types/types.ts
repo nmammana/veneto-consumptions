@@ -28,7 +28,8 @@ export interface UserAuth {
 
 export enum TableType {
   Stays = "Stays",
-  Products = "Products"
+  Products = "Products",
+  Consumptions = "Consumptions"
 }
 
 export enum ButtonTypes {
@@ -109,6 +110,8 @@ export interface Stay {
   end_date?: string;
   apartment?: number;
   users: User[];
+  payed?: boolean;
+  has_consumption?: boolean;
 }
 
 export interface PlainBenefit {
@@ -132,6 +135,12 @@ export interface StaySearchParams {
   apartment?: number;
   start_date?: string;
   end_date?: string;
+  payed?: boolean;
+}
+
+export interface ProductSearchParams {
+  productName?: string;
+  typeOfBenefit?: number;
 }
 
 interface ConsumptionItem {
@@ -153,6 +162,7 @@ export interface Consumption {
   payed?: boolean;
   user_stay_id: number;
   added: string;
+  apartment: Apartment;
 }
 
 export interface ConsumptionTableItem {
@@ -164,6 +174,11 @@ export interface ConsumptionTableItem {
   signature?: Url;
   payed?: boolean;
   consumptionTotal: string;
+  apartmentName: string;
+}
+export interface ConsumptionSearchParams {
+  added_after?: string;
+  added_before?: string;
 }
 
 export interface BenefitStatistics {
@@ -181,4 +196,10 @@ export enum TypeVariant {
   Contained = "Contained",
   Outlined = "Outlined",
   Text = "Text"
+}
+
+export enum AccountState {
+  Payed = "Payed",
+  Unpayed = "Unpayed",
+  WithoutConsumptions = "WithoutConsumptions"
 }

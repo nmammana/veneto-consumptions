@@ -1,0 +1,20 @@
+@import "../../../../styles/Global.scss";
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 4px;
+  height: 24px;
+  width: max-content;
+}
+
+.text {
+  font: $tag;
+}
+.icon {
+  margin-left: 8;
+  height: 18;
+  width: 18;
+}

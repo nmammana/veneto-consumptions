@@ -1,17 +1,19 @@
 import { Column } from "@material-table/core";
 import { ProductTableItem } from "../../../../types/types";
 
-const bodyFontSize = 16;
+const bodyFontSize = 14;
 
 export const columns: Column<ProductTableItem>[] = [
   {
-    title: "Id",
+    title: "Producto n°",
     field: "id",
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
       border: "none"
-    }
+    },
+    sorting: true,
+    defaultSort: "desc"
   },
   {
     title: "Categoría",
@@ -20,7 +22,8 @@ export const columns: Column<ProductTableItem>[] = [
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
       border: "none"
-    }
+    },
+    sorting: false
   },
   {
     title: "Producto",
@@ -29,7 +32,8 @@ export const columns: Column<ProductTableItem>[] = [
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#2d0836",
       border: "none"
-    }
+    },
+    sorting: false
   },
   {
     title: "Precio",
@@ -39,6 +43,7 @@ export const columns: Column<ProductTableItem>[] = [
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
       border: "none"
-    }
+    },
+    sorting: false
   }
 ];

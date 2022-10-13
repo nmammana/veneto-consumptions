@@ -1,10 +1,10 @@
 import { Column } from "@material-table/core";
 import { Tooltip, Typography } from "@material-ui/core";
 import { ConsumptionTableItem } from "../../../types/types";
-import { PayingTag } from "../tag/PayingTag/PayingTag";
+import { Tag } from "../tag/Tag/Tag";
 import "./ColumnConfig.scss";
 
-const bodyFontSize = 16;
+const bodyFontSize = 14;
 
 export const columns: Column<ConsumptionTableItem>[] = [
   {
@@ -14,7 +14,8 @@ export const columns: Column<ConsumptionTableItem>[] = [
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
       border: "none",
-      width: "20%"
+      width: "20%",
+      padding: "4px"
     }
   },
   {
@@ -24,7 +25,19 @@ export const columns: Column<ConsumptionTableItem>[] = [
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#2d0836",
       border: "none",
-      width: "20%"
+      width: "15%",
+      padding: "4px"
+    }
+  },
+  {
+    title: "Departamento",
+    field: "apartmentName",
+    cellStyle: {
+      font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
+      color: "#817185",
+      border: "none",
+      width: "20%",
+      padding: "4px"
     }
   },
   {
@@ -38,16 +51,19 @@ export const columns: Column<ConsumptionTableItem>[] = [
           </Typography>
         }
       >
-        <p className="itemConsumptionList">
-          {item.itemConsumptionList.join(", ")}
-        </p>
+        <div className="consumptionListContainer">
+          <p className="itemConsumptionList">
+            {item.itemConsumptionList.join(", ")}
+          </p>
+        </div>
       </Tooltip>
     ),
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
       border: "none",
-      width: "280px"
+      width: "20%",
+      padding: "4px"
     }
   },
   {
@@ -57,7 +73,8 @@ export const columns: Column<ConsumptionTableItem>[] = [
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
       border: "none",
-      width: "5%"
+      width: "5%",
+      padding: "4px"
     }
   },
   {
@@ -72,18 +89,26 @@ export const columns: Column<ConsumptionTableItem>[] = [
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
       border: "none",
-      width: "10%"
+      width: "7%",
+      padding: "4px"
     }
   },
   {
     title: "",
     field: "payed",
-    render: item => <PayingTag payed={item.payed} />,
+    render: item => (
+      <Tag
+        text={item.payed ? "Pagado" : "No Pagado"}
+        title={item.payed ? "Pagado" : "No Pagado"}
+        color={item.payed ? "#00b745" : "#ffab04"}
+      />
+    ),
     cellStyle: {
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
       border: "none",
-      width: "10%"
+      width: "7%",
+      padding: "4px"
     }
   },
   {
@@ -93,7 +118,8 @@ export const columns: Column<ConsumptionTableItem>[] = [
       font: `normal normal 400 ${bodyFontSize}px/22px Poppins`,
       color: "#817185",
       border: "none",
-      width: "10%"
+      width: "6%",
+      padding: "4px"
     }
   }
 ];

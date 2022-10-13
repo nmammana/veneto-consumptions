@@ -16,10 +16,11 @@ import { NotFound } from "./components/pages/NotFound/NotFound";
 import { PublicRoute } from "./components/routes/PublicRoute";
 import { ProductsContextProvider } from "./components/context/ProductsContext";
 import { ApartmentsContextProvider } from "./components/context/ApartmentsContext";
-import { Consumptions } from "./components/pages/Consumptions/Consumptions";
 import { UserConsumptions } from "./components/pages/UserConsumptions/UserConsumptions";
 import { Spinner } from "./components/common/Spinner/Spinner";
 import { Layout } from "./components/common/Layout/Layout";
+import { StayConsumptions } from "./components/pages/StayConsumptions/StayConsumptions";
+import { Consumptions } from "./components/pages/Consumptions/Consumptions";
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== "undefined") {
@@ -87,10 +88,18 @@ export const App = () => {
                         }
                       />
                       <Route
-                        path="/consumos/:stayId"
+                        path="/consumos"
                         element={
                           <PrivateRoute>
                             <Consumptions />
+                          </PrivateRoute>
+                        }
+                      />
+                      <Route
+                        path="/consumos/:stayId"
+                        element={
+                          <PrivateRoute>
+                            <StayConsumptions />
                           </PrivateRoute>
                         }
                       />
