@@ -69,6 +69,7 @@ export const DateInput: FC<DateInputProps> = ({
             onChange={newValue => {
               onChange(newValue ?? undefined);
             }}
+            helperText=""
             onBlur={onBlur}
             placeholder={placeholder}
             format={dateFormat}

@@ -121,6 +121,7 @@ export const Autocomplete = <V,>({
     <ThemeProvider theme={muiTheme}>
       <FormControl className={className} error={hasError} fullWidth={fullWidth}>
         <MuiAutocomplete
+          style={{ height: "100%" }}
           disableClearable={!clearable}
           /* classes={autocompleteClasses} */
           clearText={clearText}
@@ -173,6 +174,7 @@ export const Autocomplete = <V,>({
                 <FormHelperText
                   error={hasError}
                   /* className={formHelperTextClasses.root} */
+                  style={{ margin: 0 }}
                   margin="dense"
                 >
                   {showableHelperText}
