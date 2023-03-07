@@ -21,6 +21,7 @@ import { Spinner } from "./components/common/Spinner/Spinner";
 import { Layout } from "./components/common/Layout/Layout";
 import { StayConsumptions } from "./components/pages/StayConsumptions/StayConsumptions";
 import { Consumptions } from "./components/pages/Consumptions/Consumptions";
+import { IdleTimerWrapper } from "./components/common/IdleTimerWrapper/IdleTimerWrapper";
 
 // CALL IT ONCE IN YOUR APP
 if (typeof window !== "undefined") {
@@ -36,96 +37,99 @@ export const App = () => {
             <StaysContextProvider>
               <ProductsContextProvider>
                 <BrowserRouter>
-                  <Suspense
-                    fallback={
-                      <Layout>
-                        <Spinner />
-                      </Layout>
-                    }
-                  >
-                    <Routes>
-                      {/* **** Public Routes **** */}
-                      <Route path="/" element={<Navigate to="/inicio" />} />
-                      <Route
-                        path="/inicio"
-                        element={
-                          <PublicRoute>
-                            <Auth />
-                          </PublicRoute>
-                        }
+                  <IdleTimerWrapper>
+                    <Suspense
+                      fallback={
+                        <Layout>
+                          <Spinner />
+                        </Layout>
+                      }
+                    >
+                      <Routes>
+                        {/* **** Public Routes **** */}
+                        <Route path="/" element={<Navigate to="/inicio" />} />
+                        <Route
+                          path="/inicio"
+                          element={
+                            <PublicRoute>
+                              <Auth />
+                            </PublicRoute>
+                          }
+                        />
+                        {/* **** Private Routes **** */}
+                        <Route
+                          path="/estadias"
+                          element={
+                            <PrivateRoute>
+                              <Stays />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route
+                          path="/productos"
+                          element={
+                            <PrivateRoute>
+                              <Products />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route
+                          path="/editar-estadia"
+                          element={
+                            <PrivateRoute>
+                              <CreateOrEditStay />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route
+                          path="/editar-estadia/:stayId"
+                          element={
+                            <PrivateRoute>
+                              <CreateOrEditStay />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route
+                          path="/consumos"
+                          element={
+                            <PrivateRoute>
+                              <Consumptions />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route
+                          path="/consumos/:stayId"
+                          element={
+                            <PrivateRoute>
+                              <StayConsumptions />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route
+                          path="/codigo/:qrCode"
+                          element={
+                            <PrivateRoute>
+                              <UserConsumptions />
+                            </PrivateRoute>
+                          }
+                        />
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+
+                      <ToastContainer
+                        position="bottom-center"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
                       />
-                      {/* **** Private Routes **** */}
-                      <Route
-                        path="/estadias"
-                        element={
-                          <PrivateRoute>
-                            <Stays />
-                          </PrivateRoute>
-                        }
-                      />
-                      <Route
-                        path="/productos"
-                        element={
-                          <PrivateRoute>
-                            <Products />
-                          </PrivateRoute>
-                        }
-                      />
-                      <Route
-                        path="/editar-estadia"
-                        element={
-                          <PrivateRoute>
-                            <CreateOrEditStay />
-                          </PrivateRoute>
-                        }
-                      />
-                      <Route
-                        path="/editar-estadia/:stayId"
-                        element={
-                          <PrivateRoute>
-                            <CreateOrEditStay />
-                          </PrivateRoute>
-                        }
-                      />
-                      <Route
-                        path="/consumos"
-                        element={
-                          <PrivateRoute>
-                            <Consumptions />
-                          </PrivateRoute>
-                        }
-                      />
-                      <Route
-                        path="/consumos/:stayId"
-                        element={
-                          <PrivateRoute>
-                            <StayConsumptions />
-                          </PrivateRoute>
-                        }
-                      />
-                      <Route
-                        path="/codigo/:qrCode"
-                        element={
-                          <PrivateRoute>
-                            <UserConsumptions />
-                          </PrivateRoute>
-                        }
-                      />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                    <ToastContainer
-                      position="bottom-center"
-                      autoClose={5000}
-                      hideProgressBar={false}
-                      newestOnTop={false}
-                      closeOnClick
-                      rtl={false}
-                      pauseOnFocusLoss
-                      draggable
-                      pauseOnHover
-                      theme="light"
-                    />
-                  </Suspense>
+                    </Suspense>
+                  </IdleTimerWrapper>
                 </BrowserRouter>
               </ProductsContextProvider>
             </StaysContextProvider>
