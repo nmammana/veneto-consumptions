@@ -12,7 +12,7 @@ export const staysTable: Stay[] = [
           id: 1,
           first_name: "Andres",
           last_name: "Gallardo",
-          email: "gallardoandres18@gmail.com",
+          user_email: "gallardoandres18@gmail.com",
           document: "38500821",
           role: 5
         },

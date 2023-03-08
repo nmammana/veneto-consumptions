@@ -76,6 +76,7 @@ export const StaysForm = () => {
   };
   const [stayFormValues, setStayFormValues] =
     useState<StayInputs>(stayDefaultValues);
+  const [userEdited, setUserEdited] = useState<Optional<User>>(undefined);
 
   const ref = useRef<FormikProps<StayInputs>>(null);
 
@@ -104,25 +105,45 @@ export const StaysForm = () => {
         ? DateTime.fromISO(endDate).toFormat("dd/MM/yyyy")
         : "";
       if (!errorMsg) {
+        const updatedUsers = userEdited?.id
+          ? currentStay.users.map(user => {
+              if (user.id === userEdited.id) {
+                return {
+                  ...userEdited,
+                  user: {
+                    ...userEdited.user,
+                    first_name: firstName,
+                    last_name: lastName,
+                    user_email: email,
+                    document: identityNumber
+                  },
+                  qr_code: qrCode,
+                  benefits: formattedBenefits
+                };
+              }
+              return user;
+            })
+          : [
+              ...currentStay.users,
+              {
+                user: {
+                  first_name: firstName,
+                  last_name: lastName,
+                  user_email: email,
+                  document: identityNumber
+                },
+                qr_code: qrCode,
+                benefits: formattedBenefits
+              }
+            ];
         setCurrentStay({
           ...currentStay,
           start_date: formattedStartDate,
           end_date: formattedEndDate,
           apartment,
-          users: [
-            ...currentStay.users,
-            {
-              user: {
-                first_name: firstName,
-                last_name: lastName,
-                email,
-                document: identityNumber
-              },
-              qr_code: qrCode,
-              benefits: formattedBenefits
-            }
-          ]
+          users: updatedUsers
         });
+        setUserEdited(undefined);
         setStayFormValues(stayDefaultValues);
         ref.current.setFieldValue("start_date", startDate);
         ref.current.setFieldValue("end_date", endDate);
@@ -152,25 +173,11 @@ export const StaysForm = () => {
   };
 
   const editUser = (userToEdit: User) => {
+    setUserEdited(userToEdit);
     if (ref.current) {
-      const updatedUserList = currentStay.users.filter(
-        user => user !== userToEdit
-      );
-      ref.current.setFieldValue("firstName", "");
-      ref.current.setFieldValue("lastName", "");
-      ref.current.setFieldValue("email", "");
-      ref.current.setFieldValue("identityNumber", "");
-      ref.current.setFieldValue("qrCode", "");
-      ref.current.setFieldValue(
-        "benefits",
-        benefitList.map(benefit => ({
-          [`${benefit.typeOfBenefit}`]: 0
-        }))
-      );
-      setCurrentStay({ ...currentStay, users: updatedUserList });
       ref.current.setFieldValue("firstName", userToEdit.user.first_name);
       ref.current.setFieldValue("lastName", userToEdit.user.last_name);
-      ref.current.setFieldValue("email", userToEdit.user.email);
+      ref.current.setFieldValue("email", userToEdit.user.user_email);
       ref.current.setFieldValue("identityNumber", userToEdit.user.document);
       ref.current.setFieldValue("qrCode", userToEdit.qr_code);
       userToEdit.benefits?.forEach((benefit, index) => {

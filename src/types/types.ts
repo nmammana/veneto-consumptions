@@ -86,7 +86,7 @@ export interface Person {
   id?: number;
   first_name?: string;
   last_name?: string;
-  email?: string;
+  user_email?: string;
   document?: string;
   role?: number;
 }
