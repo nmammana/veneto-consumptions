@@ -3,7 +3,8 @@ import {
   Benefit,
   notUndefined,
   Optional,
-  StayInputs
+  StayInputs,
+  User
 } from "../../../../types/types";
 import {
   convertDateStringToDateTime,
@@ -13,7 +14,8 @@ import {
 
 export const validateUserAddition = (
   formValues: StayInputs,
-  benefits?: Benefit[]
+  benefits?: Benefit[],
+  userEdited?: User
 ): Optional<string> => {
   const {
     startDate,
@@ -77,6 +79,29 @@ export const validateUserAddition = (
     })
     .filter(notUndefined);
   if (!isEmpty(negativeBenefitError)) return head(negativeBenefitError);
+
+  const userEffectiveBenefits = userEdited?.benefits;
+  const quantityIsLessThanConsumptionMadeError = userEffectiveBenefits
+    ?.map(userBenefit => {
+      const matchedFieldBenefit = benefits?.find(
+        fieldBenefit =>
+          fieldBenefit.type_of_benefit === userBenefit.type_of_benefit
+      );
+      const userBenefitQuantity = userBenefit.quantity;
+      const userBenefitQuantityAvailable = userBenefit?.quantity_available ?? 0;
+      const alreadyUsedBenefitsQuantity =
+        userBenefitQuantity - userBenefitQuantityAvailable;
+      if (
+        matchedFieldBenefit?.quantity &&
+        matchedFieldBenefit?.quantity < alreadyUsedBenefitsQuantity
+      ) {
+        return "Error: La cantidad de beneficios otorgados no puede ser menor a los que ya se consumieron";
+      }
+      return undefined;
+    })
+    .filter(notUndefined);
+  if (!isEmpty(quantityIsLessThanConsumptionMadeError))
+    return head(quantityIsLessThanConsumptionMadeError);
 
   return undefined;
 };
