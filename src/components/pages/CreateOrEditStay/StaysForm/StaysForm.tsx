@@ -29,7 +29,10 @@ import {
 } from "./validations";
 import { toastDefaultConfig } from "../../../../utils/toast";
 
-const formatBenefits = (benefits?: PlainBenefit[]): Optional<Benefit[]> => {
+const formatBenefits = (
+  benefits?: PlainBenefit[],
+  userEdited?: User
+): Optional<Benefit[]> => {
   if (!benefits) return [];
   const formattedBenefits = benefits
     .map(benefit => {
@@ -43,10 +46,19 @@ const formatBenefits = (benefits?: PlainBenefit[]): Optional<Benefit[]> => {
       creacion de estadias */
       if (typeof benefitQuantity === "string")
         benefitQuantity = parseInt(benefitQuantity);
+      const userBenefitQuantityAvailable =
+        userEdited?.benefits?.find(b => b.type_of_benefit === typeOfBenefit)
+          ?.quantity_available ?? 0;
+      const userBenefitQuantity =
+        userEdited?.benefits?.find(b => b.type_of_benefit === typeOfBenefit)
+          ?.quantity ?? 0;
+      const benefitAlreadyUsed =
+        userBenefitQuantity - userBenefitQuantityAvailable;
       return typeOfBenefit && benefitQuantity
         ? {
             type_of_benefit: typeOfBenefit,
-            quantity: benefitQuantity
+            quantity: benefitQuantity,
+            quantity_available: benefitQuantity - benefitAlreadyUsed
           }
         : undefined;
     })
@@ -93,10 +105,11 @@ export const StaysForm = () => {
         qrCode,
         benefits
       } = ref.current.values;
-      const formattedBenefits = formatBenefits(benefits);
+      const formattedBenefits = formatBenefits(benefits, userEdited);
       const errorMsg = validateUserAddition(
         ref.current.values,
-        formattedBenefits
+        formattedBenefits,
+        userEdited
       );
       const formattedStartDate = startDate
         ? DateTime.fromISO(startDate).toFormat("dd/MM/yyyy")

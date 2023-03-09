@@ -2,15 +2,25 @@
 
 .benefitContainer {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  .benefitName {
-    font: $caption;
-    color: $gray;
+  flex-direction: column;
+  gap: 2;
+
+  .benefitTotalContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .benefitName {
+      font: $caption;
+      color: $gray;
+    }
+    .benefitQuantity {
+      font: $caption;
+      color: $gray;
+    }
   }
-  .benefitQuantity {
-    font: $caption;
-    color: $gray;
+  .quantityAvailable {
+    font: $captionItalic;
+    color: $blue;
   }
 }
