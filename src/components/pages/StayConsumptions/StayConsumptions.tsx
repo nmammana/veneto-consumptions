@@ -18,6 +18,7 @@ import { toastDefaultConfig } from "../../../utils/toast";
 import { roundNumberToSecondDecimal } from "../../../utils/helpers";
 import { PayOffAllConsumptionsPopup } from "./PayOffAllConsumptionsPopup/PayOffAllConsumptionsPopup";
 import { PayOffSelectedConsumptionsPopup } from "./PayOffSelectedConsumptionsPopup/PayOffSelectedConsumptionsPopup";
+import { StaysContext } from "../../context/StaysContext";
 
 const getTotalValuesFromConsumptionList = (
   consumptionList?: Consumption[]
@@ -44,6 +45,7 @@ export const StayConsumptions = () => {
   const stayId = Number(params.stayId);
 
   const { authAxios } = useContext(AxiosContext);
+  const { stayList, setStayList } = useContext(StaysContext);
   const [isLoadingConsumptions, setIsLoadingConsumptions] =
     useState<boolean>(false);
   const [consumptionList, setConsumptionList] = useState<Consumption[]>();
@@ -102,6 +104,13 @@ export const StayConsumptions = () => {
       });
       if (paymentResponse.data) {
         toast.success(paymentResponse.data.details, toastDefaultConfig);
+        const updatedStayList = stayList.map(s => {
+          if (s.id === stayId) {
+            return { ...s, payed: true };
+          }
+          return s;
+        });
+        setStayList(updatedStayList);
       }
     } catch (error) {
       toast.error(
