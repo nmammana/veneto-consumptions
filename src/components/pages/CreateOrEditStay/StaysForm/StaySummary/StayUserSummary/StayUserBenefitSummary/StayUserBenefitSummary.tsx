@@ -20,9 +20,7 @@ export const StayUserBenefitSummary: FC<StayUserBenefitSummaryProps> = ({
         <p className="benefitName">{benefitName}</p>
         <p className="benefitQuantity">{quantity}</p>
       </div>
-      {quantityAvailable && (
-        <p className="quantityAvailable">{quantityAvailable} disponibles</p>
-      )}
+      <p className="quantityAvailable">{quantityAvailable} disponibles</p>
     </div>
   );
 };
